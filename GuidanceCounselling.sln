@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GuidanceCounselling", "GuidanceCounselling\GuidanceCounselling.vbproj", "{03D231CF-00B1-4E5B-B42A-CEB45F8A2860}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GuidanceCounselling.Tests", "GuidanceCounselling.Tests\GuidanceCounselling.Tests.vbproj", "{EFE09D4A-02CB-46B3-819C-48457A7968D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03D231CF-00B1-4E5B-B42A-CEB45F8A2860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03D231CF-00B1-4E5B-B42A-CEB45F8A2860}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03D231CF-00B1-4E5B-B42A-CEB45F8A2860}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03D231CF-00B1-4E5B-B42A-CEB45F8A2860}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFE09D4A-02CB-46B3-819C-48457A7968D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFE09D4A-02CB-46B3-819C-48457A7968D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFE09D4A-02CB-46B3-819C-48457A7968D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFE09D4A-02CB-46B3-819C-48457A7968D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

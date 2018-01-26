@@ -1,0 +1,206 @@
+﻿body {
+    /*padding-top: 50px;
+    padding-bottom: 20px;*/
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    /*padding-left: 15px;
+    padding-right: 15px;*/
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    /*max-width: 280px;*/
+}
+
+.navbar{
+    border-radius:0px;
+    background-color:#ffffff;
+    margin-bottom:0px;
+}
+
+a, p {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.navbar-nav > li > a, .navbar-brand{
+    color: #44b1df;
+    border-radius:3px;
+}
+
+.navbar-collapse{
+    padding-bottom:8px !important;
+}
+
+.navbar-toggle span{
+    color: #2491bf !important;
+}
+
+input.form-control, select.form-control{
+    box-shadow:none;
+    border-radius:3px;
+    border-color: rgba(100,100,100,0.2);
+    transition:0.2s;
+    color: rgba(0,0,0,0.5);
+}
+
+input.form-control:active, input.form-control:focus, select.form-control:active, select.form-control:focus{
+    box-shadow:none;
+    border-color: #64e1ef;
+    color: rgba(0,0,0,0.9);
+}
+
+.container.body-header div{
+    padding-left:0px;
+    padding-right:0px;
+}
+
+.container.body-header{
+    margin-bottom:20px;
+}
+
+.container.body-header p{
+    line-height:34px;
+    margin-bottom:0px;
+    font-size:1.4em;
+    font-weight:100;
+    color: rgba(0,0,0,0.4);
+}
+
+.body-data{
+    padding:6px 16px;
+    background-color:#fafafa;
+    border-radius:3px;
+}
+
+@media(max-width:767px){
+    .navbar-collapse{
+        border-bottom-style:solid;
+        border-width:1px;
+        border-bottom-color:rgba(100,100,100,0.3);
+    }
+
+    .container.body-header div{
+        padding-bottom:5px;
+    }
+
+    .body-content{
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .two-form > .row > form > .col-md-6:first-of-type{
+        padding-right:5px;
+        padding-left:5px;
+        margin-bottom:10px;
+    }
+
+    .two-form > .row > form > .col-md-6:last-of-type{
+        padding-right:5px;
+        padding-left:5px;
+    }
+}
+
+@media(min-width:768px){
+    .navbar-brand{
+        padding-left:12px;
+    }
+
+    #wrapper #page-content-wrapper .navbar .container{
+        padding-left:0px;
+        padding-right:0px;
+    }
+
+    .footer-container{
+        padding-right:0px;
+    }
+
+    .two-form > .row > form > .col-md-6:first-of-type{
+        padding-left:0px;
+    }
+
+    .two-form > .row > form > .col-md-6:last-of-type{
+        padding-right:0px;
+    }
+
+    .two-form p.instructions{
+        margin-top:7px;
+    }
+
+    .two-form .padding-fix{
+        padding-left:23px;
+        padding-right:23px;
+    }
+}
+
+.window-footer .col-md-6:first-of-type{
+    padding-left:8px;
+}
+
+.window-footer .col-md-6:last-of-type{
+    padding-right:5px;
+}
+
+.pagination li a{
+    padding:3px 8px;
+}
+
+footer{
+    margin-top:16px;
+    color:rgba(0,0,0,0.4);
+}
+
+.body-data{
+    color: rgba(0,0,0,0.6);
+}
+
+.header-btn{
+    margin-left:8px;
+    border-radius:3px;
+    border-style:none;
+    padding:3px 12px;
+}
+
+.header-btn span{
+    font-size:0.8em;
+    margin-right:5px;
+}
+
+.form-bottom-space{
+    margin-bottom:20px;
+}
+
+.form-bottom-space .row{
+    margin-bottom:10px;
+}
+
+.btn-default{
+    background-color:#eeeeee;
+    color:#9a9a9a;
+}
+
+.btn{
+    border-style:none;
+}
+
+.btn-xs{
+    padding: 0px 8px;
+}
+
+.two-form table tbody>tr>td:last-of-type{
+    text-align:right;
+}
+
+.dataTables_empty{
+    text-align:center !important;
+}
