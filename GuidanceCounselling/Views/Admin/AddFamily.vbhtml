@@ -177,7 +177,8 @@ End Code
             function reorder() {
                 var count = 0;
                 $(".form-inputs input").each(function () {
-                    $(this).attr("name", "FamilyMembers["+count+"].UserId");
+                    $(this).attr("name", "FamilyMembers[" + count + "].UserId");
+                    count++;
                 });
             }
         });

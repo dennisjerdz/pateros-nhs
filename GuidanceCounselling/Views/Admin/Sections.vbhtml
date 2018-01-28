@@ -39,7 +39,7 @@ End Code
                             <td>@item.Students.Count() Students</td>
                             <td>@item.DateCreated</td>
                             <td style="text-align:right;">
-                                <a class="btn btn-xs btn-primary" href="@Url.Action("SectionsEdit", New With {.id = item.SectionId})">Edit</a>
+                                <a class="btn btn-xs btn-warning" href="@Url.Action("SectionsEdit", New With {.id = item.SectionId})">Edit Info</a>
                                 <a class="btn btn-xs btn-info" href="@Url.Action("ManageStudents", New With {.id = item.SectionId})">Manage Students</a>
                             </td>
                         </tr>

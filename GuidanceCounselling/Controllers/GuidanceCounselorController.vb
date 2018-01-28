@@ -29,7 +29,7 @@ Namespace Controllers
         <ValidateAntiForgeryToken>
         <Route("QuestionGroup/Add")>
         Function AddQuestionGroup(<Bind(Include:="QuestionGroupId,Name,DisplayName,ExamType")> ByVal questionGroup As QuestionGroup) As ActionResult
-            questionGroup.DateCreated = DateTimeOffset.Now
+            questionGroup.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
 
             If ModelState.IsValid Then
                 db.QuestionGroups.Add(questionGroup)
@@ -118,7 +118,7 @@ Namespace Controllers
         <Route("QuestionGroup/{id}/Questions/TFRank/Add")>
         <ValidateAntiForgeryToken()>
         Function AddTFRank(<Bind(Include:="QuestionTFRankId,QuestionGroupId,Question")> ByVal questionTFRank As QuestionTFRank) As ActionResult
-            questionTFRank.DateCreated = DateTimeOffset.Now
+            questionTFRank.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
 
             If ModelState.IsValid Then
                 db.QuestionTFRanks.Add(questionTFRank)
@@ -192,7 +192,7 @@ Namespace Controllers
         <Route("QuestionGroup/{id}/Questions/TFList/Add")>
         <ValidateAntiForgeryToken()>
         Function AddTFList(<Bind(Include:="QuestionTFListId,QuestionGroupId,Question")> ByVal questionTFList As QuestionTFList) As ActionResult
-            questionTFList.DateCreated = DateTimeOffset.Now
+            questionTFList.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
 
             If ModelState.IsValid Then
                 db.QuestionTFLists.Add(questionTFList)
@@ -252,7 +252,7 @@ Namespace Controllers
         <Route("QuestionGroup/{id}/Questions/Essay/Add")>
         <ValidateAntiForgeryToken()>
         Function AddEssay(<Bind(Include:="QuestionEssayId,QuestionGroupId,Question")> ByVal questionEssay As QuestionEssay) As ActionResult
-            questionEssay.DateCreated = DateTimeOffset.Now
+            questionEssay.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
 
             If ModelState.IsValid Then
                 db.QuestionEssays.Add(questionEssay)
@@ -312,7 +312,7 @@ Namespace Controllers
         <Route("QuestionGroup/{id}/Questions/OneToFive/Add")>
         <ValidateAntiForgeryToken()>
         Function AddOneToFive(<Bind(Include:="QuestionOneToFiveId,QuestionGroupId,Question")> ByVal questionOneToFive As QuestionOneToFive) As ActionResult
-            questionOneToFive.DateCreated = DateTimeOffset.Now
+            questionOneToFive.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
 
             If ModelState.IsValid Then
                 db.QuestionOneToFives.Add(questionOneToFive)
@@ -367,6 +367,8 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function AddExam(<Bind(Include:="ExamId,Name")> ByVal exam As Exam) As ActionResult
+            exam.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
+
             If ModelState.IsValid Then
                 db.Exams.Add(exam)
                 db.SaveChanges()
@@ -375,7 +377,7 @@ Namespace Controllers
             Return View(exam)
         End Function
 
-        <Route("Exams/Edit")>
+        <Route("Exam/{id}/Edit")>
         Function EditExam(ByVal id As Integer?) As ActionResult
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
@@ -387,7 +389,7 @@ Namespace Controllers
             Return View(exam)
         End Function
 
-        <Route("Exams/Edit")>
+        <Route("Exam/{id}/Edit")>
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function EditExam(<Bind(Include:="ExamId,Name,DateCreated")> ByVal exam As Exam) As ActionResult
@@ -409,7 +411,37 @@ Namespace Controllers
                 Return HttpNotFound()
             End If
 
-            Dim ec As New ExamCreateModel With {.QuestionGroups = db.QuestionGroups.ToList(), .ExamId = exam.ExamId, .Name = exam.Name}
+            Dim allQG As List(Of QuestionGroup) = db.QuestionGroups.ToList()
+
+            ' Get Current Question Groups Array
+            Dim arrayOfExamQG() As Integer = exam.ExamQuestionGroups.Select(Function(a) a.QuestionGroupId).ToArray()
+
+            ' Get Curret Question Groups List
+            Dim currentQG As List(Of QuestionGroup) = allQG.Where(Function(a) arrayOfExamQG.Contains(a.QuestionGroupId)).ToList()
+
+            ' Get Available Question Groups
+            Dim availableQG As List(Of QuestionGroup) = allQG.Where(Function(b) Not (arrayOfExamQG.Contains(b.QuestionGroupId))).ToList()
+
+            Dim aqg As New List(Of QuestionGroupExamCreateModel)
+            Dim cqg As New List(Of QuestionGroupExamCreateModel)
+
+            ' Assign CURRENT
+            If currentQG IsNot Nothing Then
+                For Each i As QuestionGroup In currentQG
+                    Dim insert_cqg As New QuestionGroupExamCreateModel(i)
+                    cqg.Add(insert_cqg)
+                Next
+            End If
+
+            ' Assign AVAILABLE (non-member)
+            If availableQG IsNot Nothing Then
+                For Each i As QuestionGroup In availableQG
+                    Dim insert_aqg As New QuestionGroupExamCreateModel(i)
+                    aqg.Add(insert_aqg)
+                Next
+            End If
+
+            Dim ec As New ExamCreateModel With {.AvailableQuestionGroups = aqg, .CurrentQuestionGroups = cqg, .ExamId = exam.ExamId, .Name = exam.Name}
 
             Return View(ec)
         End Function
@@ -418,7 +450,274 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function SetupExam(model As ExamCreateModel)
+            If ModelState.IsValid Then
+                Dim el As List(Of ExamQuestionGroup) = db.ExamQuestionGroups.Where(Function(e) e.ExamId = model.ExamId).ToList()
+
+                db.ExamQuestionGroups.RemoveRange(el)
+                db.SaveChanges()
+
+                If model.CurrentQuestionGroups IsNot Nothing Then
+                    For Each item As QuestionGroupExamCreateModel In model.CurrentQuestionGroups
+                        db.ExamQuestionGroups.Add(New ExamQuestionGroup With {.ExamId = model.ExamId, .QuestionGroupId = item.QuestionGroupId})
+                    Next
+
+                    db.SaveChanges()
+                End If
+
+                Return RedirectToAction("Exams")
+            End If
+
+            Dim exam As Exam = db.Exams.Find(model.ExamId)
+            If IsNothing(exam) Then
+                Return HttpNotFound()
+            End If
+
+            Dim allQG As List(Of QuestionGroup) = db.QuestionGroups.ToList()
+
+            ' Get Current Question Groups Array
+            Dim arrayOfExamQG() As Integer = Exam.ExamQuestionGroups.Select(Function(a) a.QuestionGroupId).ToArray()
+
+            ' Get Curret Question Groups List
+            Dim currentQG As List(Of QuestionGroup) = allQG.Where(Function(a) arrayOfExamQG.Contains(a.QuestionGroupId)).ToList()
+
+            ' Get Available Question Groups
+            Dim availableQG As List(Of QuestionGroup) = allQG.Where(Function(b) Not (arrayOfExamQG.Contains(b.QuestionGroupId))).ToList()
+
+            Dim aqg As New List(Of QuestionGroupExamCreateModel)
+            Dim cqg As New List(Of QuestionGroupExamCreateModel)
+
+            ' Assign CURRENT
+            If currentQG IsNot Nothing Then
+                For Each i As QuestionGroup In currentQG
+                    Dim insert_cqg As New QuestionGroupExamCreateModel(i)
+                    cqg.Add(insert_cqg)
+                Next
+            End If
+
+            ' Assign AVAILABLE (non-member)
+            If availableQG IsNot Nothing Then
+                For Each i As QuestionGroup In availableQG
+                    Dim insert_aqg As New QuestionGroupExamCreateModel(i)
+                    aqg.Add(insert_aqg)
+                Next
+            End If
+
+            Dim ec As New ExamCreateModel With {.AvailableQuestionGroups = aqg, .CurrentQuestionGroups = cqg, .ExamId = Exam.ExamId, .Name = Exam.Name}
+
+            Return View(ec)
+        End Function
+
+        <Route("Exam/{id}/Assign")>
+        Public Function AssignExam(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim exam As Exam = db.Exams.Find(id)
+            If IsNothing(exam) Then
+                Return HttpNotFound()
+            End If
+
+            Dim e As New AssignExamModel(exam)
+            e.Grades = db.Grades.ToList()
+
+            Return View(e)
+        End Function
+
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        <Route("Exam/{id}/Assign")>
+        Public Function AssignExam(model As AssignExamModel) As ActionResult
+            If ModelState.IsValid Then
+                If model.Students IsNot Nothing Then
+                    For Each s As StudentExamTakerModel In model.Students
+                        If s.Included = True Then
+                            db.ExamStudents.Add(New ExamStudent With {.AvailabilityEnd = model.AvailabilityEnd, .AvailabilityStart = model.AvailabilityStart, .ExamId = model.ExamId, .UserId = s.UserId, .DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))})
+                        End If
+                    Next
+
+                    db.SaveChanges()
+                    Return RedirectToAction("ExamAssignments", New With {.id = model.ExamId})
+                End If
+            End If
+
+            Dim exam As Exam = db.Exams.Find(model.ExamId)
+            If IsNothing(exam) Then
+                Return HttpNotFound()
+            End If
+
+            Dim e As New AssignExamModel(exam)
+            e.Grades = db.Grades.ToList()
+
+            Return View(e)
+        End Function
+
+        <Route("Exam/{id}/Assignments")>
+        Public Function ExamAssignments(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim exam As Exam = db.Exams.Find(id)
+            If IsNothing(exam) Then
+                Return HttpNotFound()
+            End If
+
+            Return View(exam)
+        End Function
+
+        <Route("Exam/Assignments/{id}/Edit")>
+        Public Function EditAssignment(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim exam As ExamStudent = db.ExamStudents.Find(id)
+            If IsNothing(exam) Then
+                Return HttpNotFound()
+            End If
+
+            Return View(exam)
+        End Function
+
+        <Route("Exam/Assignments/{id}/Edit")>
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Public Function EditAssignment(<Bind(Include:="ExamId,AvailabilityStart,AvailabilityEnd,ExamStudentId,UserId,DateCreated,TakenAt")> ByVal model As ExamStudent) As ActionResult
+            If ModelState.IsValid Then
+                db.Entry(model).State = EntityState.Modified
+                db.SaveChanges()
+                Return RedirectToAction("ExamAssignments", New With {.id = model.ExamId})
+            End If
+
             Return View(model)
+        End Function
+
+        Public Function DeleteAssignment(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim exam As ExamStudent = db.ExamStudents.Find(id)
+            If IsNothing(exam) Then
+                Return HttpNotFound()
+            End If
+
+            db.ExamStudents.Remove(exam)
+            db.SaveChanges()
+
+            Return RedirectToAction("ExamAssignments", New With {.id = exam.ExamId})
+        End Function
+
+        '
+        '
+        '
+        '
+        ' Edit Account
+
+        <Route("Account/Edit")>
+        Public Function EditAccount() As ActionResult
+            Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Email = User.Identity.Name)
+
+            Dim r As New UserEditModelL(u)
+
+            Return View(r)
+        End Function
+
+        <Route("Account/Edit")>
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Public Function EditAccount(model As UserEditModelL) As ActionResult
+            If ModelState.IsValid Then
+                Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Email = User.Identity.Name)
+
+                If IsNothing(u) Then
+                    Return HttpNotFound()
+                End If
+
+                u.FirstName = model.FirstName
+                u.MiddleName = model.MiddleName
+                u.LastName = model.LastName
+                u.IsDisabled = model.IsDisabled
+                u.Gender = model.Gender
+                u.UserName = model.Email
+                u.Email = model.Email
+
+                db.SaveChanges()
+
+                Return RedirectToAction("Accounts")
+            End If
+
+            Return View(model)
+        End Function
+
+        '
+        '
+        '
+        '
+        ' Announcements
+
+        Function Announcements() As ActionResult
+            Return View(db.Announcements.ToList())
+        End Function
+
+        <Route("Announcement/Create")>
+        Function AddAnnouncement(ByVal id As Integer?)
+            Return View()
+        End Function
+
+        <Route("Announcement/Create")>
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Function AddAnnouncement(<Bind(Include:="AnnouncementId,Name,Content,DateCreated")> ByVal announcement As Announcement)
+            announcement.Active = True
+            announcement.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
+
+            If ModelState.IsValid Then
+                db.Announcements.Add(announcement)
+                db.SaveChanges()
+                Return RedirectToAction("Announcements")
+            End If
+            Return View(announcement)
+        End Function
+
+        <Route("Announcement/{id}/Edit")>
+        Function EditAnnouncement(ByVal id As Integer?)
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim announcement As Announcement = db.Announcements.Find(id)
+            If IsNothing(announcement) Then
+                Return HttpNotFound()
+            End If
+            Return View(announcement)
+        End Function
+
+        <Route("Announcement/{id}/Edit")>
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Function EditAnnouncement(<Bind(Include:="AnnouncementId,Name,Content,Active,DateCreated")> ByVal announcement As Announcement)
+            If ModelState.IsValid Then
+                db.Entry(announcement).State = EntityState.Modified
+                db.SaveChanges()
+                Return RedirectToAction("Announcements")
+            End If
+            Return View(announcement)
+        End Function
+
+        Function ChangeStatus(ByVal id As Integer?)
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim announcement As Announcement = db.Announcements.Find(id)
+            If IsNothing(announcement) Then
+                Return HttpNotFound()
+            End If
+
+            If announcement.Active = True Then
+                announcement.Active = False
+            Else
+                announcement.Active = True
+            End If
+            db.SaveChanges()
+
+            Return RedirectToAction("Announcements")
         End Function
     End Class
 End Namespace

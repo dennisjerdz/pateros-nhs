@@ -41,7 +41,7 @@ End Code
                                 @item.DateCreated
                             </td>
                             <td style="text-align:right;">
-                                @Html.ActionLink("Edit", "EditTFRank", New With {.id = item.QuestionTFRankId}, New With {.class = "btn btn-xs btn-primary"})
+                                @Html.ActionLink("Edit Info", "EditTFRank", New With {.id = item.QuestionTFRankId}, New With {.class = "btn btn-xs btn-warning"})
                                 @Html.ActionLink("Delete", "DeleteTFRank", New With {.id = item.QuestionTFRankId}, New With {.class = "btn btn-xs btn-danger"})
                             </td>
                         </tr>

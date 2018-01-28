@@ -204,19 +204,35 @@
     <Compile Include="Controllers\GradesController.vb" />
     <Compile Include="Controllers\GuidanceCounselorController.vb" />
     <Compile Include="Controllers\ManageController.vb" />
-    <Compile Include="Controllers\QuestionTFRanksController.vb" />
     <Compile Include="Controllers\SectionsController.vb" />
+    <Compile Include="Controllers\StudentController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801051436561_Initial.Designer.vb">
-      <DependentUpon>201801051436561_Initial.vb</DependentUpon>
+    <Compile Include="Migrations\201801262309172_initial.Designer.vb">
+      <DependentUpon>201801262309172_initial.vb</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801051436561_Initial.vb" />
-    <Compile Include="Migrations\201801051813048_AddedRequiredDataAnnotation.Designer.vb">
-      <DependentUpon>201801051813048_AddedRequiredDataAnnotation.vb</DependentUpon>
+    <Compile Include="Migrations\201801262309172_initial.vb" />
+    <Compile Include="Migrations\201801280317042_updates-1-28.Designer.vb">
+      <DependentUpon>201801280317042_updates-1-28.vb</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801051813048_AddedRequiredDataAnnotation.vb" />
+    <Compile Include="Migrations\201801280317042_updates-1-28.vb" />
+    <Compile Include="Migrations\201801280737422_Remove-Required-Middle-Initial.Designer.vb">
+      <DependentUpon>201801280737422_Remove-Required-Middle-Initial.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801280737422_Remove-Required-Middle-Initial.vb" />
+    <Compile Include="Migrations\201801280820155_Announcement-And-Messaging.Designer.vb">
+      <DependentUpon>201801280820155_Announcement-And-Messaging.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801280820155_Announcement-And-Messaging.vb" />
+    <Compile Include="Migrations\201801280928109_5pm-fix.Designer.vb">
+      <DependentUpon>201801280928109_5pm-fix.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801280928109_5pm-fix.vb" />
+    <Compile Include="Migrations\201801281343412_Exam-Property-Fix.Designer.vb">
+      <DependentUpon>201801281343412_Exam-Property-Fix.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801281343412_Exam-Property-Fix.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\ExamModels.vb" />
@@ -243,11 +259,23 @@
     <Compile Include="Startup.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201801051436561_Initial.resx">
-      <DependentUpon>201801051436561_Initial.vb</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801262309172_initial.resx">
+      <DependentUpon>201801262309172_initial.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801051813048_AddedRequiredDataAnnotation.resx">
-      <DependentUpon>201801051813048_AddedRequiredDataAnnotation.vb</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801280317042_updates-1-28.resx">
+      <DependentUpon>201801280317042_updates-1-28.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801280737422_Remove-Required-Middle-Initial.resx">
+      <DependentUpon>201801280737422_Remove-Required-Middle-Initial.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801280820155_Announcement-And-Messaging.resx">
+      <DependentUpon>201801280820155_Announcement-And-Messaging.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801280928109_5pm-fix.resx">
+      <DependentUpon>201801280928109_5pm-fix.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801281343412_Exam-Property-Fix.resx">
+      <DependentUpon>201801281343412_Exam-Property-Fix.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -332,13 +360,21 @@
     <Content Include="Views\GuidanceCounselor\EditTFList.vbhtml" />
     <Content Include="Views\GuidanceCounselor\EditEssay.vbhtml" />
     <Content Include="Views\GuidanceCounselor\EditOneToFive.vbhtml" />
-    <Content Include="Views\Exams\Create.vbhtml" />
-    <Content Include="Views\Exams\Delete.vbhtml" />
-    <Content Include="Views\Exams\Details.vbhtml" />
-    <Content Include="Views\Exams\Edit.vbhtml" />
-    <Content Include="Views\Exams\Index.vbhtml" />
     <Content Include="Views\GuidanceCounselor\AddExam.vbhtml" />
     <Content Include="Views\GuidanceCounselor\EditExam.vbhtml" />
+    <Content Include="Views\Admin\EditAccount.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\EditAccount.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\Exams.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\SetupExam.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\AssignExam.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\ExamAssignments.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\EditAssignment.vbhtml" />
+    <Content Include="Views\Student\EditAccount.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\Announcements.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\EditAnnouncement.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\AddAnnouncement.vbhtml" />
+    <Content Include="Views\Student\AssignedExams.vbhtml" />
+    <Content Include="Views\Student\TakeExamConfirm.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -353,7 +389,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

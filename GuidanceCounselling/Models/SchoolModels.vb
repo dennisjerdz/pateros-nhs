@@ -56,3 +56,39 @@ Public Class SectionAccountsViewModel
     Public Property SectionId As Integer?
     Public Property IsDisabled As Boolean
 End Class
+
+Public Class Announcement
+    Public Property AnnouncementId As Integer
+    Public Property Name As String
+    Public Property Content As String
+    Public Property Active As Boolean
+    Public Property DateCreated As DateTimeOffset
+End Class
+
+Public Class Conversation
+    Public Property ConversationId As Integer
+
+    Public Property SenderId As String
+    Public Overridable Property Sender As ApplicationUser
+
+    Public Property ReceiverId As String
+    Public Overridable Property Receiver As ApplicationUser
+
+    Public Property DateCreated As DateTimeOffset
+
+    Public Property Messages As List(Of Message)
+End Class
+
+Public Class Message
+    Public Property MessageId As Integer
+
+    Public Property Content As String
+
+    Public Property UserId As String
+    Public Property User As ApplicationUser
+
+    Public Property ConversationId As Integer
+    Public Overridable Property Conversation As Conversation
+
+    Public Property DateCreated As DateTimeOffset
+End Class

@@ -56,7 +56,7 @@ End Code
                                 @item.DateCreated
                             </td>
                             <td style = "text-align:right;" >
-                                @Html.ActionLink("Edit", "EditQuestionGroup", New With {.id = item.QuestionGroupId}, New With {.class = "btn btn-xs btn-primary"})
+                                @Html.ActionLink("Edit Info", "EditQuestionGroup", New With {.id = item.QuestionGroupId}, New With {.class = "btn btn-xs btn-warning"})
                                 @Html.ActionLink("Manage Questions", "ManageQuestions", New With {.id = item.QuestionGroupId}, New With {.class = "btn btn-xs btn-primary"})
                             </td>
                         </tr>

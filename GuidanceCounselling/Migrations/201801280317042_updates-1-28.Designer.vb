@@ -6,14 +6,14 @@ Imports System.Resources
 
 Namespace Migrations
     <GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")>
-    Public NotInheritable Partial Class AddedRequiredDataAnnotation
+    Public NotInheritable Partial Class updates128
         Implements IMigrationMetadata
     
-        Private ReadOnly Resources As New ResourceManager(GetType(AddedRequiredDataAnnotation))
+        Private ReadOnly Resources As New ResourceManager(GetType(updates128))
         
         Private ReadOnly Property IMigrationMetadata_Id() As String Implements IMigrationMetadata.Id
             Get
-                Return "201801051813048_AddedRequiredDataAnnotation"
+                Return "201801280317042_updates-1-28"
             End Get
         End Property
         

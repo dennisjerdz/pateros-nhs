@@ -69,7 +69,6 @@ Public Class RegisterViewModel
     <Display(Name:="First Name")>
     Public Property FirstName As String
 
-    <Required>
     <Display(Name:="Middle Name")>
     Public Property MiddleName As String
 

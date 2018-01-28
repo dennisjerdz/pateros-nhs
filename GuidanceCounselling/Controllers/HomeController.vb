@@ -1,8 +1,16 @@
 ﻿Public Class HomeController
     Inherits System.Web.Mvc.Controller
 
+    Private db As New ApplicationDbContext
+
     Function Index() As ActionResult
-        Return View()
+
+        If User.Identity.Name IsNot Nothing Then
+            Return View(db.Announcements.Where(Function(a) a.Active = True).ToList())
+        Else
+            Return View()
+        End If
+
     End Function
 
     Function About() As ActionResult

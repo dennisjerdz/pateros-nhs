@@ -28,9 +28,12 @@ Public Class ApplicationUser
     <ForeignKey("SectionId")>
     Public Overridable Property Section As Section
 
+    Public Overridable Property ExamStudents As List(Of ExamStudent)
+    Public Overridable Property Messages As List(Of Message)
+
     Public Function getFullName() As String
         ' Return $"{Me.LastName}, {Me.FirstName} {Me.MiddleName.Substring(0, 1)}."
-        Return $"{Me.LastName}, {Me.FirstName} {Me.MiddleName}."
+        Return $"{Me.LastName}, {Me.FirstName} {Me.MiddleName}"
     End Function
 
     Public Async Function GenerateUserIdentityAsync(manager As UserManager(Of ApplicationUser)) As Task(Of ClaimsIdentity)
@@ -51,7 +54,7 @@ Public Class UserEditModel
         FirstName = u.FirstName
         MiddleName = u.MiddleName
         LastName = u.LastName
-        Username = u.UserName
+        Email = u.Email
         BirthDate = u.BirthDate
         Contact = u.Contact
         IsDisabled = u.IsDisabled
@@ -62,7 +65,33 @@ Public Class UserEditModel
     Public Property FirstName As String
     Public Property MiddleName As String
     Public Property LastName As String
-    Public Property Username As String
+    Public Property Email As String
+    Public Property BirthDate As DateTimeOffset
+    Public Property Contact As String
+    Public Property IsDisabled As Boolean
+    Public Property Gender As Byte
+End Class
+
+Public Class UserEditModelL
+    Public Sub New()
+
+    End Sub
+
+    Public Sub New(u As ApplicationUser)
+        FirstName = u.FirstName
+        MiddleName = u.MiddleName
+        LastName = u.LastName
+        Email = u.Email
+        BirthDate = u.BirthDate
+        Contact = u.Contact
+        IsDisabled = u.IsDisabled
+        Gender = u.Gender
+    End Sub
+
+    Public Property FirstName As String
+    Public Property MiddleName As String
+    Public Property LastName As String
+    Public Property Email As String
     Public Property BirthDate As DateTimeOffset
     Public Property Contact As String
     Public Property IsDisabled As Boolean
@@ -94,6 +123,8 @@ Public Class ApplicationDbContext
     Public Property ExamStudentEssays As DbSet(Of ExamStudentEssay)
     Public Property ExamStudentOneToFives As DbSet(Of ExamStudentOneToFive)
     Public Property ExamStudentRowGroup As DbSet(Of ExamStudentRowGroup)
+    Public Property Announcements As DbSet(Of Announcement)
+    Public Property Messages As DbSet(Of Message)
 
     Public Shared Function Create() As ApplicationDbContext
         Return New ApplicationDbContext()

@@ -3,7 +3,7 @@ Imports System.Data.Entity.Migrations
 Imports Microsoft.VisualBasic
 
 Namespace Migrations
-    Public Partial Class Initial
+    Public Partial Class initial
         Inherits DbMigration
     
         Public Overrides Sub Up()
@@ -26,7 +26,7 @@ Namespace Migrations
                 Function(c) New With
                     {
                         .ExamId = c.Int(nullable := False, identity := True),
-                        .Name = c.String(),
+                        .Name = c.String(nullable := False),
                         .DateCreated = c.DateTimeOffset(nullable := False, precision := 7)
                     }) _
                 .PrimaryKey(Function(t) t.ExamId)
@@ -36,8 +36,8 @@ Namespace Migrations
                 Function(c) New With
                     {
                         .QuestionGroupId = c.Int(nullable := False, identity := True),
-                        .Name = c.String(),
-                        .DisplayName = c.String(),
+                        .Name = c.String(nullable := False),
+                        .DisplayName = c.String(nullable := False),
                         .ExamType = c.Int(nullable := False),
                         .DateCreated = c.DateTimeOffset(nullable := False, precision := 7)
                     }) _
@@ -160,6 +160,7 @@ Namespace Migrations
                         .BirthDate = c.DateTimeOffset(nullable := False, precision := 7),
                         .Contact = c.String(),
                         .IsDisabled = c.Boolean(nullable := False),
+                        .Gender = c.Byte(nullable := False),
                         .FamilyId = c.Int(),
                         .SectionId = c.Int(),
                         .Email = c.String(maxLength := 256),
@@ -233,12 +234,12 @@ Namespace Migrations
                 "dbo.Sections",
                 Function(c) New With
                     {
-                        .Sectionid = c.Int(nullable := False, identity := True),
+                        .SectionId = c.Int(nullable := False, identity := True),
                         .Name = c.String(),
                         .GradeId = c.Int(nullable := False),
                         .DateCreated = c.DateTimeOffset(nullable := False, precision := 7)
                     }) _
-                .PrimaryKey(Function(t) t.Sectionid) _
+                .PrimaryKey(Function(t) t.SectionId) _
                 .ForeignKey("dbo.Grades", Function(t) t.GradeId, cascadeDelete := True) _
                 .Index(Function(t) t.GradeId)
             

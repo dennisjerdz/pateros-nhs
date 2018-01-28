@@ -48,24 +48,42 @@
                         <li>
                             <a href="@Url.Action("Exams", "GuidanceCounselor", New With {.id = Nothing})">Exams</a>
                         </li>
+                        <li>
+                            <a href="@Url.Action("Announcements", "GuidanceCounselor", New With {.id = Nothing})">Announcements</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("EditAccount", "GuidanceCounselor", New With {.id = Nothing})">Edit Account</a>
+                        </li>
                     </text>
                 End If
+
+                @If User.IsInRole("Student") Then
+                    @<text>
+                        <li>
+                            <a href="@Url.Action("AssignedExams", "Student", New With {.id = Nothing})">Assigned Exams</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("EditAccount", "Student", New With {.id = Nothing})">Edit Account</a>
+                        </li>
+                    </text>
+                End If
+                <li> <a Class="menu-toggle" href="#">Hide Sidebar</a></li>
             </ul>
         </div>
 
         <div id = "page-content-wrapper" >
             <div class="navbar">
-                    <div class="container">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <span class="glyphicon glyphicon-align-justify"></span>
-                            </button>
+                        <div class="container">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <span class="glyphicon glyphicon-align-justify"></span>
+                                </button>
                         @Html.ActionLink("Career Counselling System", "Index", "Home", New With {.area = ""}, New With {.class = "navbar-brand"})
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li><a id="menu-toggle" href="#">Sidebar toggle</a></li>
+                            <li><a class="menu-toggle" href="#">Sidebar toggle</a></li>
                         </ul>
                         @Html.Partial("_LoginPartial")
                     </div>
@@ -76,7 +94,9 @@
                 @RenderBody()
                 <div class="container footer-container">
                     <footer>
-                        <p style="float:right;">&copy; @DateTime.Now.Year - Pateros National High School Career Counselling System</p>
+                        <center>
+                            <p>&copy; @DateTime.Now.Year - Pateros National High School Career Counselling System</p>
+                        </center>
                     </footer>
                 </div>
             </div>
@@ -94,7 +114,7 @@
 
     <!-- Menu Toggle Script -->
     <script>
-    $("#menu-toggle").click(function(e) {
+    $(".menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });

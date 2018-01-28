@@ -46,6 +46,7 @@ End Code
                                 End Code
                             </td>
                             <td style="text-align:right;">
+                                <a class="btn btn-xs btn-warning" href="@Url.Action("EditAccount", New With {.id = item.UserId})">Edit</a>
                                 @If item.IsDisabled = True Then
                                     @<a class="btn btn-xs btn-success" href="@Url.Action("ChangeStatus", New With {.id = item.UserId})">Activate</a>
                                 Else

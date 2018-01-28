@@ -26,6 +26,7 @@ Public Class Exam
     Public Property DateCreated As DateTimeOffset
 
     Public Overridable Property ExamQuestionGroups As List(Of ExamQuestionGroup)
+    Public Overridable Property ExamStudents As List(Of ExamStudent)
 End Class
 
 Public Class ExamQuestionGroup
@@ -45,7 +46,51 @@ Public Class ExamCreateModel
 
     Public Property ExamId As Integer
     Public Property Name As String
-    Public Property QuestionGroups As List(Of QuestionGroup)
+    Public Property AvailableQuestionGroups As List(Of QuestionGroupExamCreateModel)
+    Public Property CurrentQuestionGroups As List(Of QuestionGroupExamCreateModel)
+End Class
+
+Public Class QuestionGroupExamCreateModel
+    Public Sub New()
+
+    End Sub
+
+    Public Sub New(q As QuestionGroup)
+        Me.QuestionGroupId = q.QuestionGroupId
+        Me.Name = q.Name
+        Me.DisplayName = q.DisplayName
+        Me.ExamType = q.ExamType
+    End Sub
+
+    Public Property QuestionGroupId As Integer
+    Public Property Name As String
+    Public Property DisplayName As String
+    Public Property ExamType As ExamType
+End Class
+
+Public Class AssignExamModel
+    Public Sub New()
+
+    End Sub
+
+    Public Sub New(e As Exam)
+        Me.ExamId = e.ExamId
+        Me.Name = e.Name
+    End Sub
+
+    Public Property ExamId As Integer
+    Public Property Name As String
+
+    Public Property AvailabilityStart As DateTimeOffset
+    Public Property AvailabilityEnd As DateTimeOffset
+
+    Public Property Grades As List(Of Grade)
+    Public Property Students As List(Of StudentExamTakerModel)
+End Class
+
+Public Class StudentExamTakerModel
+    Public Property UserId As String
+    Public Property Included As Boolean
 End Class
 
 Public Class ExamStudent
@@ -54,7 +99,7 @@ Public Class ExamStudent
     Public Property UserId As String
     Public Property AvailabilityStart As DateTimeOffset
     Public Property AvailabilityEnd As DateTimeOffset
-    Public Property TakenAt As DateTimeOffset
+    Public Property TakenAt As DateTimeOffset?
     Public Property DateCreated As DateTimeOffset
 
     Public Overridable Property Exam As Exam
@@ -157,7 +202,7 @@ Public Class ExamStudentOneToFive ' or QuestionOneToFive Answer
     Public Property ExamStudentOneToFiveId As Integer
     Public Property ExamStudentId As Integer
     Public Property QuestionOneToFiveId As Integer
-    Public Property Answer As Boolean
+    Public Property Answer As Integer
     Public Property DateCreated As DateTimeOffset
 
     Public Property ExamStudent As ExamStudent

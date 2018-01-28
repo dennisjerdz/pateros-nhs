@@ -38,7 +38,7 @@ End Code
                             <td>@item.Sections.Count() Sections</td>
                             <td>@item.DateCreated</td>
                             <td style="text-align:right;">
-                                <a class="btn btn-xs btn-primary" href="@Url.Action("GradesEdit", New With {.id = item.GradeId})">Edit</a>
+                                <a class="btn btn-xs btn-warning" href="@Url.Action("GradesEdit", New With {.id = item.GradeId})">Edit Info</a>
                                 <a class="btn btn-xs btn-info" href="@Url.Action("Sections", New With {.id = item.GradeId})">Manage Sections</a>
                             </td>
                         </tr>

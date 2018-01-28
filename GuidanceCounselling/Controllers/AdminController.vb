@@ -64,7 +64,7 @@ Namespace Controllers
         <HttpPost>
         <Route("Grades/Add")>
         Function GradesAdd(<Bind(Include:="GradeId,Name,DateCreated")> ByVal grade As Grade) As ActionResult
-            grade.DateCreated = DateTimeOffset.Now
+            grade.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
 
             If ModelState.IsValid Then
                 db.Grades.Add(grade)
@@ -145,7 +145,7 @@ Namespace Controllers
         <Route("{id}/Sections/Add")>
         <HttpPost>
         Function SectionsAdd(<Bind(Include:="Sectionid,Name,GradeId")> ByVal section As Section) As ActionResult
-            section.DateCreated = DateTimeOffset.Now
+            section.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
 
             If ModelState.IsValid Then
                 db.Sections.Add(section)
@@ -515,7 +515,7 @@ Namespace Controllers
             Return View(model)
         End Function
 
-        <Route("Account/Edit")>
+        <Route("Account/{id}/Edit")>
         Public Function EditAccount(ByVal id As Guid) As ActionResult
             Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Id = id.ToString())
 
@@ -524,11 +524,16 @@ Namespace Controllers
             Return View(r)
         End Function
 
-        <Route("Account/Edit")>
+        <Route("Account/{id}/Edit")>
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Public Function EditAccount(model As UserEditModel) As ActionResult
             If ModelState.IsValid Then
+                If db.Users.Any(Function(k) k.Email = model.Email And k.Id = model.UserId) Then
+                    ModelState.AddModelError(String.Empty, "There is already another user with this email.")
+                    Return View(model)
+                End If
+
                 Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Id = model.UserId.ToString())
 
                 If IsNothing(u) Then
@@ -540,11 +545,15 @@ Namespace Controllers
                 u.LastName = model.LastName
                 u.IsDisabled = model.IsDisabled
                 u.Gender = model.Gender
-                u.UserName = model.Username
-                u.Email = model.Username
+                u.UserName = model.Email
+                u.Email = model.Email
 
                 db.SaveChanges()
+
+                Return RedirectToAction("Accounts")
             End If
+
+            Return View(model)
         End Function
 
         Private Sub AddErrors(result As IdentityResult)

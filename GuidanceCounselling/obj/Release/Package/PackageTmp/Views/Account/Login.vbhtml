@@ -27,7 +27,7 @@ End Code
                         <div class="form-group">
                             <input type="submit" value="Log in" class="btn btn-info btn-block" style="margin-top:8px;" />
                             <br />
-                            <a class="btn btn-xs btn-default" href="@Url.Action("Index", "Home", Nothing)"><span class="glyphicon glyphicon-chevron-left"></span> Back to Home</a>
+                            <a class="btn btn-sm btn-default" href="@Url.Action("Index", "Home", Nothing)"><span class="glyphicon glyphicon-chevron-left"></span> Back to Home</a>
                         </div>
                         @* Enable this once you have account confirmation enabled for password reset functionality
                     <p>

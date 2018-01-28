@@ -41,7 +41,7 @@ End Code
                                 @item.DateCreated
                             </td>
                             <td style="text-align:right;">
-                                @Html.ActionLink("Edit", "EditOneToFive", New With {.id = item.QuestionOneToFiveId}, New With {.class = "btn btn-xs btn-primary"})
+                                @Html.ActionLink("Edit Info", "EditOneToFive", New With {.id = item.QuestionOneToFiveId}, New With {.class = "btn btn-xs btn-warning"})
                                 @Html.ActionLink("Delete", "DeleteOneToFive", New With {.id = item.QuestionOneToFiveId}, New With {.class = "btn btn-xs btn-danger"})
                             </td>
                         </tr>

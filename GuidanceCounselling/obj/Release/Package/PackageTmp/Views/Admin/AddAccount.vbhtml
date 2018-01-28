@@ -6,6 +6,10 @@
     For Each item In ViewBag.Roles
         r.Add(New SelectListItem With {.Text = item.Name, .Value = item.Name})
     Next
+
+    Dim g = New List(Of SelectListItem)()
+    g.Add(New SelectListItem With {.Text = "Female", .Value = "0"})
+    g.Add(New SelectListItem With {.Text = "Male", .Value = "1"})
 End Code
 
 <div class="container body-header">
@@ -48,8 +52,8 @@ End Code
                 </div>
 
                 <div class="col-md-4">
-                    <label class="control-label">Role</label>
-                    @Html.DropDownList("Role", r, New With {.Class = "form-control"})
+                    <label class="control-label">Gender</label>
+                    @Html.DropDownList("Gender", g, New With {.Class = "form-control"})
                 </div>
 
                 <div class="col-md-4">
@@ -60,6 +64,11 @@ End Code
         
             <div class="row">
                 <div class="col-md-4">
+                    <label class="control-label">Role</label>
+                    @Html.DropDownList("Role", r, New With {.Class = "form-control"})
+                </div>
+
+                <div class="col-md-4">
                     @Html.LabelFor(Function(m) m.Password, New With {.class = "control-label"})
                     @Html.TextBoxFor(Function(m) m.Password, New With {.class = "form-control", .type = "password"})
                 </div>
@@ -68,12 +77,14 @@ End Code
                     @Html.LabelFor(Function(m) m.ConfirmPassword, New With {.class = "control-label"})
                     @Html.TextBoxFor(Function(m) m.ConfirmPassword, New With {.class = "form-control", .type = "password"})
                 </div>
-
-                <div class="col-md-4">
+            </div> 
+    
+            <div class="row">
+                <div class="col-md-4 col-md-offset-8">
                     <label style="margin-bottom:5px;">&nbsp;</label>
                     <input type="submit" class="btn btn-primary btn-block" value="Add Account" />
                 </div>
-            </div>      
+            </div>     
         </text> End Using
 </div>
 
