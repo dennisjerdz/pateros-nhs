@@ -1,6 +1,8 @@
 ﻿Imports System.Data.Entity
 Imports System.Net
 Imports System.Web.Mvc
+Imports Microsoft.AspNet.Identity
+Imports Microsoft.AspNet.Identity.Owin
 
 Namespace Controllers
     '<Authorize(Roles:="Guidance Counselor")>
@@ -475,7 +477,7 @@ Namespace Controllers
             Dim allQG As List(Of QuestionGroup) = db.QuestionGroups.ToList()
 
             ' Get Current Question Groups Array
-            Dim arrayOfExamQG() As Integer = Exam.ExamQuestionGroups.Select(Function(a) a.QuestionGroupId).ToArray()
+            Dim arrayOfExamQG() As Integer = exam.ExamQuestionGroups.Select(Function(a) a.QuestionGroupId).ToArray()
 
             ' Get Curret Question Groups List
             Dim currentQG As List(Of QuestionGroup) = allQG.Where(Function(a) arrayOfExamQG.Contains(a.QuestionGroupId)).ToList()
@@ -502,7 +504,7 @@ Namespace Controllers
                 Next
             End If
 
-            Dim ec As New ExamCreateModel With {.AvailableQuestionGroups = aqg, .CurrentQuestionGroups = cqg, .ExamId = Exam.ExamId, .Name = Exam.Name}
+            Dim ec As New ExamCreateModel With {.AvailableQuestionGroups = aqg, .CurrentQuestionGroups = cqg, .ExamId = exam.ExamId, .Name = exam.Name}
 
             Return View(ec)
         End Function
@@ -718,6 +720,163 @@ Namespace Controllers
             db.SaveChanges()
 
             Return RedirectToAction("Announcements")
+        End Function
+
+        '
+        '
+        '
+        '
+        ' Student Grades
+
+        Function Students() As ActionResult
+            Dim UserManager = HttpContext.GetOwinContext().GetUserManager(Of ApplicationUserManager)()
+            Dim users = db.Users.Where(Function(u) u.Email <> User.Identity.Name).ToList()
+
+            Dim accts As List(Of AccountsViewModel) = users.Select(Function(a) New AccountsViewModel() With {
+                .UserId = a.Id,
+                .Name = a.getFullName,
+                .Email = a.Email,
+                .IsDisabled = a.IsDisabled,
+                .Role = String.Join(",", UserManager.GetRoles(a.Id))
+            }).ToList()
+
+            Return View(accts.Where(Function(c) c.Role = "Student"))
+        End Function
+
+        <Route("Student/{id}/Grades")>
+        Function Grades(ByVal id As String) As ActionResult
+            Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Id = id.ToString())
+
+            Return View(u)
+        End Function
+
+        <Route("Student/{id}/Grades/Add")>
+        Function AddGrade(ByVal id As String) As ActionResult
+            Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Id = id.ToString())
+
+            If u Is Nothing Then
+                Return HttpNotFound()
+            End If
+
+            Dim g As New StudentGrade With {.UserId = u.Id}
+
+            Return View(g)
+        End Function
+
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        <Route("Student/{id}/Grades/Add")>
+        Function AddGrade(<Bind(Include:="StudentGradeId,UserId,Name")> ByVal studentGrade As StudentGrade) As ActionResult
+            studentGrade.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
+
+            If ModelState.IsValid Then
+                db.StudentGrades.Add(studentGrade)
+                db.SaveChanges()
+                Return RedirectToAction("ViewGrades", New With {.id = studentGrade.UserId})
+            End If
+
+            Return View(studentGrade)
+        End Function
+
+        <Route("Student/Grade/{id}/Edit")>
+        Function EditGrade(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim studentGrade As StudentGrade = db.StudentGrades.Find(id)
+            If IsNothing(studentGrade) Then
+                Return HttpNotFound()
+            End If
+
+            Return View(studentGrade)
+        End Function
+
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        <Route("Student/Grade/{id}/Edit")>
+        Function EditGrade(<Bind(Include:="StudentGradeId,UserId,Name")> ByVal studentGrade As StudentGrade) As ActionResult
+            If ModelState.IsValid Then
+                db.Entry(studentGrade).State = EntityState.Modified
+                db.SaveChanges()
+                Return RedirectToAction("ViewGrades", New With {.id = studentGrade.UserId})
+            End If
+
+            Return View(studentGrade)
+        End Function
+
+        '
+        '
+        '
+        '
+        ' Subject Grades
+
+        <Route("Student/Grade/{id}/Subjects")>
+        Function ViewGrades(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim studentGrade As StudentGrade = db.StudentGrades.Find(id)
+            If IsNothing(studentGrade) Then
+                Return HttpNotFound()
+            End If
+
+            Return View(studentGrade)
+        End Function
+
+        <Route("Student/Grade/{id}/Subjects")>
+        Function AddSubjectGrade(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim studentGrade As StudentGrade = db.StudentGrades.Find(id)
+            If IsNothing(studentGrade) Then
+                Return HttpNotFound()
+            End If
+
+            Dim g As New SubjectGrade With {.StudentGradeId = id}
+
+            Return View(g)
+        End Function
+
+        <Route("Student/Grade/{id}/Subjects")>
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Function AddSubjectGrade(<Bind(Include:="SubjectGradeId,StudentGradeId,Subject,Grade")> ByVal subjectGrade As SubjectGrade) As ActionResult
+            subjectGrade.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
+
+            If ModelState.IsValid Then
+                db.SubjectGrades.Add(subjectGrade)
+                db.SaveChanges()
+                Return RedirectToAction("ViewGrades", New With {.id = subjectGrade.StudentGradeId})
+            End If
+
+            Return View(subjectGrade)
+        End Function
+
+        <Route("Student/Subject/{id}/Grade/Edit")>
+        Function EditSubjectGrade(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim subjectGrade As SubjectGrade = db.SubjectGrades.Find(id)
+            If IsNothing(subjectGrade) Then
+                Return HttpNotFound()
+            End If
+
+            Return View(subjectGrade)
+        End Function
+
+        <Route("Student/Subject/{id}/Grade/Edit")>
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        Function EditSubjectGrade(<Bind(Include:="SubjectGradeId,StudentGradeId,Subject,Grade,DateCreated")> ByVal subjectGrade As SubjectGrade) As ActionResult
+            If ModelState.IsValid Then
+                db.Entry(subjectGrade).State = EntityState.Modified
+                db.SaveChanges()
+                Return RedirectToAction("ViewGrades", New With {.id = subjectGrade.StudentGradeId})
+            End If
+
+            Return View(subjectGrade)
         End Function
     End Class
 End Namespace

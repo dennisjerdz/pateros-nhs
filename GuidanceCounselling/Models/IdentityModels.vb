@@ -126,6 +126,8 @@ Public Class ApplicationDbContext
     Public Property ExamStudentRowGroup As DbSet(Of ExamStudentRowGroup)
     Public Property Announcements As DbSet(Of Announcement)
     Public Property Messages As DbSet(Of Message)
+    Public Property StudentGrades As DbSet(Of StudentGrade)
+    Public Property SubjectGrades As DbSet(Of SubjectGrade)
 
     Public Shared Function Create() As ApplicationDbContext
         Return New ApplicationDbContext()

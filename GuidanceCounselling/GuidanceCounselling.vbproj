@@ -206,6 +206,8 @@
     <Compile Include="Controllers\ManageController.vb" />
     <Compile Include="Controllers\SectionsController.vb" />
     <Compile Include="Controllers\StudentController.vb" />
+    <Compile Include="Controllers\StudentGradesController.vb" />
+    <Compile Include="Controllers\SubjectGradesController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -233,6 +235,10 @@
       <DependentUpon>201801281343412_Exam-Property-Fix.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201801281343412_Exam-Property-Fix.vb" />
+    <Compile Include="Migrations\201801290421244_Student-Grade-Add.Designer.vb">
+      <DependentUpon>201801290421244_Student-Grade-Add.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801290421244_Student-Grade-Add.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\ExamModels.vb" />
@@ -276,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801281343412_Exam-Property-Fix.resx">
       <DependentUpon>201801281343412_Exam-Property-Fix.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801290421244_Student-Grade-Add.resx">
+      <DependentUpon>201801290421244_Student-Grade-Add.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -378,6 +387,16 @@
     <Content Include="Views\Student\AssignedExams.vbhtml" />
     <Content Include="Views\Student\TakeExamConfirm.vbhtml" />
     <Content Include="Views\Student\StudentExam.vbhtml" />
+    <Content Include="Views\StudentGrades\Create.vbhtml" />
+    <Content Include="Views\StudentGrades\Delete.vbhtml" />
+    <Content Include="Views\StudentGrades\Details.vbhtml" />
+    <Content Include="Views\StudentGrades\Edit.vbhtml" />
+    <Content Include="Views\StudentGrades\Index.vbhtml" />
+    <Content Include="Views\SubjectGrades\Create.vbhtml" />
+    <Content Include="Views\SubjectGrades\Delete.vbhtml" />
+    <Content Include="Views\SubjectGrades\Details.vbhtml" />
+    <Content Include="Views\SubjectGrades\Edit.vbhtml" />
+    <Content Include="Views\SubjectGrades\Index.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
