@@ -375,6 +375,7 @@
     <Content Include="Views\GuidanceCounselor\AddAnnouncement.vbhtml" />
     <Content Include="Views\Student\AssignedExams.vbhtml" />
     <Content Include="Views\Student\TakeExamConfirm.vbhtml" />
+    <Content Include="Views\Student\StudentExam.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
