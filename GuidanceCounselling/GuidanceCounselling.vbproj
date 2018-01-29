@@ -199,15 +199,10 @@
     <Compile Include="App_Start\Startup.Auth.vb" />
     <Compile Include="Controllers\AccountController.vb" />
     <Compile Include="Controllers\AdminController.vb" />
-    <Compile Include="Controllers\ExamsController.vb" />
-    <Compile Include="Controllers\FamiliesController.vb" />
-    <Compile Include="Controllers\GradesController.vb" />
+    <Compile Include="Controllers\FamilyMemberController.vb" />
     <Compile Include="Controllers\GuidanceCounselorController.vb" />
     <Compile Include="Controllers\ManageController.vb" />
-    <Compile Include="Controllers\SectionsController.vb" />
     <Compile Include="Controllers\StudentController.vb" />
-    <Compile Include="Controllers\StudentGradesController.vb" />
-    <Compile Include="Controllers\SubjectGradesController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -396,22 +391,20 @@
     <Content Include="Views\Student\AssignedExams.vbhtml" />
     <Content Include="Views\Student\TakeExamConfirm.vbhtml" />
     <Content Include="Views\Student\StudentExam.vbhtml" />
-    <Content Include="Views\StudentGrades\Create.vbhtml" />
-    <Content Include="Views\StudentGrades\Delete.vbhtml" />
-    <Content Include="Views\StudentGrades\Details.vbhtml" />
-    <Content Include="Views\StudentGrades\Edit.vbhtml" />
-    <Content Include="Views\StudentGrades\Index.vbhtml" />
-    <Content Include="Views\SubjectGrades\Create.vbhtml" />
-    <Content Include="Views\SubjectGrades\Delete.vbhtml" />
-    <Content Include="Views\SubjectGrades\Details.vbhtml" />
-    <Content Include="Views\SubjectGrades\Edit.vbhtml" />
-    <Content Include="Views\SubjectGrades\Index.vbhtml" />
     <Content Include="Views\Student\ExamRestriction.vbhtml" />
     <Content Include="Views\Student\ExamAlreadyTaken.vbhtml" />
     <Content Include="Views\Student\ExamResults.vbhtml" />
     <Content Include="Views\GuidanceCounselor\Students.vbhtml" />
     <Content Include="Views\GuidanceCounselor\Grades.vbhtml" />
     <Content Include="Views\GuidanceCounselor\AddGrade.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\EditGrade.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\ViewGrades.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\AddSubjectGrade.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\EditSubjectGrade.vbhtml" />
+    <Content Include="Views\FamilyMember\EditAccount.vbhtml" />
+    <Content Include="Views\FamilyMember\Students.vbhtml" />
+    <Content Include="Views\FamilyMember\Grades.vbhtml" />
+    <Content Include="Views\FamilyMember\ViewGrades.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

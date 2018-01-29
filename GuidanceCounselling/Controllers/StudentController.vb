@@ -66,11 +66,11 @@ Namespace Controllers
                 Return HttpNotFound()
             End If
 
-            Return RedirectToAction("StudentExam", New With {.id = exam.ExamStudentId, .count = 0})
+            Return RedirectToAction("StudentExam", New With {.id = exam.ExamStudentId})
         End Function
 
-        <Route("Student/Exam/{id}/{count}/Taking")>
-        Function StudentExam(ByVal id As Integer, ByVal count As Integer) As ActionResult
+        <Route("Student/Exam/{id}/Taking")>
+        Function StudentExam(ByVal id As Integer) As ActionResult
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             End If
@@ -95,6 +95,7 @@ Namespace Controllers
             'End If
         End Function
 
+        <Route("Student/Exam/{id}/Taking")>
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Public Function StudentExam(model As SubmitExamModel) As ActionResult

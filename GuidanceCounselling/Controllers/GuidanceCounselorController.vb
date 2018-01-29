@@ -529,11 +529,12 @@ Namespace Controllers
         <ValidateAntiForgeryToken>
         <Route("Exam/{id}/Assign")>
         Public Function AssignExam(model As AssignExamModel) As ActionResult
+
             If ModelState.IsValid Then
                 If model.Students IsNot Nothing Then
                     For Each s As StudentExamTakerModel In model.Students
                         If s.Included = True Then
-                            db.ExamStudents.Add(New ExamStudent With {.AvailabilityEnd = model.AvailabilityEnd.ToOffset(New TimeSpan(8, 0, 0)), .AvailabilityStart = model.AvailabilityStart.ToOffset(New TimeSpan(8, 0, 0)), .ExamId = model.ExamId, .UserId = s.UserId, .DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))})
+                            db.ExamStudents.Add(New ExamStudent With {.AvailabilityEnd = model.AvailabilityEnd.ToOffset(New TimeSpan(8, 0, 0)).AddHours(-8), .AvailabilityStart = model.AvailabilityStart.ToOffset(New TimeSpan(8, 0, 0)).AddHours(-8), .ExamId = model.ExamId, .UserId = s.UserId, .DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))})
                         End If
                     Next
 
@@ -583,8 +584,8 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Public Function EditAssignment(<Bind(Include:="ExamId,AvailabilityStart,AvailabilityEnd,ExamStudentId,UserId,DateCreated,TakenAt")> ByVal model As ExamStudent) As ActionResult
-            model.AvailabilityStart.ToOffset(New TimeSpan(8, 0, 0))
-            model.AvailabilityEnd.ToOffset(New TimeSpan(8, 0, 0))
+            model.AvailabilityStart.ToOffset(New TimeSpan(8, 0, 0)).AddHours(-8)
+            model.AvailabilityEnd.ToOffset(New TimeSpan(8, 0, 0)).AddHours(-8)
 
             If ModelState.IsValid Then
                 db.Entry(model).State = EntityState.Modified
@@ -743,7 +744,7 @@ Namespace Controllers
                 .Role = String.Join(",", UserManager.GetRoles(a.Id))
             }).ToList()
 
-            Return View(accts.Where(Function(c) c.Role = "Student"))
+            Return View(accts.Where(Function(c) c.Role = "Student").ToList())
         End Function
 
         <Route("Student/{id}/Grades")>
@@ -775,7 +776,7 @@ Namespace Controllers
             If ModelState.IsValid Then
                 db.StudentGrades.Add(studentGrade)
                 db.SaveChanges()
-                Return RedirectToAction("ViewGrades", New With {.id = studentGrade.UserId})
+                Return RedirectToAction("Grades", New With {.id = studentGrade.UserId})
             End If
 
             Return View(studentGrade)
@@ -797,11 +798,11 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         <Route("Student/Grade/{id}/Edit")>
-        Function EditGrade(<Bind(Include:="StudentGradeId,UserId,Name")> ByVal studentGrade As StudentGrade) As ActionResult
+        Function EditGrade(<Bind(Include:="StudentGradeId,UserId,Name,DateCreated")> ByVal studentGrade As StudentGrade) As ActionResult
             If ModelState.IsValid Then
                 db.Entry(studentGrade).State = EntityState.Modified
                 db.SaveChanges()
-                Return RedirectToAction("ViewGrades", New With {.id = studentGrade.UserId})
+                Return RedirectToAction("Grades", New With {.id = studentGrade.UserId})
             End If
 
             Return View(studentGrade)
@@ -826,7 +827,7 @@ Namespace Controllers
             Return View(studentGrade)
         End Function
 
-        <Route("Student/Grade/{id}/Subjects")>
+        <Route("Student/Grade/{id}/Subjects/Add")>
         Function AddSubjectGrade(ByVal id As Integer?) As ActionResult
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
@@ -841,7 +842,7 @@ Namespace Controllers
             Return View(g)
         End Function
 
-        <Route("Student/Grade/{id}/Subjects")>
+        <Route("Student/Grade/{id}/Subjects/Add")>
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function AddSubjectGrade(<Bind(Include:="SubjectGradeId,StudentGradeId,Subject,Grade")> ByVal subjectGrade As SubjectGrade) As ActionResult

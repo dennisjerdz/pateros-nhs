@@ -72,18 +72,21 @@ End Code
                     <div class="row">
                         <div class="col-md-12">
                             <p style="color:#ff3f1c;">
-                                Results: 
-                                @Code
-                                    Dim rd As Decimal = rankTrueCount / CountTFRankQuestion
-                                End Code
+                                Results:
 
-                                @Math.Round((rd * 100), 2) % or @rankTrueCount / @CountTFRankQuestion
+                                @If rankTrueCount > 0 Then
+                                    Dim rd As Decimal = Convert.ToDecimal(rankTrueCount / CountTFRankQuestion)
+
+                                    @<text>
+                                        @Math.Round((rd * 100), 2) % or @rankTrueCount / @CountTFRankQuestion
+                                    </text>
+                                End If
                             </p>
                             <br />
                         </div>
                     </div>
                 </text>
-                                    Case "TFList"
+                                            Case "TFList"
                 @<text>
                     
                     @Code
@@ -98,7 +101,8 @@ End Code
                         </div>
 
                         <div class="row">
-                            @For Each q As QuestionTFList In e.QuestionGroup.QuestionTFLists
+                            <div class="col-md-12">
+                                @For Each q As QuestionTFList In e.QuestionGroup.QuestionTFLists
                                 @Code
                                     Dim answer As ExamStudentTFList = q.ExamStudentTFLists.FirstOrDefault(Function(s) s.ExamStudentId = Model.ExamStudentId)
                                 End Code
@@ -115,6 +119,7 @@ End Code
                                             cq += 1
                                             cTFList += 1
                                         Next
+                            </div>
                         </div>
                     </div>
                     <div class="row">

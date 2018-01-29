@@ -77,7 +77,7 @@ End Code
                                                 </select>
                                             </div>
                                             
-                                            <input type="hidden" value="@q.QuestionTFListId" name="ExamStudentTFRank[@cTFList].QuestionTFList"/>
+                                            <input type="hidden" value="@q.QuestionTFListId" name="ExamStudentTFList[@cTFList].QuestionTFListId"/>
                                             <div class="col-md-10">
                                                 <p><strong>@cq .</strong> @q.Question</p>
                                             </div>
@@ -108,7 +108,7 @@ End Code
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <textarea name="ExamStudentEssay[@cEssay].Answer" class="form-control"></textarea>
-                                                <input type="hidden" value="@q.QuestionEssayId" name="ExamStudentTFRank[@cEssay].QuestionEssayId" />
+                                                <input type="hidden" value="@q.QuestionEssayId" name="ExamStudentEssay[@cEssay].QuestionEssayId" />
                                             </div>
                                         </div>
                                     </text>

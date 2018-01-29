@@ -43,10 +43,13 @@
                 @If User.IsInRole("Guidance Counselor") Then
                     @<text>
                         <li>
-                            <a href="@Url.Action("QuestionGroups", "GuidanceCounselor", New With {.id = Nothing})">Question Groups</a>
+                            <a href="@Url.Action("Exams", "GuidanceCounselor", New With {.id = Nothing})">Exams</a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Exams", "GuidanceCounselor", New With {.id = Nothing})">Exams</a>
+                            <a href="@Url.Action("Students", "GuidanceCounselor", New With {.id = Nothing})">Students</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("QuestionGroups", "GuidanceCounselor", New With {.id = Nothing})">Question Groups</a>
                         </li>
                         <li>
                             <a href="@Url.Action("Announcements", "GuidanceCounselor", New With {.id = Nothing})">Announcements</a>
@@ -63,7 +66,21 @@
                             <a href="@Url.Action("AssignedExams", "Student", New With {.id = Nothing})">Assigned Exams</a>
                         </li>
                         <li>
+                            <a href="@Url.Action("MyGrades", "Student", New With {.id = Nothing})">My Grades</a>
+                        </li>
+                        <li>
                             <a href="@Url.Action("EditAccount", "Student", New With {.id = Nothing})">Edit Account</a>
+                        </li>
+                    </text>
+                End If
+
+                @If User.IsInRole("Family Member") Then
+                    @<text>
+                        <li>
+                            <a href="@Url.Action("Students", "FamilyMember", New With {.id = Nothing})">Students</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("EditAccount", "FamilyMember", New With {.id = Nothing})">Edit Account</a>
                         </li>
                     </text>
                 End If

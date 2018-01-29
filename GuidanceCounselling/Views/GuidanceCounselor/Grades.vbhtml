@@ -9,7 +9,7 @@ End Code
             <p>
                 @ViewBag.Title / @Model.getFullName
                 <a class="header-btn btn btn-default" href="@Url.Action("Students")"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
-                <a class="header-btn btn btn-info" href="@Url.Action("AddGrade", New With {.id = ViewBag.Id})"><span class="glyphicon glyphicon-plus"></span>Add</a>
+                <a class="header-btn btn btn-info" href="@Url.Action("AddGrade", New With {.id = Model.Id})"><span class="glyphicon glyphicon-plus"></span>Add</a>
             </p>
         </div>
 
@@ -42,6 +42,7 @@ End Code
                             </td>
                             <td style="text-align:right;">
                                 @Html.ActionLink("Edit Info", "EditGrade", New With {.id = item.StudentGradeId}, New With {.class = "btn btn-xs btn-warning"})
+                                @Html.ActionLink("View Grades", "ViewGrades", New With {.id = item.StudentGradeId}, New With {.class = "btn btn-xs btn-info"})
                             </td>
                         </tr>
                     Next
