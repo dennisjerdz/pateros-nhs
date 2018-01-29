@@ -23,6 +23,7 @@ End Code
 
         Dim cq As Integer = 1
 
+        Dim CountTFRankQuestion As Integer = 0
     End Code
 
     @For Each e In Model.Exam.ExamQuestionGroups
@@ -63,18 +64,22 @@ End Code
 
                                                 cq += 1
                                                 cTFRank += 1
+
+                                                CountTFRankQuestion += 1
                                             Next
                     </div>
                     
                     <div class="row">
                         <div class="col-md-12">
-                            <p style="color:#aeaeae;">
+                            <p style="color:#ff3f1c;">
+                                Results: 
                                 @Code
-                                    Dim rd As Decimal = rankTrueCount / cq
+                                    Dim rd As Decimal = rankTrueCount / CountTFRankQuestion
                                 End Code
 
-                                @Math.Round(rd) %
+                                @Math.Round((rd * 100), 2) % or @rankTrueCount / @CountTFRankQuestion
                             </p>
+                            <br />
                         </div>
                     </div>
                 </text>
@@ -114,7 +119,8 @@ End Code
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <p style="color:#aeaeae;"> @listTrueCount / @cq Problems selected.</p>
+                            <p style="color:#ff3f1c;">Results: @listTrueCount / @cq Problems selected.</p>
+                            <br />
                         </div>
                     </div>
                 </text>
@@ -185,3 +191,14 @@ End Code
                                             cq = 1
                                         Next
 </div>
+
+@Section styles
+    <style>
+        .exam-module-border {
+            border-radius: 3px;
+            margin-bottom: 10px;
+            border: 1px solid #cfcfcf;
+            padding: 20px;
+        }
+    </style>
+End Section

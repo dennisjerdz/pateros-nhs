@@ -409,6 +409,9 @@
     <Content Include="Views\Student\ExamRestriction.vbhtml" />
     <Content Include="Views\Student\ExamAlreadyTaken.vbhtml" />
     <Content Include="Views\Student\ExamResults.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\Students.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\Grades.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\AddGrade.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

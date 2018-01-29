@@ -533,7 +533,7 @@ Namespace Controllers
                 If model.Students IsNot Nothing Then
                     For Each s As StudentExamTakerModel In model.Students
                         If s.Included = True Then
-                            db.ExamStudents.Add(New ExamStudent With {.AvailabilityEnd = model.AvailabilityEnd, .AvailabilityStart = model.AvailabilityStart, .ExamId = model.ExamId, .UserId = s.UserId, .DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))})
+                            db.ExamStudents.Add(New ExamStudent With {.AvailabilityEnd = model.AvailabilityEnd.ToOffset(New TimeSpan(8, 0, 0)), .AvailabilityStart = model.AvailabilityStart.ToOffset(New TimeSpan(8, 0, 0)), .ExamId = model.ExamId, .UserId = s.UserId, .DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))})
                         End If
                     Next
 
@@ -583,6 +583,9 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Public Function EditAssignment(<Bind(Include:="ExamId,AvailabilityStart,AvailabilityEnd,ExamStudentId,UserId,DateCreated,TakenAt")> ByVal model As ExamStudent) As ActionResult
+            model.AvailabilityStart.ToOffset(New TimeSpan(8, 0, 0))
+            model.AvailabilityEnd.ToOffset(New TimeSpan(8, 0, 0))
+
             If ModelState.IsValid Then
                 db.Entry(model).State = EntityState.Modified
                 db.SaveChanges()

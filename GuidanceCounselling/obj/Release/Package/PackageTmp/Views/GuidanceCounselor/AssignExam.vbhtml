@@ -97,7 +97,7 @@ End Code
 
                                                             <tbody>
                                                                 @code
-                                                                    For Each u As ApplicationUser In s.Students.OrderByDescending(Function(l) l.LastName)
+                                                                    For Each u As ApplicationUser In s.Students.Where(Function(f) f.IsDisabled = False).OrderByDescending(Function(l) l.LastName)
                                                                         @<text>
                                                                             <tr>
                                                                                 <td>@u.getFullName</td>

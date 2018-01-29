@@ -198,7 +198,7 @@ Namespace Controllers
             ' Get All Users
             Dim UserManager = HttpContext.GetOwinContext().GetUserManager(Of ApplicationUserManager)()
 
-            Dim users = db.Users.Where(Function(u) u.Email <> User.Identity.Name).ToList()
+            Dim users = db.Users.Where(Function(u) u.Email <> User.Identity.Name And u.IsDisabled = False).ToList()
             Dim accts As List(Of SectionAccountsViewModel) = users.Select(Function(a) New SectionAccountsViewModel() With {
                 .UserId = a.Id,
                 .Name = a.getFullName,

@@ -69,6 +69,7 @@ Namespace Controllers
             Return RedirectToAction("StudentExam", New With {.id = exam.ExamStudentId, .count = 0})
         End Function
 
+        <Route("Student/Exam/{id}/{count}/Taking")>
         Function StudentExam(ByVal id As Integer, ByVal count As Integer) As ActionResult
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
@@ -142,6 +143,7 @@ Namespace Controllers
             Return RedirectToAction("AssignedExams")
         End Function
 
+        <Route("Exam/{id}/Results")>
         Function ExamResults(ByVal id As Integer?) As ActionResult
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
