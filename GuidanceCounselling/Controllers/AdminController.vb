@@ -465,7 +465,7 @@ Namespace Controllers
 
         <Route("Account/Add")>
         Function AddAccount() As ActionResult
-            ViewBag.Roles = db.Roles.Where(Function(s) s.Name <> "IT Admin").ToList()
+            ViewBag.Roles = db.Roles.ToList()
             Return View()
         End Function
 
@@ -478,7 +478,7 @@ Namespace Controllers
             If db.Roles.Any(Function(s) s.Name = role) Then
 
             Else
-                ViewBag.Roles = db.Roles.Where(Function(s) s.Name <> "IT Admin").ToList()
+                ViewBag.Roles = db.Roles.ToList()
                 Return View(model)
             End If
 
@@ -510,7 +510,7 @@ Namespace Controllers
                 AddErrors(result)
             End If
 
-            ViewBag.Roles = db.Roles.Where(Function(s) s.Name <> "IT Admin").ToList()
+            ViewBag.Roles = db.Roles.ToList()
             ' If we got this far, something failed, redisplay form
             Return View(model)
         End Function

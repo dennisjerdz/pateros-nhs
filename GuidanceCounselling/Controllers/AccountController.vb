@@ -42,6 +42,10 @@ Public Class AccountController
     ' GET: /Account/Login
     <AllowAnonymous>
     Public Function Login(returnUrl As String) As ActionResult
+        If User.IsInRole("IT Admin") Or User.IsInRole("Family Member") Or User.IsInRole("Guidance Counselor") Or User.IsInRole("Student") Or User.IsInRole("Academic Adviser") Then
+            Return RedirectToAction("Index", "Home", New With {.id = Nothing})
+        End If
+
         ViewData!ReturnUrl = returnUrl
         Return View()
     End Function
@@ -375,7 +379,7 @@ Public Class AccountController
     <ValidateAntiForgeryToken>
     Public Function LogOff() As ActionResult
         AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie)
-        Return RedirectToAction("Index", "Home")
+        Return RedirectToAction("Login", "Account")
     End Function
 
     '

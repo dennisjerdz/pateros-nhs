@@ -231,3 +231,5 @@ C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\Guidan
 C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.AnnouncementAndMessaging.resources
 C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations._5pmfix.resources
 C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.ExamPropertyFix.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.StudentGradeAdd.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.checkifpending1.resources

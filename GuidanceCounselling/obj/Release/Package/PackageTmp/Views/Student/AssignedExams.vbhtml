@@ -47,6 +47,11 @@ End Code
                                 @item.DateCreated
                             </td>
                             <td style="text-align:right;">
+
+                                @If item.TakenAt IsNot Nothing Then
+                                    @Html.ActionLink("View Exam Results", "ExamResults", New With {.id = item.ExamStudentId}, New With {.class = "btn btn-xs btn-warning"})
+                                End If
+
                                 @If item.TakenAt Is Nothing Then
                                     @Html.ActionLink("Take Exam", "TakeExamConfirm", New With {.id = item.ExamStudentId}, New With {.class = "btn btn-xs btn-warning"})
                                 End If

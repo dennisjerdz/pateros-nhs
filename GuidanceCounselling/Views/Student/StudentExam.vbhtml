@@ -13,7 +13,7 @@ End Code
     @Using Html.BeginForm("StudentExam", "Student", FormMethod.Post, New With {.class = "form-horizontal form-bottom-space", .role = "form"})
 
         @Html.AntiForgeryToken()
-        @Html.HiddenFor(Function(m) m.ExamStudentId, New With {.Value = Model.ExamId})
+        @Html.HiddenFor(Function(m) m.ExamStudentId, New With {.Value = Model.ExamStudentId})
 
         @<text>
             @Html.ValidationSummary("", New With {.class = "text-danger"})
@@ -107,7 +107,7 @@ End Code
 
                                         <div class="row">
                                             <div class="col-md-8">
-                                                <textarea name="ExamStudentTFRank[@cEssay].Answer" class="form-control"></textarea>
+                                                <textarea name="ExamStudentEssay[@cEssay].Answer" class="form-control"></textarea>
                                                 <input type="hidden" value="@q.QuestionEssayId" name="ExamStudentTFRank[@cEssay].QuestionEssayId" />
                                             </div>
                                         </div>
@@ -139,7 +139,7 @@ End Code
                                                 </select>
                                             </div>
                                             
-                                            <input type="hidden" value="@q.QuestionOneToFiveId" name="ExamStudentTFRank[@cOneToFive].QuestionOneToFiveId"/>
+                                            <input type="hidden" value="@q.QuestionOneToFiveId" name="ExamStudentOneToFive[@cOneToFive].QuestionOneToFiveId"/>
                                             <div class="col-md-10">
                                                 <p><strong>@cq .</strong> @q.Question</p>
                                             </div>

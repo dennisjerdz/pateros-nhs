@@ -114,6 +114,7 @@ Public Class QuestionTFRank 'TF = True/False
     Public Property DateCreated As DateTimeOffset
 
     Public Overridable Property QuestionGroup As QuestionGroup
+    Public Overridable Property ExamStudentTFRanks As List(Of ExamStudentTFRank)
 End Class
 
 Public Class QuestionTFList
@@ -123,6 +124,7 @@ Public Class QuestionTFList
     Public Property DateCreated As DateTimeOffset
 
     Public Overridable Property QuestionGroup As QuestionGroup
+    Public Overridable Property ExamStudentTFLists As List(Of ExamStudentTFList)
 End Class
 
 Public Class QuestionEssay
@@ -132,6 +134,7 @@ Public Class QuestionEssay
     Public Property DateCreated As DateTimeOffset
 
     Public Overridable Property QuestionGroup As QuestionGroup
+    Public Overridable Property ExamStudentEssays As List(Of ExamStudentEssay)
 End Class
 
 Public Class QuestionOneToFive
@@ -141,6 +144,7 @@ Public Class QuestionOneToFive
     Public Property DateCreated As DateTimeOffset
 
     Public Overridable Property QuestionGroup As QuestionGroup
+    Public Overridable Property ExamStudentOneToFives As List(Of ExamStudentOneToFive)
 End Class
 
 Public Class QuestionRowGroup ' 4 Columns
@@ -248,18 +252,9 @@ Public Class SubmitExamModel
     Public Property AvailabilityStart As DateTimeOffset
     Public Property AvailabilityEnd As DateTimeOffset
 
-    Public Overridable Property QuestionTFRanks As List(Of ExamTFRankModel)
-    Public Overridable Property QuestionTFLists As List(Of QuestionTFList)
-    Public Overridable Property QuestionEssays As List(Of QuestionEssay)
-    Public Overridable Property QuestionOneToFives As List(Of QuestionOneToFive)
-    Public Overridable Property QuestionRowGroups As List(Of QuestionRowGroup)
-End Class
-
-Public Class ExamTFRankModel
-    Public Sub New()
-
-    End Sub
-
-    Public Property QuestionTFRankId As Integer
-    Public Property Question As String
+    Public Overridable Property ExamStudentTFRank As List(Of ExamStudentTFRank)
+    Public Overridable Property ExamStudentTFList As List(Of ExamStudentTFList)
+    Public Overridable Property ExamStudentEssay As List(Of ExamStudentEssay)
+    Public Overridable Property ExamStudentOneToFive As List(Of ExamStudentOneToFive)
+    Public Overridable Property ExamStudentRowGroup As List(Of ExamStudentRowGroup)
 End Class

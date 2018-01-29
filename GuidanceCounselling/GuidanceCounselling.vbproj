@@ -239,6 +239,10 @@
       <DependentUpon>201801290421244_Student-Grade-Add.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201801290421244_Student-Grade-Add.vb" />
+    <Compile Include="Migrations\201801291543186_check-if-pending1.Designer.vb">
+      <DependentUpon>201801291543186_check-if-pending1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801291543186_check-if-pending1.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\ExamModels.vb" />
@@ -286,6 +290,9 @@
     <EmbeddedResource Include="Migrations\201801290421244_Student-Grade-Add.resx">
       <DependentUpon>201801290421244_Student-Grade-Add.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801291543186_check-if-pending1.resx">
+      <DependentUpon>201801291543186_check-if-pending1.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -309,8 +316,10 @@
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
     <None Include="My Project\PublishProfiles\pateros-nhs - FTP %282%29.pubxml" />
+    <None Include="My Project\PublishProfiles\pateros-nhs - FTP %283%29.pubxml" />
     <None Include="My Project\PublishProfiles\pateros-nhs - FTP.pubxml" />
     <None Include="My Project\PublishProfiles\pateros-nhs - Web Deploy %282%29.pubxml" />
+    <None Include="My Project\PublishProfiles\pateros-nhs - Web Deploy %283%29.pubxml" />
     <None Include="My Project\PublishProfiles\pateros-nhs - Web Deploy.pubxml" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -397,6 +406,9 @@
     <Content Include="Views\SubjectGrades\Details.vbhtml" />
     <Content Include="Views\SubjectGrades\Edit.vbhtml" />
     <Content Include="Views\SubjectGrades\Index.vbhtml" />
+    <Content Include="Views\Student\ExamRestriction.vbhtml" />
+    <Content Include="Views\Student\ExamAlreadyTaken.vbhtml" />
+    <Content Include="Views\Student\ExamResults.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

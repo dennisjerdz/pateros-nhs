@@ -9,6 +9,14 @@ Namespace Controllers
 
         Private db As New ApplicationDbContext
 
+        Function ExamAlreadyTaken() As ActionResult
+            Return View()
+        End Function
+
+        Function ExamRestriction() As ActionResult
+            Return View()
+        End Function
+
         Function Index() As ActionResult
             Return View()
         End Function
@@ -27,6 +35,23 @@ Namespace Controllers
             Dim exam As ExamStudent = db.ExamStudents.Find(id)
             If IsNothing(exam) Then
                 Return HttpNotFound()
+            End If
+
+            Dim now As DateTimeOffset = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
+            Dim currentUser As String = User.Identity.Name
+
+            Dim checkUser As ApplicationUser = db.Users.FirstOrDefault(Function(u) u.Email = currentUser)
+
+            If now < exam.AvailabilityStart Then
+                Return RedirectToAction("ExamRestriction")
+            End If
+
+            If now > exam.AvailabilityEnd Then
+                Return RedirectToAction("ExamRestriction")
+            End If
+
+            If db.ExamStudents.Any(Function(e) e.UserId = checkUser.Id And e.ExamStudentId = id And e.TakenAt IsNot Nothing) Then
+                Return RedirectToAction("ExamAlreadyTaken")
             End If
 
             Return View(exam)
@@ -71,17 +96,62 @@ Namespace Controllers
 
         <HttpPost()>
         <ValidateAntiForgeryToken>
-        Public Function StudentExam(model As ExamStudent, collection As FormCollection) As ActionResult
-            If ModelState.IsValid Then
-                Dim i As Integer = 0
-                Do While (i < collection("ExamTFRank").Count)
-                    Dim value = collection("")(i.ToString)
-                    ' do whatever with value
-                    i += 1
-                Loop
+        Public Function StudentExam(model As SubmitExamModel) As ActionResult
+            'If ModelState.IsValid Then
+            'Dim i As Integer = 0
+            'Do While (i < Collection("ExamTFRank").Count)
+            'Dim value = Collection("")(i.ToString)
+            '' do whatever with value
+            'i  += 1
+            'Loop
+            'End If
+
+            Dim exam As ExamStudent = db.ExamStudents.Find(model.ExamStudentId)
+            If IsNothing(exam) Then
+                Return HttpNotFound()
             End If
 
-            Return View()
+            exam.TakenAt = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
+
+            If model.ExamStudentTFRank IsNot Nothing Then
+                For Each i As ExamStudentTFRank In model.ExamStudentTFRank
+                    db.ExamStudentTFRanks.Add(New ExamStudentTFRank() With {.ExamStudentId = model.ExamStudentId, .Answer = i.Answer, .QuestionTFRankId = i.QuestionTFRankId, .DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))})
+                Next
+            End If
+
+            If model.ExamStudentTFList IsNot Nothing Then
+                For Each i As ExamStudentTFList In model.ExamStudentTFList
+                    db.ExamStudentTFLists.Add(New ExamStudentTFList() With {.ExamStudentId = model.ExamStudentId, .Answer = i.Answer, .QuestionTFListId = i.QuestionTFListId, .DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))})
+                Next
+            End If
+
+            If model.ExamStudentEssay IsNot Nothing Then
+                For Each i As ExamStudentEssay In model.ExamStudentEssay
+                    db.ExamStudentEssays.Add(New ExamStudentEssay() With {.ExamStudentId = model.ExamStudentId, .Answer = i.Answer, .QuestionEssayId = i.QuestionEssayId, .DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))})
+                Next
+            End If
+
+            If model.ExamStudentOneToFive IsNot Nothing Then
+                For Each i As ExamStudentOneToFive In model.ExamStudentOneToFive
+                    db.ExamStudentOneToFives.Add(New ExamStudentOneToFive() With {.ExamStudentId = model.ExamStudentId, .Answer = i.Answer, .QuestionOneToFiveId = i.QuestionOneToFiveId, .DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))})
+                Next
+            End If
+
+            db.SaveChanges()
+
+            Return RedirectToAction("AssignedExams")
+        End Function
+
+        Function ExamResults(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim exam As ExamStudent = db.ExamStudents.Find(id)
+            If IsNothing(exam) Then
+                Return HttpNotFound()
+            End If
+
+            Return View(exam)
         End Function
 
         '

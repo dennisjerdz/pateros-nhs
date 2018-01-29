@@ -50,7 +50,17 @@ End Code
                                 @item.ExamQuestionGroups.Count() Exams
                             </td>
                             <td>
-                                @Convert.ChangeType(item.ExamType, GetType(Integer)) Questions
+                                @Code
+                                    Dim c As Integer = 0
+
+                                    c += item.QuestionEssays.Count()
+                                    c += item.QuestionOneToFives.Count()
+                                    c += item.QuestionTFLists.Count()
+                                    c += item.QuestionTFLists.Count()
+                                    c += item.QuestionTFRanks.Count()
+
+                                End Code
+                                @c Questions
                             </td>
                             <td>
                                 @item.DateCreated
