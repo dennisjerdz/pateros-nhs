@@ -235,3 +235,31 @@ Public Enum ExamType
     <Display(Name:="Select Column Per Row")>
     RowGroup = 4
 End Enum
+
+Public Class SubmitExamModel
+    Public Sub New()
+
+    End Sub
+
+    Public Property ExamStudentId As Integer
+    Public Property Name As String
+    Public Property ExamId As Integer
+
+    Public Property AvailabilityStart As DateTimeOffset
+    Public Property AvailabilityEnd As DateTimeOffset
+
+    Public Overridable Property QuestionTFRanks As List(Of ExamTFRankModel)
+    Public Overridable Property QuestionTFLists As List(Of QuestionTFList)
+    Public Overridable Property QuestionEssays As List(Of QuestionEssay)
+    Public Overridable Property QuestionOneToFives As List(Of QuestionOneToFive)
+    Public Overridable Property QuestionRowGroups As List(Of QuestionRowGroup)
+End Class
+
+Public Class ExamTFRankModel
+    Public Sub New()
+
+    End Sub
+
+    Public Property QuestionTFRankId As Integer
+    Public Property Question As String
+End Class

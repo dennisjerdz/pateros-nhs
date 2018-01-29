@@ -92,3 +92,35 @@ Public Class Message
 
     Public Property DateCreated As DateTimeOffset
 End Class
+
+Public Class StudentGrade
+    Public Sub New()
+
+    End Sub
+
+    Public Property StudentGradeId As Integer
+
+    Public Property UserId As String
+    Public Overridable Property User As ApplicationUser
+
+    Public Property Name As String
+    Public Property DateCreated As DateTimeOffset
+
+    Public Overridable Property SubjectGrades As List(Of SubjectGrade)
+End Class
+
+Public Class SubjectGrade
+    Public Sub New()
+
+    End Sub
+
+    Public Property SubjectGradeId As Integer
+
+    Public Property StudentGradeId As Integer
+    Public Overridable Property StudentGrade As StudentGrade
+
+    Public Property Subject As String
+    Public Property Grade As Decimal
+
+    Public Property DateCreated As DateTimeOffset
+End Class

@@ -142,7 +142,6 @@ C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\Guidan
 C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.vbprojResolveAssemblyReference.cache
 C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.Initial.resources
-C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.AddedRequiredDataAnnotation.resources
 C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.Resources.resources
 C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.vbproj.GenerateResource.Cache
 C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.dll
@@ -227,3 +226,8 @@ C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc\GuidanceCounselling\obj
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.AnnouncementAndMessaging.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations._5pmfix.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.ExamPropertyFix.resources
+C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.updates128.resources
+C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.RemoveRequiredMiddleInitial.resources
+C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.AnnouncementAndMessaging.resources
+C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations._5pmfix.resources
+C:\Users\jsabio\Documents\Visual Studio 2015\Projects\GuidanceCounselling\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.ExamPropertyFix.resources

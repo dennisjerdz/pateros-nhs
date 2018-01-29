@@ -299,7 +299,9 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\PublishProfiles\pateros-nhs - FTP %282%29.pubxml" />
     <None Include="My Project\PublishProfiles\pateros-nhs - FTP.pubxml" />
+    <None Include="My Project\PublishProfiles\pateros-nhs - Web Deploy %282%29.pubxml" />
     <None Include="My Project\PublishProfiles\pateros-nhs - Web Deploy.pubxml" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

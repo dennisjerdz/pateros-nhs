@@ -69,6 +69,21 @@ Namespace Controllers
             'End If
         End Function
 
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Public Function StudentExam(model As ExamStudent, collection As FormCollection) As ActionResult
+            If ModelState.IsValid Then
+                Dim i As Integer = 0
+                Do While (i < collection("ExamTFRank").Count)
+                    Dim value = collection("")(i.ToString)
+                    ' do whatever with value
+                    i += 1
+                Loop
+            End If
+
+            Return View()
+        End Function
+
         '
         '
         '

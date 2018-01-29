@@ -30,6 +30,7 @@ Public Class ApplicationUser
 
     Public Overridable Property ExamStudents As List(Of ExamStudent)
     Public Overridable Property Messages As List(Of Message)
+    Public Overridable Property Grades As List(Of StudentGrade)
 
     Public Function getFullName() As String
         ' Return $"{Me.LastName}, {Me.FirstName} {Me.MiddleName.Substring(0, 1)}."
