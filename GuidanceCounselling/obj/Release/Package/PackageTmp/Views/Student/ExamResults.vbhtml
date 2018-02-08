@@ -24,6 +24,7 @@ End Code
         Dim cq As Integer = 1
 
         Dim CountTFRankQuestion As Integer = 0
+        Dim CountTFListQuestion As Integer = 0
     End Code
 
     @For Each e In Model.Exam.ExamQuestionGroups
@@ -64,7 +65,6 @@ End Code
 
                                                 cq += 1
                                                 cTFRank += 1
-
                                                 CountTFRankQuestion += 1
                                             Next
                     </div>
@@ -79,6 +79,10 @@ End Code
 
                                     @<text>
                                         @Math.Round((rd * 100), 2) % or @rankTrueCount / @CountTFRankQuestion
+                                    </text>
+                                Else
+                                    @<text>
+                                        0% or 0 / @CountTFRankQuestion
                                     </text>
                                 End If
                             </p>
@@ -118,13 +122,14 @@ End Code
 
                                             cq += 1
                                             cTFList += 1
+                                            CountTFListQuestion += 1
                                         Next
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <p style="color:#ff3f1c;">Results: @listTrueCount / @cq Problems selected.</p>
+                            <p style="color:#ff3f1c;">Results: @listTrueCount / @CountTFListQuestion Problems selected.</p>
                             <br />
                         </div>
                     </div>
@@ -160,7 +165,7 @@ End Code
                                             Next
                     </div>
                 </text>
-                                        Case "cOneToFive"
+                                            Case "OneToFive"
                 @<text>
                     <div class="exam-module-border">
                         <div class="row">
@@ -190,11 +195,14 @@ End Code
                                             Next
                     </div>
                 </text>
-                                            End Select
+                                                End Select
 
-                                            ' Exam counter reset
-                                            cq = 1
-                                        Next
+                                                ' Exam counter reset
+                                                cq = 1
+
+                                                CountTFListQuestion = 0
+                                                CountTFRankQuestion = 0
+                                            Next
 </div>
 
 @Section styles

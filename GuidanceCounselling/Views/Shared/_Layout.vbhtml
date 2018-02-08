@@ -52,6 +52,9 @@
                             <a href="@Url.Action("QuestionGroups", "GuidanceCounselor", New With {.id = Nothing})">Question Groups</a>
                         </li>
                         <li>
+                            <a href="@Url.Action("Conversations", "GuidanceCounselor", New With {.id = Nothing})">Conversations</a>
+                        </li>
+                        <li>
                             <a href="@Url.Action("Announcements", "GuidanceCounselor", New With {.id = Nothing})">Announcements</a>
                         </li>
                         <li>
@@ -69,6 +72,9 @@
                             <a href="@Url.Action("MyGrades", "Student", New With {.id = Nothing})">My Grades</a>
                         </li>
                         <li>
+                            <a href="@Url.Action("Conversations", "GuidanceCounselor", New With {.id = Nothing})">Conversations</a>
+                        </li>
+                        <li>
                             <a href="@Url.Action("EditAccount", "Student", New With {.id = Nothing})">Edit Account</a>
                         </li>
                     </text>
@@ -78,6 +84,9 @@
                     @<text>
                         <li>
                             <a href="@Url.Action("Students", "FamilyMember", New With {.id = Nothing})">Students</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Conversations", "GuidanceCounselor", New With {.id = Nothing})">Conversations</a>
                         </li>
                         <li>
                             <a href="@Url.Action("EditAccount", "FamilyMember", New With {.id = Nothing})">Edit Account</a>

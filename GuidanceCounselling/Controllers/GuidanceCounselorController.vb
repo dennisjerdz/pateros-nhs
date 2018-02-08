@@ -584,8 +584,8 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Public Function EditAssignment(<Bind(Include:="ExamId,AvailabilityStart,AvailabilityEnd,ExamStudentId,UserId,DateCreated,TakenAt")> ByVal model As ExamStudent) As ActionResult
-            model.AvailabilityStart.ToOffset(New TimeSpan(8, 0, 0)).AddHours(-8)
-            model.AvailabilityEnd.ToOffset(New TimeSpan(8, 0, 0)).AddHours(-8)
+            model.AvailabilityStart = model.AvailabilityStart.ToOffset(New TimeSpan(8, 0, 0)).AddHours(-8)
+            model.AvailabilityEnd = model.AvailabilityEnd.ToOffset(New TimeSpan(8, 0, 0)).AddHours(-8)
 
             If ModelState.IsValid Then
                 db.Entry(model).State = EntityState.Modified
@@ -881,6 +881,50 @@ Namespace Controllers
             End If
 
             Return View(subjectGrade)
+        End Function
+
+        '
+        '
+        '
+        '
+        ' Conversations
+        Function Accounts() As ActionResult
+            Dim UserManager = HttpContext.GetOwinContext().GetUserManager(Of ApplicationUserManager)()
+            Dim users = db.Users.Where(Function(u) u.Email <> User.Identity.Name).ToList()
+
+            Dim accts As List(Of AccountsViewModel) = users.Select(Function(a) New AccountsViewModel() With {
+                .UserId = a.Id,
+                .Name = a.getFullName,
+                .Email = a.Email,
+                .IsDisabled = a.IsDisabled,
+                .Role = String.Join(",", UserManager.GetRoles(a.Id))
+            }).ToList()
+
+            Return View(accts)
+        End Function
+
+        Function Conversations() As ActionResult
+            Return View(db.Conversations.Where(Function(c) c.Receiver.Email = User.Identity.Name Or c.Sender.Email = User.Identity.Name).ToList())
+        End Function
+
+        <Route("Conversation/{id}")>
+        Function OpenConversation(ByVal id As Integer?)
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim conversation As Conversation = db.Conversations.Find(id)
+            If IsNothing(conversation) Then
+                Return HttpNotFound()
+            End If
+
+            Return View(conversation)
+        End Function
+
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        <Route("Conversation/{id}")>
+        Function SendMessage(model As Conversation)
+            Return View()
         End Function
     End Class
 End Namespace

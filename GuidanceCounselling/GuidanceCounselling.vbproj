@@ -405,6 +405,8 @@
     <Content Include="Views\FamilyMember\Students.vbhtml" />
     <Content Include="Views\FamilyMember\Grades.vbhtml" />
     <Content Include="Views\FamilyMember\ViewGrades.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\Conversations.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\Accounts.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

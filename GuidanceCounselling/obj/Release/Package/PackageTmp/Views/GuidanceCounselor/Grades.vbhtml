@@ -7,7 +7,7 @@ End Code
     <div class="row">
         <div class="col-md-9">
             <p>
-                @ViewBag.Title / @Model.getFullName
+                @ViewBag.Title / @Model.getFullName / Grading Periods List
                 <a class="header-btn btn btn-default" href="@Url.Action("Students")"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
                 <a class="header-btn btn btn-info" href="@Url.Action("AddGrade", New With {.id = Model.Id})"><span class="glyphicon glyphicon-plus"></span>Add</a>
             </p>
@@ -25,7 +25,7 @@ End Code
             <table class="table table-hover table-condensed">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Quarter</th>
                         <th>Date Created</th>
                         <th></th>
                     </tr>

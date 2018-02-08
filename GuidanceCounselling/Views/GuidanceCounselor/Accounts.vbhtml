@@ -1,15 +1,13 @@
-﻿@ModelType GuidanceCounselling.ApplicationUser
+﻿@ModelType List(Of AccountsViewModel)
 @Code
-    ViewBag.Title = "Student Grades"
+    ViewBag.Title = "Accounts"
 End Code
 
 <div class="container body-header">
     <div class="row">
         <div class="col-md-9">
             <p>
-                @ViewBag.Title / @Model.getFullName / Grading Periods List
-                <a class="header-btn btn btn-default" href="@Url.Action("Students")"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
-                <a class="header-btn btn btn-info" href="@Url.Action("AddGrade", New With {.id = Model.Id})"><span class="glyphicon glyphicon-plus"></span>Add</a>
+                @ViewBag.Title / List
             </p>
         </div>
 
@@ -25,24 +23,36 @@ End Code
             <table class="table table-hover table-condensed">
                 <thead>
                     <tr>
-                        <th>Quarter</th>
-                        <th>Date Created</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
                         <th></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @For Each item In Model.Grades
+                    @For Each item In Model
                         @<tr>
+                            <td>@item.Name</td>
+                            <td>@item.Email</td>
+                            <td>@item.Role</td>
                             <td>
-                                @item.Name
-                            </td>
-                            <td>
-                                @item.DateCreated
+                                @Code
+                                    If item.IsDisabled = True Then
+                                        @<font style="color:#da8e8e">Disabled</font>
+                                    Else
+                                        @<font style="color:#8eda8e">Active</font>
+                                    End If
+                                End Code
                             </td>
                             <td style="text-align:right;">
-                                @Html.ActionLink("Edit Info", "EditGrade", New With {.id = item.StudentGradeId}, New With {.class = "btn btn-xs btn-warning"})
-                                @Html.ActionLink("View Grades", "ViewGrades", New With {.id = item.StudentGradeId}, New With {.class = "btn btn-xs btn-info"})
+                                
+                                @If item.IsDisabled = True Then
+
+                                Else
+                                    @<a Class="btn btn-xs btn-info" href="@Url.Action("SendMessage", New With {.id = item.UserId})">Send Message</a>
+                                End If
                             </td>
                         </tr>
                     Next
@@ -61,7 +71,7 @@ End Code
                 "pageLength": 10,
                 "dom": "<'table-responsive'rt><'window-footer'<'col-md-6'i><'col-md-6'p>>",
                 "columnDefs": [
-                    { "orderable": false, "targets": 2 }
+                    { "orderable": false, "targets": 4 }
                 ]
             });
 
@@ -71,3 +81,4 @@ End Code
         });
     </script>
 End Section
+

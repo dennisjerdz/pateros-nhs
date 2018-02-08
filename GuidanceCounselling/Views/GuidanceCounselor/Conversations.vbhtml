@@ -1,15 +1,14 @@
-﻿@ModelType GuidanceCounselling.ApplicationUser
+﻿@ModelType IEnumerable(Of GuidanceCounselling.Conversation)
 @Code
-    ViewBag.Title = "Student Grades"
+    ViewBag.Title = "Conversations"
 End Code
 
 <div class="container body-header">
     <div class="row">
         <div class="col-md-9">
             <p>
-                @ViewBag.Title / @Model.getFullName / Grading Periods List
-                <a class="header-btn btn btn-default" href="@Url.Action("Students")"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
-                <a class="header-btn btn btn-info" href="@Url.Action("AddGrade", New With {.id = Model.Id})"><span class="glyphicon glyphicon-plus"></span>Add</a>
+                @ViewBag.Title / List
+                <a class="header-btn btn btn-info" href="@Url.Action("AddAnnouncement")"><span class="glyphicon glyphicon-plus"></span>Add</a>
             </p>
         </div>
 
@@ -25,24 +24,33 @@ End Code
             <table class="table table-hover table-condensed">
                 <thead>
                     <tr>
-                        <th>Quarter</th>
+                        <th>Conversation with</th>
+                        <th>Message Count</th>
                         <th>Date Created</th>
                         <th></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @For Each item In Model.Grades
+                    @For Each item As Conversation In Model.OrderByDescending(Function(a) a.Messages.OrderByDescending(Function(b) b.DateCreated))
                         @<tr>
                             <td>
-                                @item.Name
+                                <strong>
+                                    @If User.Identity.Name = item.Receiver.Email Then
+                                        @<text>@item.Sender.getFullName</text>
+                                    Else
+                                        @<text>@item.Receiver.getFullName</text>
+                                    End If  
+                                </strong>
+                            </td>
+                            <td>
+                                @item.Messages.Count()
                             </td>
                             <td>
                                 @item.DateCreated
                             </td>
                             <td style="text-align:right;">
-                                @Html.ActionLink("Edit Info", "EditGrade", New With {.id = item.StudentGradeId}, New With {.class = "btn btn-xs btn-warning"})
-                                @Html.ActionLink("View Grades", "ViewGrades", New With {.id = item.StudentGradeId}, New With {.class = "btn btn-xs btn-info"})
+                                @Html.ActionLink("Open Conversation", "OpenConversation", New With {.id = item.ConversationId}, New With {.class = "btn btn-xs btn-info"})
                             </td>
                         </tr>
                     Next
@@ -61,7 +69,7 @@ End Code
                 "pageLength": 10,
                 "dom": "<'table-responsive'rt><'window-footer'<'col-md-6'i><'col-md-6'p>>",
                 "columnDefs": [
-                    { "orderable": false, "targets": 2 }
+                    { "orderable": false, "targets": 3 }
                 ]
             });
 

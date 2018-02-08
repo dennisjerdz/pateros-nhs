@@ -118,7 +118,7 @@ End Code
                                 Next
                             </div>
                         </text>
-                    Case "cOneToFive"
+                    Case "OneToFive"
                         @<text>
                             <div class="exam-module-border">
                                 <div class="row">
@@ -147,7 +147,7 @@ End Code
                                     </text>
 
                                     cq += 1
-                                    cTFRank += 1
+                                    cOneToFive += 1
                                 Next
                             </div>
                         </text>

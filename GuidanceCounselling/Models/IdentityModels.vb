@@ -125,6 +125,7 @@ Public Class ApplicationDbContext
     Public Property ExamStudentOneToFives As DbSet(Of ExamStudentOneToFive)
     Public Property ExamStudentRowGroup As DbSet(Of ExamStudentRowGroup)
     Public Property Announcements As DbSet(Of Announcement)
+    Public Property Conversations As DbSet(Of Conversation)
     Public Property Messages As DbSet(Of Message)
     Public Property StudentGrades As DbSet(Of StudentGrade)
     Public Property SubjectGrades As DbSet(Of SubjectGrade)
