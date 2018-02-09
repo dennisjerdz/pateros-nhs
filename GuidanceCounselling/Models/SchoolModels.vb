@@ -63,6 +63,7 @@ Public Class Announcement
     Public Property Content As String
     Public Property Active As Boolean
     Public Property DateCreated As DateTimeOffset
+    Public Property DateExpired As DateTimeOffset
 End Class
 
 Public Class Conversation

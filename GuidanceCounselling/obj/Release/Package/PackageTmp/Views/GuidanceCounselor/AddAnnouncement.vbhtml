@@ -23,9 +23,14 @@ End Code
             @Html.ValidationSummary("", New With {.class = "text-danger"})
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     @Html.LabelFor(Function(m) m.Name, New With {.class = "control-label"})
                     @Html.EditorFor(Function(model) model.Name, New With {.htmlAttributes = New With {.class = "form-control"}})
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(Function(m) m.DateExpired, New With {.class = "control-label"})
+                    @Html.EditorFor(Function(model) model.DateExpired, New With {.htmlAttributes = New With {.class = "form-control", .type = "datetime-local"}})
                 </div>
             </div>
 

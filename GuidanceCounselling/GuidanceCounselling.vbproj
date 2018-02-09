@@ -206,6 +206,7 @@
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper.vb" />
     <Compile Include="Migrations\201801262309172_initial.Designer.vb">
       <DependentUpon>201801262309172_initial.vb</DependentUpon>
     </Compile>
@@ -238,6 +239,10 @@
       <DependentUpon>201801291543186_check-if-pending1.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201801291543186_check-if-pending1.vb" />
+    <Compile Include="Migrations\201802082235082_added-expiryDate-on-Announcements.Designer.vb">
+      <DependentUpon>201802082235082_added-expiryDate-on-Announcements.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802082235082_added-expiryDate-on-Announcements.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\ExamModels.vb" />
@@ -287,6 +292,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801291543186_check-if-pending1.resx">
       <DependentUpon>201801291543186_check-if-pending1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802082235082_added-expiryDate-on-Announcements.resx">
+      <DependentUpon>201802082235082_added-expiryDate-on-Announcements.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

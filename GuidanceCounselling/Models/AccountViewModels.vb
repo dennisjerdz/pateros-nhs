@@ -9,6 +9,16 @@ Public Class AccountsViewModel
     Public Property IsDisabled As Boolean
 End Class
 
+Public Class StudentsViewModel
+    Public Property UserId As String
+    Public Property Name As String
+    Public Property Email As String
+    Public Property Role As String
+    Public Property Grade As String
+    Public Property Section As String
+    Public Property IsDisabled As Boolean
+End Class
+
 Public Class ExternalLoginConfirmationViewModel
     <Required>
     <Display(Name:="Email")>

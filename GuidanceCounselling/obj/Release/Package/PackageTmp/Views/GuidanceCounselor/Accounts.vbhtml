@@ -1,6 +1,6 @@
-﻿@ModelType List(Of StudentsViewModel)
+﻿@ModelType List(Of AccountsViewModel)
 @Code
-    ViewBag.Title = "Students"
+    ViewBag.Title = "Accounts"
 End Code
 
 <div class="container body-header">
@@ -26,7 +26,6 @@ End Code
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Grade - Section</th>
                         <th>Status</th>
                         <th></th>
                     </tr>
@@ -38,7 +37,6 @@ End Code
                             <td>@item.Name</td>
                             <td>@item.Email</td>
                             <td>@item.Role</td>
-                            <td>@item.Grade - @item.Section</td>
                             <td>
                                 @Code
                                     If item.IsDisabled = True Then
@@ -49,10 +47,15 @@ End Code
                                 End Code
                             </td>
                             <td style="text-align:right;">
-                                <a class="btn btn-xs btn-info" href="@Url.Action("Grades", New With {.id = item.UserId})">View Grades</a>
+                                
+                                @If item.IsDisabled = True Then
+
+                                Else
+                                    @<a Class="btn btn-xs btn-info" href="@Url.Action("SendMessage", New With {.id = item.UserId})">Send Message</a>
+                                End If
                             </td>
                         </tr>
-                                    Next
+                    Next
                 </tbody>
             </table>
         </div>
@@ -68,7 +71,7 @@ End Code
                 "pageLength": 10,
                 "dom": "<'table-responsive'rt><'window-footer'<'col-md-6'i><'col-md-6'p>>",
                 "columnDefs": [
-                    { "orderable": false, "targets": 5 }
+                    { "orderable": false, "targets": 4 }
                 ]
             });
 

@@ -314,3 +314,4 @@ C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\ob
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Debug\GuidanceCounselling.dll
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Debug\GuidanceCounselling.xml
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Debug\GuidanceCounselling.pdb
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.addedexpiryDateonAnnouncements.resources

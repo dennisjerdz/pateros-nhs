@@ -23,11 +23,13 @@ Namespace Controllers
             Dim UserManager = HttpContext.GetOwinContext().GetUserManager(Of ApplicationUserManager)()
             Dim users = db.Users.Where(Function(u) u.Email <> User.Identity.Name And u.FamilyId = au.FamilyId.Value).ToList()
 
-            Dim accts As List(Of AccountsViewModel) = users.Select(Function(a) New AccountsViewModel() With {
+            Dim accts As List(Of StudentsViewModel) = users.Select(Function(a) New StudentsViewModel() With {
                 .UserId = a.Id,
                 .Name = a.getFullName,
                 .Email = a.Email,
                 .IsDisabled = a.IsDisabled,
+                .Grade = a.Section.Grade.Name,
+                .Section = a.Section.Name,
                 .Role = String.Join(",", UserManager.GetRoles(a.Id))
             }).ToList()
 

@@ -25,8 +25,8 @@ End Code
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Status</th>
                         <th>Date Created</th>
+                        <th>Expiration Date</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -38,23 +38,17 @@ End Code
                                 @item.Name
                             </td>                             
                             <td>
-                                @Code
-                                    If item.Active = True Then
-                                        @<font style="color:#8eda8e">Active</font>
-                                    Else
-                                        @<font style="color:#da8e8e">Disabled</font>
-                                    End If
-                                End Code     
-                            </td>
-                            <td>
                                 @item.DateCreated
                             </td>
+                            <td>
+                                @item.DateExpired
+                            </td>
                             <td style="text-align:right;">
-                                @Html.ActionLink("Edit Content", "EditAnnouncement", New With {.id = item.AnnouncementId}, New With {.class = "btn btn-xs btn-warning"})
+                                @Html.ActionLink("Edit", "EditAnnouncement", New With {.id = item.AnnouncementId}, New With {.class = "btn btn-xs btn-warning"})
                                 @If item.Active = True Then
-                                    @<a class="btn btn-xs btn-danger" href="@Url.Action("ChangeStatus", New With {.id = item.AnnouncementId})">Disable</a>
+                                    @<!--<a class="btn btn-xs btn-danger" href="@Url.Action("ChangeStatus", New With {.id = item.AnnouncementId})">Disable</a>-->
                                 Else
-                                    @<a class="btn btn-xs btn-success" href="@Url.Action("ChangeStatus", New With {.id = item.AnnouncementId})">Activate</a>
+                                    @<!--<a class="btn btn-xs btn-success" href="@Url.Action("ChangeStatus", New With {.id = item.AnnouncementId})">Activate</a>-->
                                 End If
                             </td>
                         </tr>

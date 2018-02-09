@@ -9,6 +9,7 @@ End Code
         <div class="col-md-9">
             <p>
                 @ViewBag.Title / @Model.ExamStudentId / Results
+                <a class="header-btn btn btn-default" href="@Url.Action("AssignedExams", New With {.id = Nothing})"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
             </p>
         </div>
     </div>
@@ -129,7 +130,7 @@ End Code
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <p style="color:#ff3f1c;">Results: @listTrueCount / @CountTFListQuestion Problems selected.</p>
+                            <p style="color:#ff3f1c;">Results: @listTrueCount / @CountTFListQuestion</p>
                             <br />
                         </div>
                     </div>

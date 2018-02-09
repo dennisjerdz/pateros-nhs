@@ -102,6 +102,23 @@ Namespace Controllers
             Return View(grade)
         End Function
 
+        Function GradesDelete(ByVal id As Integer?)
+            If id Is Nothing Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+
+            Dim grade As Grade = db.Grades.FirstOrDefault(Function(g) g.GradeId = id)
+
+            If grade Is Nothing Then
+                Return HttpNotFound()
+            End If
+
+            db.Grades.Remove(grade)
+            db.SaveChanges()
+
+            Return RedirectToAction("Grades")
+        End Function
+
         '
         '
         '

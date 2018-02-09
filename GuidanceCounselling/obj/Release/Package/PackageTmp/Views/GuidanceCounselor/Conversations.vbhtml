@@ -1,6 +1,6 @@
-﻿@ModelType List(Of StudentsViewModel)
+﻿@ModelType IEnumerable(Of GuidanceCounselling.Conversation)
 @Code
-    ViewBag.Title = "Students"
+    ViewBag.Title = "Conversations"
 End Code
 
 <div class="container body-header">
@@ -8,6 +8,7 @@ End Code
         <div class="col-md-9">
             <p>
                 @ViewBag.Title / List
+                <a class="header-btn btn btn-info" href="@Url.Action("AddAnnouncement")"><span class="glyphicon glyphicon-plus"></span>Add</a>
             </p>
         </div>
 
@@ -23,36 +24,36 @@ End Code
             <table class="table table-hover table-condensed">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Grade - Section</th>
-                        <th>Status</th>
+                        <th>Conversation with</th>
+                        <th>Message Count</th>
+                        <th>Date Created</th>
                         <th></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @For Each item In Model
+                    @For Each item As Conversation In Model.OrderByDescending(Function(a) a.Messages.OrderByDescending(Function(b) b.DateCreated))
                         @<tr>
-                            <td>@item.Name</td>
-                            <td>@item.Email</td>
-                            <td>@item.Role</td>
-                            <td>@item.Grade - @item.Section</td>
                             <td>
-                                @Code
-                                    If item.IsDisabled = True Then
-                                        @<font style="color:#da8e8e">Disabled</font>
+                                <strong>
+                                    @If User.Identity.Name = item.Receiver.Email Then
+                                        @<text>@item.Sender.getFullName</text>
                                     Else
-                                        @<font style="color:#8eda8e">Active</font>
-                                    End If
-                                End Code
+                                        @<text>@item.Receiver.getFullName</text>
+                                    End If  
+                                </strong>
+                            </td>
+                            <td>
+                                @item.Messages.Count()
+                            </td>
+                            <td>
+                                @item.DateCreated
                             </td>
                             <td style="text-align:right;">
-                                <a class="btn btn-xs btn-info" href="@Url.Action("Grades", New With {.id = item.UserId})">View Grades</a>
+                                @Html.ActionLink("Open Conversation", "OpenConversation", New With {.id = item.ConversationId}, New With {.class = "btn btn-xs btn-info"})
                             </td>
                         </tr>
-                                    Next
+                    Next
                 </tbody>
             </table>
         </div>
@@ -68,7 +69,7 @@ End Code
                 "pageLength": 10,
                 "dom": "<'table-responsive'rt><'window-footer'<'col-md-6'i><'col-md-6'p>>",
                 "columnDefs": [
-                    { "orderable": false, "targets": 5 }
+                    { "orderable": false, "targets": 3 }
                 ]
             });
 
@@ -78,4 +79,3 @@ End Code
         });
     </script>
 End Section
-

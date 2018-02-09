@@ -671,9 +671,10 @@ Namespace Controllers
         <Route("Announcement/Create")>
         <HttpPost()>
         <ValidateAntiForgeryToken>
-        Function AddAnnouncement(<Bind(Include:="AnnouncementId,Name,Content,DateCreated")> ByVal announcement As Announcement)
+        Function AddAnnouncement(<Bind(Include:="AnnouncementId,Name,Content,DateExpired")> ByVal announcement As Announcement)
             announcement.Active = True
             announcement.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
+            announcement.DateExpired = announcement.DateExpired.ToOffset(New TimeSpan(8, 0, 0)).AddHours(-8)
 
             If ModelState.IsValid Then
                 db.Announcements.Add(announcement)
@@ -698,7 +699,9 @@ Namespace Controllers
         <Route("Announcement/{id}/Edit")>
         <HttpPost()>
         <ValidateAntiForgeryToken>
-        Function EditAnnouncement(<Bind(Include:="AnnouncementId,Name,Content,Active,DateCreated")> ByVal announcement As Announcement)
+        Function EditAnnouncement(<Bind(Include:="AnnouncementId,Name,Content,Active,DateCreated,DateExpired")> ByVal announcement As Announcement)
+            announcement.DateExpired = announcement.DateExpired.ToOffset(New TimeSpan(8, 0, 0)).AddHours(-8)
+
             If ModelState.IsValid Then
                 db.Entry(announcement).State = EntityState.Modified
                 db.SaveChanges()
@@ -736,12 +739,14 @@ Namespace Controllers
             Dim UserManager = HttpContext.GetOwinContext().GetUserManager(Of ApplicationUserManager)()
             Dim users = db.Users.Where(Function(u) u.Email <> User.Identity.Name).ToList()
 
-            Dim accts As List(Of AccountsViewModel) = users.Select(Function(a) New AccountsViewModel() With {
+            Dim accts As List(Of StudentsViewModel) = users.Select(Function(a) New StudentsViewModel() With {
                 .UserId = a.Id,
                 .Name = a.getFullName,
                 .Email = a.Email,
                 .IsDisabled = a.IsDisabled,
-                .Role = String.Join(",", UserManager.GetRoles(a.Id))
+                .Grade = a.Section.Grade.Name,
+                .Section = a.Section.Name,
+            .Role = String.Join(",", UserManager.GetRoles(a.Id))
             }).ToList()
 
             Return View(accts.Where(Function(c) c.Role = "Student").ToList())
@@ -918,6 +923,11 @@ Namespace Controllers
             End If
 
             Return View(conversation)
+        End Function
+
+        Function SendMessage()
+
+            Return View()
         End Function
 
         <HttpPost()>
