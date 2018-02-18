@@ -32,25 +32,31 @@ End Code
                 </thead>
 
                 <tbody>
-                    @For Each item As Conversation In Model.OrderByDescending(Function(a) a.Messages.OrderByDescending(Function(b) b.DateCreated))
+                    @For Each item As Conversation In Model.OrderByDescending(Function(a) a.Messages)
                         @<tr>
                             <td>
-                                <strong>
-                                    @If User.Identity.Name = item.Receiver.Email Then
-                                        @<text>@item.Sender.getFullName</text>
-                                    Else
-                                        @<text>@item.Receiver.getFullName</text>
-                                    End If  
-                                </strong>
+                                @If User.Identity.Name = item.Receiver.Email Then
+                                    @<text>@item.Sender.getFullName</text>
+                                Else
+                                    @<text>@item.Receiver.getFullName</text>
+                                End If
                             </td>
                             <td>
-                                @item.Messages.Count()
+                                @If item.Messages Is Nothing Then
+                                    @<text>0</text>
+                                Else
+                                    @<text>@item.Messages.Count</text>
+                                End If
                             </td>
                             <td>
                                 @item.DateCreated
                             </td>
                             <td style="text-align:right;">
-                                @Html.ActionLink("Open Conversation", "OpenConversation", New With {.id = item.ConversationId}, New With {.class = "btn btn-xs btn-info"})
+                                @If User.Identity.Name = item.Receiver.Email Then
+                                    @<text>@Html.ActionLink("Open Conversation", "OpenConversation", New With {.id = item.SenderId}, New With {.class = "btn btn-xs btn-info"})</text>
+                                Else
+                                    @<text>@Html.ActionLink("Open Conversation", "OpenConversation", New With {.id = item.ReceiverId}, New With {.class = "btn btn-xs btn-info"})</text>
+                                End If
                             </td>
                         </tr>
                     Next

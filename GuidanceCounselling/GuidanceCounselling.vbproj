@@ -415,6 +415,7 @@
     <Content Include="Views\FamilyMember\ViewGrades.vbhtml" />
     <Content Include="Views\GuidanceCounselor\Conversations.vbhtml" />
     <Content Include="Views\GuidanceCounselor\Accounts.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\OpenConversation.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

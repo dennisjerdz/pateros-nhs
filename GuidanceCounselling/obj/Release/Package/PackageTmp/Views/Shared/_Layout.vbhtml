@@ -49,6 +49,9 @@
                             <a href="@Url.Action("Students", "GuidanceCounselor", New With {.id = Nothing})">Students</a>
                         </li>
                         <li>
+                            <a href="@Url.Action("Accounts", "GuidanceCounselor", New With {.id = Nothing})">Accounts</a>
+                        </li>
+                        <li>
                             <a href="@Url.Action("QuestionGroups", "GuidanceCounselor", New With {.id = Nothing})">Question Groups</a>
                         </li>
                         <li>

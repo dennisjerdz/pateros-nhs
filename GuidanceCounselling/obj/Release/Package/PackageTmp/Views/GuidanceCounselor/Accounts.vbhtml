@@ -48,10 +48,8 @@ End Code
                             </td>
                             <td style="text-align:right;">
                                 
-                                @If item.IsDisabled = True Then
-
-                                Else
-                                    @<a Class="btn btn-xs btn-info" href="@Url.Action("SendMessage", New With {.id = item.UserId})">Send Message</a>
+                                @If item.IsDisabled = False Then
+                                    @<a Class="btn btn-xs btn-info" href="@Url.Action("OpenConversation", New With {.id = item.UserId})">Send Message</a>
                                 End If
                             </td>
                         </tr>

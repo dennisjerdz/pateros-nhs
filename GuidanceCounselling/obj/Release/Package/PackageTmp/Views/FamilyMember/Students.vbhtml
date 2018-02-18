@@ -1,4 +1,4 @@
-﻿@ModelType List(Of AccountsViewModel)
+﻿@ModelType List(Of StudentsViewModel)
 @Code
     ViewBag.Title = "Students"
 End Code
@@ -26,6 +26,7 @@ End Code
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
+                        <th>Grade - Section</th>
                         <th>Status</th>
                         <th></th>
                     </tr>
@@ -37,6 +38,7 @@ End Code
                             <td>@item.Name</td>
                             <td>@item.Email</td>
                             <td>@item.Role</td>
+                            <td>@item.Grade - @item.Section</td>
                             <td>
                                 @Code
                                     If item.IsDisabled = True Then
@@ -66,7 +68,7 @@ End Code
                 "pageLength": 10,
                 "dom": "<'table-responsive'rt><'window-footer'<'col-md-6'i><'col-md-6'p>>",
                 "columnDefs": [
-                    { "orderable": false, "targets": 4 }
+                    { "orderable": false, "targets": 5 }
                 ]
             });
 

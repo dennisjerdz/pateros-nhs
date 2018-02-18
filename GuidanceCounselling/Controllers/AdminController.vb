@@ -19,19 +19,28 @@ Namespace Controllers
             Return View()
         End Function
 
-        Function Accounts() As ActionResult
+        Async Function Accounts() As Task(Of ActionResult)
             Dim UserManager = HttpContext.GetOwinContext().GetUserManager(Of ApplicationUserManager)()
-            Dim users = db.Users.Where(Function(u) u.Email <> User.Identity.Name).ToList()
 
-            Dim accts As List(Of AccountsViewModel) = users.Select(Function(a) New AccountsViewModel() With {
-                .UserId = a.Id,
-                .Name = a.getFullName,
-                .Email = a.Email,
-                .IsDisabled = a.IsDisabled,
-                .Role = String.Join(",", UserManager.GetRoles(a.Id))
-            }).ToList()
+            Dim acctss As List(Of AccountsViewModel) = Await db.Users.Where(Function(a) a.Email <> User.Identity.Name).Select(Function(s) New AccountsViewModel() With {
+            .UserId = s.Id,
+            .Name = s.LastName + ", " + s.FirstName + " " + s.MiddleName,
+            .Email = s.Email,
+            .IsDisabled = s.IsDisabled,
+            .Role = db.Roles.FirstOrDefault(Function(r) r.Id = s.Roles.FirstOrDefault().RoleId).Name
+            }).ToListAsync()
 
-            Return View(accts)
+            'Dim users = Await db.Users.Where(Function(u) u.Email <> User.Identity.Name).ToListAsync()
+
+            'Dim accts As List(Of AccountsViewModel) = users.Select(Function(a) New AccountsViewModel() With {
+            '.UserId = a.Id,
+            '.Name = a.getFullName,
+            '.Email = a.Email,
+            '.IsDisabled = a.IsDisabled,
+            '.Role = String.Join(",", UserManager.GetRoles(a.Id))
+            '}).ToList()
+
+            Return View(acctss)
         End Function
 
         Function ChangeStatus(ByVal id As String) As ActionResult
@@ -201,7 +210,7 @@ Namespace Controllers
         End Function
 
         <Route("Sections/{id}/Students/Manage")>
-        Function ManageStudents(ByVal id As Integer?) As ActionResult
+        Async Function ManageStudents(ByVal id As Integer?) As Task(Of ActionResult)
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             End If
@@ -215,15 +224,24 @@ Namespace Controllers
             ' Get All Users
             Dim UserManager = HttpContext.GetOwinContext().GetUserManager(Of ApplicationUserManager)()
 
-            Dim users = db.Users.Where(Function(u) u.Email <> User.Identity.Name And u.IsDisabled = False).ToList()
-            Dim accts As List(Of SectionAccountsViewModel) = users.Select(Function(a) New SectionAccountsViewModel() With {
-                .UserId = a.Id,
-                .Name = a.getFullName,
-                .Email = a.Email,
-                .IsDisabled = a.IsDisabled,
-                .SectionId = a.SectionId,
-                .Role = String.Join(",", UserManager.GetRoles(a.Id))
-            }).ToList()
+            'Dim users = db.Users.Where(Function(u) u.Email <> User.Identity.Name And u.IsDisabled = False).ToList()
+            'Dim accts As List(Of SectionAccountsViewModel) = users.Select(Function(a) New SectionAccountsViewModel() With {
+            '.UserId = a.Id,
+            '.Name = a.getFullName,
+            '.Email = a.Email,
+            '.IsDisabled = a.IsDisabled,
+            '.SectionId = a.SectionId,
+            '.Role = String.Join(",", UserManager.GetRoles(a.Id))
+            '}).ToList()
+
+            Dim accts As List(Of SectionAccountsViewModel) = Await db.Users.Where(Function(a) a.Email <> User.Identity.Name).Select(Function(s) New SectionAccountsViewModel() With {
+                .UserId = s.Id,
+                .Name = s.LastName + ", " + s.FirstName + " " + s.MiddleName,
+                .Email = s.Email,
+                .IsDisabled = s.IsDisabled,
+                .SectionId = s.SectionId,
+                .Role = db.Roles.FirstOrDefault(Function(r) r.Id = s.Roles.FirstOrDefault().RoleId).Name
+            }).ToListAsync()
 
             ' Get Users with Student Role
             Dim s_accts As String() = accts.Where(Function(a) a.Role = "Student").Select(Function(c) c.UserId).ToArray()
@@ -232,10 +250,10 @@ Namespace Controllers
             Dim msm As New ManageStudentsModel(section)
 
             ' Assign students of the section
-            Dim currentStudents As List(Of ApplicationUser) = db.Users.Where(Function(u) s_accts.Contains(u.Id) And u.SectionId = section.SectionId).ToList()
+            Dim currentStudents As List(Of ApplicationUser) = Await db.Users.Where(Function(u) s_accts.Contains(u.Id) And u.SectionId = section.SectionId).ToListAsync()
 
             ' Assign students that don't belong to that section
-            Dim nonStudents As List(Of ApplicationUser) = db.Users.Where(Function(u) s_accts.Contains(u.Id) And u.SectionId Is Nothing).ToList()
+            Dim nonStudents As List(Of ApplicationUser) = Await db.Users.Where(Function(u) s_accts.Contains(u.Id) And u.SectionId Is Nothing).ToListAsync()
 
             msm.Students = currentStudents.Select(Function(ss) New UsersSectionModel With {
             .Name = ss.getFullName, .UserId = ss.Id, .SectionId = ss.SectionId}).ToList()

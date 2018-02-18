@@ -1,5 +1,6 @@
 ﻿Imports System.Data.Entity
 Imports System.Net
+Imports System.Threading.Tasks
 Imports System.Web.Mvc
 Imports Microsoft.AspNet.Identity
 Imports Microsoft.AspNet.Identity.Owin
@@ -893,19 +894,28 @@ Namespace Controllers
         '
         '
         ' Conversations
-        Function Accounts() As ActionResult
+        Async Function Accounts() As Task(Of ActionResult)
             Dim UserManager = HttpContext.GetOwinContext().GetUserManager(Of ApplicationUserManager)()
-            Dim users = db.Users.Where(Function(u) u.Email <> User.Identity.Name).ToList()
 
-            Dim accts As List(Of AccountsViewModel) = users.Select(Function(a) New AccountsViewModel() With {
-                .UserId = a.Id,
-                .Name = a.getFullName,
-                .Email = a.Email,
-                .IsDisabled = a.IsDisabled,
-                .Role = String.Join(",", UserManager.GetRoles(a.Id))
-            }).ToList()
+            Dim acctss As List(Of AccountsViewModel) = Await db.Users.Where(Function(a) a.Email <> User.Identity.Name).Select(Function(s) New AccountsViewModel() With {
+            .UserId = s.Id,
+            .Name = s.LastName + " " + s.FirstName + " " + s.MiddleName,
+            .Email = s.Email,
+            .IsDisabled = s.IsDisabled,
+            .Role = db.Roles.FirstOrDefault(Function(r) r.Id = s.Roles.FirstOrDefault().RoleId).Name
+            }).ToListAsync()
 
-            Return View(accts)
+            'Dim users = db.Users.Where(Function(u) u.Email <> User.Identity.Name).ToList()
+
+            'Dim accts As List(Of AccountsViewModel) = users.Select(Function(a) New AccountsViewModel() With {
+            '    .UserId = a.Id,
+            '    .Name = a.getFullName,
+            '    .Email = a.Email,
+            '    .IsDisabled = a.IsDisabled,
+            '    .Role = String.Join(",", UserManager.GetRoles(a.Id))
+            '}).ToList()
+
+            Return View(acctss)
         End Function
 
         Function Conversations() As ActionResult
@@ -913,16 +923,33 @@ Namespace Controllers
         End Function
 
         <Route("Conversation/{id}")>
-        Function OpenConversation(ByVal id As Integer?)
+        Function OpenConversation(ByVal id As String)
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             End If
-            Dim conversation As Conversation = db.Conversations.Find(id)
-            If IsNothing(conversation) Then
-                Return HttpNotFound()
-            End If
 
-            Return View(conversation)
+            Dim cue As String = User.Identity.Name
+
+            Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Id = id)
+            Dim cu As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.UserName = cue)
+
+            If u Is Nothing Or cu Is Nothing Then
+                Return RedirectToAction("Accounts")
+            Else
+                Dim conversation As Conversation = db.Conversations.FirstOrDefault(Function(c) (c.ReceiverId = u.Id And c.SenderId = cu.Id) Or (c.SenderId = u.Id And c.ReceiverId = cu.Id))
+
+                If conversation Is Nothing Then
+                    Dim nc As New Conversation With {.SenderId = cu.Id, .ReceiverId = u.Id, .DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))}
+                    db.Conversations.Add(nc)
+                    db.SaveChanges()
+
+                    Dim nm As New Message With {.UserId = cu.Id, .ConversationId = nc.ConversationId, .Conversation = nc}
+                    Return View(nm)
+                Else
+                    Dim nm As New Message With {.UserId = cu.Id, .ConversationId = conversation.ConversationId, .Conversation = conversation}
+                    Return View(nm)
+                End If
+            End If
         End Function
 
         Function SendMessage()

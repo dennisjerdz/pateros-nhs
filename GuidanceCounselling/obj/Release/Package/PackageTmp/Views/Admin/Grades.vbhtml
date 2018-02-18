@@ -40,6 +40,9 @@ End Code
                             <td style="text-align:right;">
                                 <a class="btn btn-xs btn-warning" href="@Url.Action("GradesEdit", New With {.id = item.GradeId})">Edit Info</a>
                                 <a class="btn btn-xs btn-info" href="@Url.Action("Sections", New With {.id = item.GradeId})">Manage Sections</a>
+                                @If (item.Sections.Count = 0) Then
+                                    @<a Class="btn btn-xs btn-danger" href="@Url.Action("GradesDelete", New With {.id = item.GradeId})">Delete Grade</a>
+                                End If
                             </td>
                         </tr>
                     Next
