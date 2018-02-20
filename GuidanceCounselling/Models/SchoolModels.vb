@@ -77,7 +77,7 @@ Public Class Conversation
 
     Public Property DateCreated As DateTimeOffset
 
-    Public Property Messages As List(Of Message)
+    Public Overridable Property Messages As List(Of Message)
 End Class
 
 Public Class Message

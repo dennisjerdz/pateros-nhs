@@ -952,15 +952,35 @@ Namespace Controllers
             End If
         End Function
 
-        Function SendMessage()
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        <Route("Conversation/{id}")>
+        Function OpenConversation(model As Message)
+            model.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
+
+            Dim cu As String = User.Identity.Name
+            model.UserId = db.Users.FirstOrDefault(Function(u) u.UserName = cu).Id
+
+            If ModelState.IsValid Then
+                db.Messages.Add(model)
+                db.SaveChanges()
+
+                Dim c As Conversation = db.Conversations.FirstOrDefault(Function(o) o.ConversationId = model.ConversationId)
+
+                If c.ReceiverId = model.UserId Then
+                    Return RedirectToAction("OpenConversation", New With {.id = c.SenderId})
+                End If
+
+                If c.SenderId = model.UserId Then
+                    Return RedirectToAction("OpenConversation", New With {.id = c.ReceiverId})
+                End If
+            End If
 
             Return View()
         End Function
 
-        <HttpPost()>
-        <ValidateAntiForgeryToken>
-        <Route("Conversation/{id}")>
-        Function SendMessage(model As Conversation)
+        Function SendMessage()
+
             Return View()
         End Function
     End Class

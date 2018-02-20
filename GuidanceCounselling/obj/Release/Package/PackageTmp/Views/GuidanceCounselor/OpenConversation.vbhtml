@@ -44,30 +44,37 @@ End Code
     <div class="row">
         <div class="col-md-12">
             <div style="background-color:#fafafa; padding:15px; border-radius:4px; height:600px; overflow-y:scroll;">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div style="background-color:#bababa; font-size:1.2em; padding:12px; border-radius:4px; text-align:justify; text-align-last:left; color:white; display:inline-block;">
-                            What is Lorem Ipsum?
-                        </div>
-                        <div style="margin-bottom:10px; color:#cacaca;">02-19-2018 3 PM</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-6">
-                        <div style="background-color:#208bff; font-size:1.2em; padding:16px; border-radius:4px; text-align:justify; text-align-last:right; color:white; display:inline-block; float:right;">
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
-                        </div>
-                        <div style="margin-bottom:10px; color:#cacaca; float:right;">02-19-2018 4 PM</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div style="background-color:#bababa; font-size:1.2em; padding:16px; border-radius:4px; text-align:justify; text-align-last:left; color:white; display:inline-block;">
-                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.
-                        </div>
-                        <div style="margin-bottom:10px; color:#cacaca;">02-19-2018 4 PM</div>
-                    </div>
-                </div>
+                @If Model.Conversation.Messages IsNot Nothing Then
+                    @For Each item As Message In Model.Conversation.Messages.OrderByDescending(Function(n) n.DateCreated)
+                    If item.User.Email = User.Identity.Name Then
+                            @<text>
+                                <div Class="row">
+                                    <div Class="col-md-6 col-md-offset-6">
+                                        <div style="width:100%; overflow:hidden; margin-top:10px;">
+                                            <div style="background-color:#208bff; font-size:1.1em; padding:10px; border-radius:4px; text-align:justify; text-align-last:right; color:white; display:inline-block; float:right;">
+                                                @item.Content
+                                            </div>
+                                        </div>
+                                        <div style="margin-top:4px; color:#cacaca; float:right; display:block;">@item.DateCreated</div>
+                                    </div>
+                                </div>
+                            </text>
+                        Else
+                            @<text>
+                                <div Class="row">
+                                    <div Class="col-md-6">
+                                        <div style="width:100%; overflow:hidden; margin-top:10px;">
+                                            <div style="background-color:#bababa; font-size:1.1em; padding:10px; border-radius:4px; text-align:justify; text-align-last:left; color:white; display:inline-block;">
+                                                @item.Content
+                                            </div>
+                                        </div>
+                                        <div style="margin-top:4px; color:#cacaca; display:block;">@item.DateCreated</div>
+                                    </div>
+                                </div>
+                            </text>
+                        End If
+                    Next
+                End If
             </div>
         </div>
     </div>

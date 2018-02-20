@@ -416,6 +416,12 @@
     <Content Include="Views\GuidanceCounselor\Conversations.vbhtml" />
     <Content Include="Views\GuidanceCounselor\Accounts.vbhtml" />
     <Content Include="Views\GuidanceCounselor\OpenConversation.vbhtml" />
+    <Content Include="Views\FamilyMember\Conversations.vbhtml" />
+    <Content Include="Views\Admin\Conversations.vbhtml" />
+    <Content Include="Views\Student\Conversations.vbhtml" />
+    <Content Include="Views\Student\OpenConversation.vbhtml" />
+    <Content Include="Views\FamilyMember\OpenConversation.vbhtml" />
+    <Content Include="Views\Admin\OpenConversation.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

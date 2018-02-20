@@ -32,7 +32,7 @@ End Code
                 </thead>
 
                 <tbody>
-                    @For Each item As Conversation In Model.OrderByDescending(Function(a) a.Messages)
+                    @For Each item As Conversation In Model
                         @<tr>
                             <td>
                                 @If User.Identity.Name = item.Receiver.Email Then
