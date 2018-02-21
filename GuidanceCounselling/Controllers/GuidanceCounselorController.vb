@@ -736,21 +736,31 @@ Namespace Controllers
         '
         ' Student Grades
 
-        Function Students() As ActionResult
+        Async Function Students() As Task(Of ActionResult)
             Dim UserManager = HttpContext.GetOwinContext().GetUserManager(Of ApplicationUserManager)()
             Dim users = db.Users.Where(Function(u) u.Email <> User.Identity.Name).ToList()
 
-            Dim accts As List(Of StudentsViewModel) = users.Select(Function(a) New StudentsViewModel() With {
-                .UserId = a.Id,
-                .Name = a.getFullName,
-                .Email = a.Email,
-                .IsDisabled = a.IsDisabled,
-                .Grade = a.Section.Grade.Name,
-                .Section = a.Section.Name,
-            .Role = String.Join(",", UserManager.GetRoles(a.Id))
-            }).ToList()
+            Dim acctss As List(Of StudentsViewModel) = Await db.Users.Where(Function(a) a.Email <> User.Identity.Name).Select(Function(s) New StudentsViewModel() With {
+            .UserId = s.Id,
+            .Name = s.LastName + ", " + s.FirstName + " " + s.MiddleName,
+            .Email = s.Email,
+            .IsDisabled = s.IsDisabled,
+            .Grade = If(s.Section IsNot Nothing, s.Section.Grade.Name, ""),
+            .Section = If(s.Section IsNot Nothing, s.Section.Name, ""),
+            .Role = db.Roles.FirstOrDefault(Function(r) r.Id = s.Roles.FirstOrDefault().RoleId).Name
+            }).ToListAsync()
 
-            Return View(accts.Where(Function(c) c.Role = "Student").ToList())
+            'Dim accts As List(Of StudentsViewModel) = users.Select(Function(a) New StudentsViewModel() With {
+            '.UserId = a.Id,
+            '.Name = a.getFullName,
+            '.Email = a.Email,
+            '.IsDisabled = a.IsDisabled,
+            '.Grade = If(a.Section IsNot Nothing, a.Section.Grade.Name, ""),
+            '.Section = If(a.Section IsNot Nothing, a.Section.Name, ""),
+            '.Role = String.Join(",", UserManager.GetRoles(a.Id))
+            '}).ToList()
+
+            Return View(acctss.Where(Function(c) c.Role = "Student").ToList())
         End Function
 
         <Route("Student/{id}/Grades")>

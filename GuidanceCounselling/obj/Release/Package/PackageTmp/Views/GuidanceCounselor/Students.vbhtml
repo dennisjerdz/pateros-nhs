@@ -38,7 +38,11 @@ End Code
                             <td>@item.Name</td>
                             <td>@item.Email</td>
                             <td>@item.Role</td>
-                            <td>@item.Grade - @item.Section</td>
+                            <td>
+                                @If item.Section IsNot Nothing Then
+                                    @<text>@item.Grade - @item.Section</text>
+                                End If
+                            </td>
                             <td>
                                 @Code
                                     If item.IsDisabled = True Then

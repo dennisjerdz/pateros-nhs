@@ -8,7 +8,6 @@ End Code
         <div class="col-md-9">
             <p>
                 @ViewBag.Title / List
-                <a class="header-btn btn btn-info" href="@Url.Action("AddAnnouncement")"><span class="glyphicon glyphicon-plus"></span>Add</a>
             </p>
         </div>
 
