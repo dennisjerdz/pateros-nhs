@@ -14,6 +14,8 @@ Public Class AccountController
     Private _signInManager As ApplicationSignInManager
     Private _userManager As ApplicationUserManager
 
+    Private db As New ApplicationDbContext
+
     Public Sub New()
     End Sub
 
@@ -49,6 +51,18 @@ Public Class AccountController
         End If
 
         ViewData!ReturnUrl = returnUrl
+
+        Dim wsData As List(Of WebsiteConfig) = db.WebsiteConfig.ToList()
+
+        Dim ws As New HttpCookie("ws")
+        ws("Sidebar-Color") = wsData.FirstOrDefault(Function(w) w.Name = "Sidebar-Color").Value.ToString()
+        ws("Sidebar-Text-color") = wsData.FirstOrDefault(Function(w) w.Name = "Sidebar-Text-Color").Value.ToString()
+        ws("Nav-Text-Color") = wsData.FirstOrDefault(Function(w) w.Name = "Nav-Text-Color").Value.ToString()
+        ws("Data-Body-Color") = wsData.FirstOrDefault(Function(w) w.Name = "Data-Body-Color").Value.ToString()
+        ws("Logo-Location") = wsData.FirstOrDefault(Function(w) w.Name = "Logo-Location").Value.ToString()
+        ws.Expires.AddDays(1)
+        Response.Cookies.Add(ws)
+
         Return View()
     End Function
 
@@ -79,6 +93,10 @@ Public Class AccountController
         Dim result = Await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout:=False)
         Select Case result
             Case SignInStatus.Success
+                Dim newLogin As LoginHistory = New LoginHistory() With {.Name = User.getFullName, .Login = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))}
+                db.LoginHistory.Add(newLogin)
+                db.SaveChanges()
+
                 Return RedirectToLocal(returnUrl)
             Case SignInStatus.LockedOut
                 Return View("Lockout")

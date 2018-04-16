@@ -12,7 +12,19 @@ End Code
                     @Html.AntiForgeryToken()
                     @<text>
                         <center>
-                            <img class="img-responsive" src="~/Content/logo.jpg" style="margin-bottom:20px;"/>
+                            @code
+                                Dim ws As HttpCookie = Request.Cookies("ws")
+
+                                If ws IsNot Nothing Then
+                                    Dim logoLocation As String = ws("Logo-Location").ToString()
+
+                                    @<img Class="img-responsive" src="@logoLocation" style="margin-bottom:20px;"/>
+                                Else
+                                    @<img class="img-responsive" src="~/Content/logo.jpg" style="margin-bottom:20px;"/>
+                                End If
+                            End Code
+
+                            
                         </center>
                         
                         @Html.ValidationSummary(True, "", New With {.class = "text-danger"})

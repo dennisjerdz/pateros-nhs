@@ -734,6 +734,113 @@ Namespace Controllers
         '
         '
         '
+        ' Student Exams
+
+        Async Function AssignedExams(ByVal id As String) As Task(Of ActionResult)
+            Dim u As ApplicationUser = Await db.Users.FirstOrDefaultAsync(Function(a) a.Id = id.ToString())
+
+            If u Is Nothing Then
+                Return HttpNotFound()
+            End If
+
+            Dim exams As List(Of ExamStudent) = Await db.ExamStudents.Where(Function(e) e.UserId = id).OrderByDescending(Function(s) s.DateCreated).ToListAsync()
+            Return View(exams)
+        End Function
+
+        <Route("Exam/{id}/Results")>
+        Function ExamResults(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim exam As ExamStudent = db.ExamStudents.Find(id)
+            If IsNothing(exam) Then
+                Return HttpNotFound()
+            End If
+
+            Return View(exam)
+        End Function
+
+        '
+        '
+        '
+        '
+        ' NCAE Grades
+        <Route("Student/{id}/NCAE/Grades")>
+        Function NCAEGrades(ByVal id As String) As ActionResult
+            Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Id = id.ToString())
+
+            Return View(u)
+        End Function
+
+        <Route("Student/{id}/NCAE/Grades/Add")>
+        Function AddNCAEGrade(ByVal id As String) As ActionResult
+            Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Id = id.ToString())
+
+            If u Is Nothing Then
+                Return HttpNotFound()
+            End If
+
+            Dim g As New NCAEGrade() With {.UserId = u.Id}
+
+            Return View(g)
+        End Function
+
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        <Route("Student/{id}/NCAE/Grades/Add")>
+        Function AddNCAEGrade(<Bind(Include:="StudentGradeId,UserId,Name")> ByVal ncaeGrade As NCAEGrade) As ActionResult
+            ncaeGrade.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
+
+            If ModelState.IsValid Then
+                db.NCAEGrades.Add(ncaeGrade)
+
+                Dim nsl As List(Of NCAEGradeSubject) = Nothing
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Science", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Natural Science", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Aquaculture and Agriculture/Forestry", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Engineering", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Business and Finance/Commerce", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Professional Services", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Personal Services", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Computer & Technology", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Media & Communication", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Community Services", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Architecture and Construction", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "The Arts", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Fashion", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Military and Law Enforcement", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nsl.Add(New NCAEGradeSubject() With {.Name = "Spiritual Vocation", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+
+                db.NCAEGradeSubjects.AddRange(nsl)
+
+                Dim nal As List(Of NCAEGradeAptitude) = Nothing
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Scientific Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Reading Comprehension", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Verbal Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Mathematical Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Logical Reasoning Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Clerical Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Non-verbal Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Visual Manipulative Skill", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Humanities and Social Science", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Science, Technology, Engineering and Mathematics", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Accountancy, Business and Management", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+
+                db.NCAEGradeAptitudes.AddRange(nal)
+
+                db.SaveChanges()
+                Return RedirectToAction("NCAEGrades", New With {.id = ncaeGrade.UserId})
+            End If
+
+            Return View(ncaeGrade)
+        End Function
+
+        '
+        '
+        '
+        '
         ' Student Grades
 
         Async Function Students() As Task(Of ActionResult)
@@ -985,11 +1092,6 @@ Namespace Controllers
                     Return RedirectToAction("OpenConversation", New With {.id = c.ReceiverId})
                 End If
             End If
-
-            Return View()
-        End Function
-
-        Function SendMessage()
 
             Return View()
         End Function

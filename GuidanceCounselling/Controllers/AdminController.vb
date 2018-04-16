@@ -9,7 +9,7 @@ Imports Microsoft.AspNet.Identity.Owin
 Namespace Controllers
     <RoutePrefix("Admin")>
     <Route("{action=Index}")>
-    <Authorize(Roles:="IT Admin")>
+    <Authorize(Roles:="IT Admin, Admin")>
     Public Class AdminController
         Inherits Controller
 
@@ -303,12 +303,18 @@ Namespace Controllers
         '
         '
         '
-        'Students
+        ' Admin Functions
 
         Function Students() As ActionResult
             Dim student_role As String = db.Roles.FirstOrDefault(Function(r) r.Name = "Student").Id
             Dim users = db.Users.Where(Function(u) u.Roles.Any(Function(r) r.RoleId = student_role)).ToList()
             Return View(users)
+        End Function
+
+        Async Function LoginHistory() As Task(Of ActionResult)
+            Dim logins As List(Of LoginHistory) = Await db.LoginHistory.ToListAsync()
+
+            Return View(logins)
         End Function
 
         '
@@ -462,6 +468,40 @@ Namespace Controllers
 
             Return View(fm)
         End Function
+
+        '
+        '
+        '
+        '
+        ' Website Config
+        Function WebsiteConfig() As ActionResult
+            Return View(db.WebsiteConfig.ToList())
+        End Function
+
+        <Route("WebsiteConfig/{id}/Edit")>
+        Function EditWebsiteConfig(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim websiteConfig As WebsiteConfig = db.WebsiteConfig.Find(id)
+            If IsNothing(websiteConfig) Then
+                Return HttpNotFound()
+            End If
+            Return View(websiteConfig)
+        End Function
+
+        <HttpPost()>
+        <Route("WebsiteConfig/{id}/Edit")>
+        <ValidateAntiForgeryToken()>
+        Function EditWebsiteConfig(<Bind(Include:="WebSiteConfigId,Name,Value")> ByVal websiteConfig As WebsiteConfig) As ActionResult
+            If ModelState.IsValid Then
+                db.Entry(websiteConfig).State = EntityState.Modified
+                db.SaveChanges()
+                Return RedirectToAction("WebsiteConfig")
+            End If
+            Return View(websiteConfig)
+        End Function
+
 
         '
         '

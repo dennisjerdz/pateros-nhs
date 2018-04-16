@@ -53,6 +53,7 @@ End Code
                                 End Code
                             </td>
                             <td style="text-align:right;">
+                                <a class="btn btn-xs btn-warning" href="@Url.Action("AssignedExams", New With {.id = item.UserId})">View Assigned Exams</a>
                                 <a class="btn btn-xs btn-info" href="@Url.Action("Grades", New With {.id = item.UserId})">View Grades</a>
                             </td>
                         </tr>

@@ -33,6 +33,11 @@ Namespace Migrations
                 roleManager.Create(role)
             End If
 
+            If Not (context.Roles.Any(Function(r) r.Name = "Admin")) Then
+                Dim role As New IdentityRole With {.Name = "Admin"}
+                roleManager.Create(role)
+            End If
+
             If Not (context.Roles.Any(Function(r) r.Name = "Guidance Counselor")) Then
                 Dim role As New IdentityRole With {.Name = "Guidance Counselor"}
                 roleManager.Create(role)
@@ -70,6 +75,16 @@ Namespace Migrations
 
             Dim userManager As New UserManager(Of ApplicationUser)(New UserStore(Of ApplicationUser)(context))
 
+            If Not (context.Users.Any(Function(u) u.Email = "admin@gmail.com")) Then
+                Dim user As New ApplicationUser With {
+                    .FirstName = "A", .MiddleName = "", .LastName = "Admin", .UserName = "admin@gmail.com",
+                    .Email = "admin@gmail.com", .BirthDate = Date.Now, .EmailConfirmed = True, .IsDisabled = False
+                }
+
+                userManager.Create(user, "Testing@123")
+                userManager.AddToRole(user.Id, "Admin")
+            End If
+
             If Not (context.Users.Any(Function(u) u.Email = "itadmin@gmail.com")) Then
                 Dim user As New ApplicationUser With {
                     .FirstName = "IT", .MiddleName = "", .LastName = "Admin", .UserName = "itadmin@gmail.com",
@@ -88,6 +103,52 @@ Namespace Migrations
 
                 userManager.Create(user, "Testing@123")
                 userManager.AddToRole(user.Id, "Guidance Counselor")
+            End If
+
+            ' Website UI Settings
+            If Not (context.WebsiteConfig.Any(Function(w) w.Name = "Sidebar-Color")) Then
+                Dim nw As New WebsiteConfig With {
+                    .Name = "Sidebar-Color", .Value = "#44b1df"
+                }
+
+                context.WebsiteConfig.Add(nw)
+                context.SaveChanges()
+            End If
+
+            If Not (context.WebsiteConfig.Any(Function(w) w.Name = "Sidebar-Text-Color")) Then
+                Dim nw As New WebsiteConfig With {
+                    .Name = "Sidebar-Text-Color", .Value = "#ffffff"
+                }
+
+                context.WebsiteConfig.Add(nw)
+                context.SaveChanges()
+            End If
+
+            If Not (context.WebsiteConfig.Any(Function(w) w.Name = "Nav-Text-Color")) Then
+                Dim nw As New WebsiteConfig With {
+                    .Name = "Nav-Text-Color", .Value = "#44b1df"
+                }
+
+                context.WebsiteConfig.Add(nw)
+                context.SaveChanges()
+            End If
+
+            If Not (context.WebsiteConfig.Any(Function(w) w.Name = "Data-Body-Color")) Then
+                Dim nw As New WebsiteConfig With {
+                    .Name = "Data-Body-Color", .Value = "#fafafa"
+                }
+
+                context.WebsiteConfig.Add(nw)
+                context.SaveChanges()
+            End If
+
+            If Not (context.WebsiteConfig.Any(Function(w) w.Name = "Logo-Location")) Then
+                Dim nw As New WebsiteConfig With {
+                    .Name = "Logo-Location", .Value = "http://pateros-nhs.azurewebsites.net/Content/logo.jpg"
+                }
+
+                context.WebsiteConfig.Add(nw)
+                context.SaveChanges()
             End If
         End Sub
 

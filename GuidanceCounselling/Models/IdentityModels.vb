@@ -31,6 +31,7 @@ Public Class ApplicationUser
     Public Overridable Property ExamStudents As List(Of ExamStudent)
     Public Overridable Property Messages As List(Of Message)
     Public Overridable Property Grades As List(Of StudentGrade)
+    Public Overridable Property NCAEGrades As List(Of NCAEGrade)
 
     Public Function getFullName() As String
         ' Return $"{Me.LastName}, {Me.FirstName} {Me.MiddleName.Substring(0, 1)}."
@@ -129,6 +130,11 @@ Public Class ApplicationDbContext
     Public Property Messages As DbSet(Of Message)
     Public Property StudentGrades As DbSet(Of StudentGrade)
     Public Property SubjectGrades As DbSet(Of SubjectGrade)
+    Public Property WebsiteConfig As DbSet(Of WebsiteConfig)
+    Public Property LoginHistory As DbSet(Of LoginHistory)
+    Public Property NCAEGrades As DbSet(Of NCAEGrade)
+    Public Property NCAEGradeSubjects As DbSet(Of NCAEGradeSubject)
+    Public Property NCAEGradeAptitudes As DbSet(Of NCAEGradeAptitude)
 
     Public Shared Function Create() As ApplicationDbContext
         Return New ApplicationDbContext()

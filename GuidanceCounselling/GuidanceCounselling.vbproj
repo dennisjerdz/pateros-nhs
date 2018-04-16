@@ -243,6 +243,26 @@
       <DependentUpon>201802082235082_added-expiryDate-on-Announcements.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201802082235082_added-expiryDate-on-Announcements.vb" />
+    <Compile Include="Migrations\201803301148402_Added-WebsiteSettings.Designer.vb">
+      <DependentUpon>201803301148402_Added-WebsiteSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803301148402_Added-WebsiteSettings.vb" />
+    <Compile Include="Migrations\201804010352454_Added-LoginHistory.Designer.vb">
+      <DependentUpon>201804010352454_Added-LoginHistory.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804010352454_Added-LoginHistory.vb" />
+    <Compile Include="Migrations\201804011555553_NCAEGrades.Designer.vb">
+      <DependentUpon>201804011555553_NCAEGrades.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804011555553_NCAEGrades.vb" />
+    <Compile Include="Migrations\201804011559035_NCAEGrades-fix-identity-model.Designer.vb">
+      <DependentUpon>201804011559035_NCAEGrades-fix-identity-model.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804011559035_NCAEGrades-fix-identity-model.vb" />
+    <Compile Include="Migrations\201804011750443_added-ncaegrade-datecreated.Designer.vb">
+      <DependentUpon>201804011750443_added-ncaegrade-datecreated.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804011750443_added-ncaegrade-datecreated.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\ExamModels.vb" />
@@ -295,6 +315,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802082235082_added-expiryDate-on-Announcements.resx">
       <DependentUpon>201802082235082_added-expiryDate-on-Announcements.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803301148402_Added-WebsiteSettings.resx">
+      <DependentUpon>201803301148402_Added-WebsiteSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804010352454_Added-LoginHistory.resx">
+      <DependentUpon>201804010352454_Added-LoginHistory.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804011555553_NCAEGrades.resx">
+      <DependentUpon>201804011555553_NCAEGrades.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804011559035_NCAEGrades-fix-identity-model.resx">
+      <DependentUpon>201804011559035_NCAEGrades-fix-identity-model.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804011750443_added-ncaegrade-datecreated.resx">
+      <DependentUpon>201804011750443_added-ncaegrade-datecreated.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -422,6 +457,11 @@
     <Content Include="Views\Student\OpenConversation.vbhtml" />
     <Content Include="Views\FamilyMember\OpenConversation.vbhtml" />
     <Content Include="Views\Admin\OpenConversation.vbhtml" />
+    <Content Include="Views\Admin\WebsiteConfig.vbhtml" />
+    <Content Include="Views\Admin\EditWebsiteConfig.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\AssignedExams.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\ExamResults.vbhtml" />
+    <Content Include="Views\Admin\LoginHistory.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

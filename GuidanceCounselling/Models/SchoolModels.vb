@@ -1,4 +1,5 @@
-﻿Imports System.ComponentModel.DataAnnotations.Schema
+﻿Imports System.ComponentModel.DataAnnotations
+Imports System.ComponentModel.DataAnnotations.Schema
 Imports GuidanceCounselling
 
 Public Class Grade
@@ -124,4 +125,70 @@ Public Class SubjectGrade
     Public Property Grade As Decimal
 
     Public Property DateCreated As DateTimeOffset
+End Class
+
+Public Class WebsiteConfig
+    Public Sub New()
+
+    End Sub
+
+    Public Property WebSiteConfigId As Integer
+    Public Property Name As String
+    Public Property Value As String
+End Class
+
+Public Class LoginHistory
+    Public Sub New()
+
+    End Sub
+
+    Public Property LoginHistoryId As Integer
+    Public Property Name As String
+    Public Property Login As DateTimeOffset
+End Class
+
+Public Class NCAEGrade
+    Public Sub New()
+
+    End Sub
+
+    Public Property NCAEGradeId As Integer
+    <Required>
+    Public Property Name As String
+
+    Public Property UserId As String
+    Public Overridable Property User As ApplicationUser
+
+    Public Property DateCreated As DateTimeOffset
+End Class
+
+Public Class NCAEGradeSubject
+    Public Sub New()
+
+    End Sub
+
+    Public Property NCAEGradeSubjectId As Integer
+    Public Property Name As String
+
+    Public Property PercentageScore As Decimal?
+    ' Public Property PreferenceLevel As Integer? HP,NP,LP,VLP
+    Public Property RankOverall As Integer?
+
+    Public Property NCAEGradeId As Integer
+    Public Overridable Property NCAEGrade As NCAEGrade
+End Class
+
+Public Class NCAEGradeAptitude
+    Public Sub New()
+
+    End Sub
+
+    Public Property NCAEGradeAptitudeId As Integer
+    Public Property Name As String
+
+    Public Property StandardScore As Decimal?
+    Public Property PercentileRank As Integer?
+
+    Public Property NCAEGradeId As Integer
+    Public Overridable Property NCAEGrade As NCAEGrade
 End Class

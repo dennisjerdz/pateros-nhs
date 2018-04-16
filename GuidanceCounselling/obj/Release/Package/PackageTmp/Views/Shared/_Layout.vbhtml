@@ -12,6 +12,38 @@
     @RenderSection("styles", required:=False)
     
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+
+    @code
+        Dim ws As HttpCookie = Request.Cookies("ws")
+
+        If ws IsNot Nothing Then
+            Dim sidebarColor As String = ws("Sidebar-Color").ToString()
+            Dim sidebarTextColor As String = ws("Sidebar-Text-color").ToString()
+            Dim navTextColor As String = ws("Nav-Text-Color").ToString()
+            Dim dataBodyColor As String = ws("Data-Body-Color").ToString()
+            Dim logoLocation As String = ws("Logo-Location").ToString()
+
+            @<text>
+                <style>
+                    #sidebar-wrapper{
+                        background: @sidebarColor !important;
+                    }
+
+                    .sidebar-nav li a{
+                        color: @sidebarTextColor !important;
+                    }
+
+                    .navbar-nav>li>a, .navbar-brand{
+                        color: @navTextColor !important;
+                    }
+
+                    .body-data{
+                        background: @dataBodyColor !important;
+                    }
+                </style>
+            </text>
+        End If
+    End Code
 </head>
 <body>
 
@@ -26,6 +58,23 @@
                     </a>
                 </li>
                 -->
+                @If User.IsInRole("Admin") Then
+                    @<text>
+                        <li>
+                            <a href="@Url.Action("Students", "GuidanceCounselor", New With {.id = Nothing})">Students</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("LoginHistory", "Admin", New With {.id = Nothing})">Login History</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Conversations", "Admin", New With {.id = Nothing})">Conversations</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("WebsiteConfig", "Admin", New With {.id = Nothing})">Website UI Settings</a>
+                        </li>
+                    </text>
+                End If
+
                 @If User.IsInRole("IT Admin") Then
                     @<text>
                         <li>
