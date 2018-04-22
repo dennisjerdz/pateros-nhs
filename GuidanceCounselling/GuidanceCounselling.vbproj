@@ -263,6 +263,14 @@
       <DependentUpon>201804011750443_added-ncaegrade-datecreated.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201804011750443_added-ncaegrade-datecreated.vb" />
+    <Compile Include="Migrations\201804161804012_ncaegradesUpdate.Designer.vb">
+      <DependentUpon>201804161804012_ncaegradesUpdate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804161804012_ncaegradesUpdate.vb" />
+    <Compile Include="Migrations\201804221833116_typeForNCAEGradeAptitude.Designer.vb">
+      <DependentUpon>201804221833116_typeForNCAEGradeAptitude.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804221833116_typeForNCAEGradeAptitude.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\ExamModels.vb" />
@@ -330,6 +338,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804011750443_added-ncaegrade-datecreated.resx">
       <DependentUpon>201804011750443_added-ncaegrade-datecreated.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804161804012_ncaegradesUpdate.resx">
+      <DependentUpon>201804161804012_ncaegradesUpdate.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804221833116_typeForNCAEGradeAptitude.resx">
+      <DependentUpon>201804221833116_typeForNCAEGradeAptitude.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -462,6 +476,9 @@
     <Content Include="Views\GuidanceCounselor\AssignedExams.vbhtml" />
     <Content Include="Views\GuidanceCounselor\ExamResults.vbhtml" />
     <Content Include="Views\Admin\LoginHistory.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\AddNCAEGrade.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\NCAEGrades.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\EditNCAEGrade.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

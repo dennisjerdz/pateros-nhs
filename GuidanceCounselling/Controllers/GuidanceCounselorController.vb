@@ -788,13 +788,14 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         <Route("Student/{id}/NCAE/Grades/Add")>
-        Function AddNCAEGrade(<Bind(Include:="StudentGradeId,UserId,Name")> ByVal ncaeGrade As NCAEGrade) As ActionResult
+        Function AddNCAEGrade(<Bind(Include:="UserId,Name")> ByVal ncaeGrade As NCAEGrade) As ActionResult
             ncaeGrade.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0))
 
             If ModelState.IsValid Then
                 db.NCAEGrades.Add(ncaeGrade)
+                db.SaveChanges()
 
-                Dim nsl As List(Of NCAEGradeSubject) = Nothing
+                Dim nsl As List(Of NCAEGradeSubject) = New List(Of NCAEGradeSubject)()
                 nsl.Add(New NCAEGradeSubject() With {.Name = "Science", .NCAEGradeId = ncaeGrade.NCAEGradeId})
                 nsl.Add(New NCAEGradeSubject() With {.Name = "Natural Science", .NCAEGradeId = ncaeGrade.NCAEGradeId})
                 nsl.Add(New NCAEGradeSubject() With {.Name = "Aquaculture and Agriculture/Forestry", .NCAEGradeId = ncaeGrade.NCAEGradeId})
@@ -813,20 +814,20 @@ Namespace Controllers
 
                 db.NCAEGradeSubjects.AddRange(nsl)
 
-                Dim nal As List(Of NCAEGradeAptitude) = Nothing
-                nal.Add(New NCAEGradeAptitude() With {.Name = "Scientific Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId})
-                nal.Add(New NCAEGradeAptitude() With {.Name = "Reading Comprehension", .NCAEGradeId = ncaeGrade.NCAEGradeId})
-                nal.Add(New NCAEGradeAptitude() With {.Name = "Verbal Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId})
-                nal.Add(New NCAEGradeAptitude() With {.Name = "Mathematical Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId})
-                nal.Add(New NCAEGradeAptitude() With {.Name = "Logical Reasoning Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                Dim nal As List(Of NCAEGradeAptitude) = New List(Of NCAEGradeAptitude)()
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Scientific Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId, .Type = 1})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Reading Comprehension", .NCAEGradeId = ncaeGrade.NCAEGradeId, .Type = 1})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Verbal Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId, .Type = 1})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Mathematical Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId, .Type = 1})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Logical Reasoning Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId, .Type = 1})
 
-                nal.Add(New NCAEGradeAptitude() With {.Name = "Clerical Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId})
-                nal.Add(New NCAEGradeAptitude() With {.Name = "Non-verbal Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId})
-                nal.Add(New NCAEGradeAptitude() With {.Name = "Visual Manipulative Skill", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Clerical Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId, .Type = 2})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Non-verbal Ability", .NCAEGradeId = ncaeGrade.NCAEGradeId, .Type = 2})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Visual Manipulative Skill", .NCAEGradeId = ncaeGrade.NCAEGradeId, .Type = 2})
 
-                nal.Add(New NCAEGradeAptitude() With {.Name = "Humanities and Social Science", .NCAEGradeId = ncaeGrade.NCAEGradeId})
-                nal.Add(New NCAEGradeAptitude() With {.Name = "Science, Technology, Engineering and Mathematics", .NCAEGradeId = ncaeGrade.NCAEGradeId})
-                nal.Add(New NCAEGradeAptitude() With {.Name = "Accountancy, Business and Management", .NCAEGradeId = ncaeGrade.NCAEGradeId})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Humanities and Social Science", .NCAEGradeId = ncaeGrade.NCAEGradeId, .Type = 3})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Science, Technology, Engineering and Mathematics", .NCAEGradeId = ncaeGrade.NCAEGradeId, .Type = 3})
+                nal.Add(New NCAEGradeAptitude() With {.Name = "Accountancy, Business and Management", .NCAEGradeId = ncaeGrade.NCAEGradeId, .Type = 3})
 
                 db.NCAEGradeAptitudes.AddRange(nal)
 
@@ -835,6 +836,24 @@ Namespace Controllers
             End If
 
             Return View(ncaeGrade)
+        End Function
+
+        <Route("Student/NCAE/Grades/{id}/Edit")>
+        Function EditNCAEGrade(ByVal id As Integer?) As ActionResult
+            Dim ng As NCAEGrade = db.NCAEGrades.FirstOrDefault(Function(n) n.NCAEGradeId = id)
+            Dim nge As New NCAEGradeEditModel(ng)
+            nge.StudentName = db.Users.FirstOrDefault(Function(s) s.Id = ng.UserId).getFullName
+            nge.NCAEGradeAptitudes = ng.NCAEGradeAptitudes.ToList()
+            nge.NCAEGradeSubjects = ng.NCAEGradeSubjects.ToList()
+
+            Return View(nge)
+        End Function
+
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        <Route("Student/NCAE/Grades/{id}/Edit")>
+        Function EditNCAEGrade(ByVal model As NCAEGradeEditModel) As ActionResult
+
         End Function
 
         '

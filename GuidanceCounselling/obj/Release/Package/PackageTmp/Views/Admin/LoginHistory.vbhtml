@@ -47,10 +47,7 @@ End Code
             var datatable = $("table").DataTable({
                 paging: true,
                 "pageLength": 10,
-                "dom": "<'table-responsive'rt><'window-footer'<'col-md-6'i><'col-md-6'p>>",
-                "columnDefs": [
-                    { "orderable": false, "targets": 2 }
-                ]
+                "dom": "<'table-responsive'rt><'window-footer'<'col-md-6'i><'col-md-6'p>>"
             });
 
             $(".all-search").keyup(function () {

@@ -160,6 +160,9 @@ Public Class NCAEGrade
     Public Overridable Property User As ApplicationUser
 
     Public Property DateCreated As DateTimeOffset
+
+    Public Overridable Property NCAEGradeSubjects As List(Of NCAEGradeSubject)
+    Public Overridable Property NCAEGradeAptitudes As List(Of NCAEGradeAptitude)
 End Class
 
 Public Class NCAEGradeSubject
@@ -188,7 +191,30 @@ Public Class NCAEGradeAptitude
 
     Public Property StandardScore As Decimal?
     Public Property PercentileRank As Integer?
+    Public Property Type As Integer?
 
     Public Property NCAEGradeId As Integer
     Public Overridable Property NCAEGrade As NCAEGrade
+End Class
+
+Public Class NCAEGradeEditModel
+    Public Sub New()
+
+    End Sub
+
+    Public Sub New(ByVal ng As NCAEGrade)
+        NCAEGradeId = ng.NCAEGradeId
+        Name = ng.Name
+        UserId = ng.UserId
+    End Sub
+
+    Public Property NCAEGradeId As Integer
+    <Required>
+    Public Property Name As String
+    Public Property StudentName As String
+
+    Public Property UserId As String
+
+    Public Property NCAEGradeSubjects As List(Of NCAEGradeSubject)
+    Public Property NCAEGradeAptitudes As List(Of NCAEGradeAptitude)
 End Class
