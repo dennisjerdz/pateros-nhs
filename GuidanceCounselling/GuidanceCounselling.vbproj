@@ -479,6 +479,7 @@
     <Content Include="Views\GuidanceCounselor\AddNCAEGrade.vbhtml" />
     <Content Include="Views\GuidanceCounselor\NCAEGrades.vbhtml" />
     <Content Include="Views\GuidanceCounselor\EditNCAEGrade.vbhtml" />
+    <Content Include="Views\Admin\EditWebsiteConfigLogo.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

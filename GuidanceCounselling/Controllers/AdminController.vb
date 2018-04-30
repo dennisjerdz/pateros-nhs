@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Entity
+Imports System.IO
 Imports System.Net
 Imports System.Threading.Tasks
 Imports System.Web.Mvc
@@ -487,7 +488,12 @@ Namespace Controllers
             If IsNothing(websiteConfig) Then
                 Return HttpNotFound()
             End If
-            Return View(websiteConfig)
+
+            If websiteConfig.Name = "Logo-Location" Then
+                Return View("EditWebsiteConfigLogo", Nothing)
+            Else
+                Return View(websiteConfig)
+            End If
         End Function
 
         <HttpPost()>
@@ -500,6 +506,32 @@ Namespace Controllers
                 Return RedirectToAction("WebsiteConfig")
             End If
             Return View(websiteConfig)
+        End Function
+
+        <HttpPost()>
+        <Route("WebsiteConfigUpload/{id}/Edit")>
+        Function EditWebsiteConfigLogo(ByVal postedFile As HttpPostedFileBase) As ActionResult
+            If postedFile IsNot Nothing Then
+                Dim path As String = Server.MapPath("~/Content/")
+
+                If Not Directory.Exists(path) Then
+                    Directory.CreateDirectory(path)
+                End If
+
+                Dim ext As String = System.IO.Path.GetExtension(postedFile.FileName)
+
+                ' Return Content(postedFile.FileName + " " + ext)
+
+                Try
+                    postedFile.SaveAs(path & postedFile.FileName)
+                Catch ex As Exception
+                    TempData("upload") = "fail"
+                    TempData("errMessage") = ex.Message
+                    Return RedirectToAction("WebsiteConfig")
+                End Try
+            End If
+
+            Return RedirectToAction("WebsiteConfig")
         End Function
 
 
