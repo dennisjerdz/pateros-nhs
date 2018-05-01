@@ -98,6 +98,21 @@ Namespace Controllers
             End Select
         End Function
 
+        Public Function DeleteQuestionGroup(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+            Dim qg As QuestionGroup = db.QuestionGroups.Find(id)
+            If IsNothing(qg) Then
+                Return HttpNotFound()
+            End If
+
+            db.QuestionGroups.Remove(qg)
+            db.SaveChanges()
+
+            Return RedirectToAction("QuestionGroups", New With {.id = Nothing})
+        End Function
+
         '
         '
         '

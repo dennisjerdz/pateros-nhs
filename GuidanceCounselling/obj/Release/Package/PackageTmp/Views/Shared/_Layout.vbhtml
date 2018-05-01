@@ -61,13 +61,13 @@
                 @If User.IsInRole("Admin") Then
                     @<text>
                         <li>
+                            <a href="@Url.Action("Accounts", "Admin", New With {.id = Nothing})">Accounts</a>
+                        </li>
+                        <li>
                             <a href="@Url.Action("Students", "GuidanceCounselor", New With {.id = Nothing})">Students</a>
                         </li>
                         <li>
                             <a href="@Url.Action("LoginHistory", "Admin", New With {.id = Nothing})">Login History</a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Conversations", "Admin", New With {.id = Nothing})">Conversations</a>
                         </li>
                         <li>
                             <a href="@Url.Action("WebsiteConfig", "Admin", New With {.id = Nothing})">Website UI Settings</a>
@@ -84,10 +84,21 @@
                             <a href="@Url.Action("Families", "Admin", New With {.id = Nothing})">Families</a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Conversations", "Admin", New With {.id = Nothing})">Conversations</a>
+                            <a href="@Url.Action("Grades", "Admin", New With {.id = Nothing})">Grades & Sections</a>
+                        </li>
+                    </text>
+                End If
+
+                @If User.IsInRole("Academic Adviser") Then
+                    @<text>
+                        <li>
+                            <a href="@Url.Action("Accounts", "GuidanceCounselor", New With {.id = Nothing})">Accounts</a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Grades", "Admin", New With {.id = Nothing})">Grades & Sections</a>
+                            <a href="@Url.Action("Conversations", "GuidanceCounselor", New With {.id = Nothing})">Conversations</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Students", "GuidanceCounselor", New With {.id = Nothing})">Students</a>
                         </li>
                     </text>
                 End If

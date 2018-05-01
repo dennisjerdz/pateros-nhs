@@ -68,9 +68,13 @@ End Code
                             <td style = "text-align:right;" >
                                 @Html.ActionLink("Edit Info", "EditQuestionGroup", New With {.id = item.QuestionGroupId}, New With {.class = "btn btn-xs btn-warning"})
                                 @Html.ActionLink("Manage Questions", "ManageQuestions", New With {.id = item.QuestionGroupId}, New With {.class = "btn btn-xs btn-primary"})
+
+                                @If item.ExamQuestionGroups.Count() = 0 And c = 0 Then
+                                    @Html.ActionLink("Delete", "DeleteQuestionGroup", New With {.id = item.QuestionGroupId}, New With {.class = "btn btn-xs btn-danger"})
+                                End If
                             </td>
                         </tr>
-                    Next
+                                    Next
                 </tbody>
             </table>
         </div>

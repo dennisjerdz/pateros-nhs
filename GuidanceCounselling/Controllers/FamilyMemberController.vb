@@ -116,5 +116,46 @@ Namespace Controllers
 
             Return View()
         End Function
+
+        '
+        '
+        '
+        '
+        ' Account
+        <Route("Account/Edit")>
+        Public Function EditAccount() As ActionResult
+            Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Email = User.Identity.Name)
+
+            Dim r As New UserEditModelL(u)
+
+            Return View(r)
+        End Function
+
+        <Route("Account/Edit")>
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Public Function EditAccount(model As UserEditModelL) As ActionResult
+            If ModelState.IsValid Then
+                Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Email = User.Identity.Name)
+
+                If IsNothing(u) Then
+                    Return HttpNotFound()
+                End If
+
+                u.FirstName = model.FirstName
+                u.MiddleName = model.MiddleName
+                u.LastName = model.LastName
+                u.IsDisabled = model.IsDisabled
+                u.Gender = model.Gender
+                u.UserName = model.Email
+                u.Email = model.Email
+
+                db.SaveChanges()
+
+                Return RedirectToAction("Accounts")
+            End If
+
+            Return View(model)
+        End Function
     End Class
 End Namespace

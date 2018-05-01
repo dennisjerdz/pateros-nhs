@@ -197,6 +197,7 @@
     <Compile Include="App_Start\IdentityConfig.vb" />
     <Compile Include="App_Start\RouteConfig.vb" />
     <Compile Include="App_Start\Startup.Auth.vb" />
+    <Compile Include="Controllers\AcademicAdviserController.vb" />
     <Compile Include="Controllers\AccountController.vb" />
     <Compile Include="Controllers\AdminController.vb" />
     <Compile Include="Controllers\FamilyMemberController.vb" />
@@ -515,6 +516,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AcademicAdviser\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
