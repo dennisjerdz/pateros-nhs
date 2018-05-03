@@ -9,7 +9,7 @@ end code
         <div class="col-md-9">
             <p>
                 @ViewBag.title / @Model.ExamStudentId / Results
-                <a class="header-btn btn btn-default" href="@Url.Action("AssignedExams", New With {.id = Nothing})"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+                <a class="header-btn btn btn-default" href="@Url.Action("AssignedExams", New With {.id = Model.UserId})"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
             </p>
         </div>
     </div>

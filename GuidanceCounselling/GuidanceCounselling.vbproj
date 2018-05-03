@@ -481,6 +481,8 @@
     <Content Include="Views\GuidanceCounselor\NCAEGrades.vbhtml" />
     <Content Include="Views\GuidanceCounselor\EditNCAEGrade.vbhtml" />
     <Content Include="Views\Admin\EditWebsiteConfigLogo.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\StudentSummaryResults.vbhtml" />
+    <Content Include="Views\FamilyMember\StudentSummaryResults.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

@@ -53,7 +53,8 @@ End Code
                                 End Code
                             </td>
                             <td style="text-align:right;">
-                                <a class="btn btn-xs btn-warning" href="@Url.Action("AssignedExams", New With {.id = item.UserId})">View Assigned Exams</a>
+                                <a class="btn btn-xs btn-warning" href="@Url.Action("AssignedExams", New With {.id = item.UserId})">Assigned Exams</a>
+                                <a class="btn btn-xs btn-primary" href="@Url.Action("StudentSummaryResults", New With {.id = item.UserId})">Summary Results</a>
                                 <a class="btn btn-xs btn-info" href="@Url.Action("Grades", New With {.id = item.UserId})">View Grades</a>
                                 <a class="btn btn-xs btn-info" href="@Url.Action("NCAEGrades", New With {.id = item.UserId})">View <strong>NCAE</strong> Grades</a>
                             </td>

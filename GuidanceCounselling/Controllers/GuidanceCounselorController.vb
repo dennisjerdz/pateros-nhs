@@ -904,6 +904,17 @@ Namespace Controllers
             Return View(acctss.Where(Function(c) c.Role = "Student").ToList())
         End Function
 
+        <Route("Student/SummaryResults/{id}")>
+        Async Function StudentSummaryResults(ByVal id As String) As Task(Of ActionResult)
+            Dim u As ApplicationUser = Await db.Users.FirstOrDefaultAsync(Function(a) a.Id = id.ToString())
+
+            If u Is Nothing Then
+                Return HttpNotFound()
+            End If
+
+            Return View(u)
+        End Function
+
         <Route("Student/{id}/Grades")>
         Function Grades(ByVal id As String) As ActionResult
             Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Id = id.ToString())

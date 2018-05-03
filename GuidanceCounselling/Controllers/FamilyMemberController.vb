@@ -1,5 +1,6 @@
 ﻿Imports System.Data.Entity
 Imports System.Net
+Imports System.Threading.Tasks
 Imports System.Web.Mvc
 Imports Microsoft.AspNet.Identity
 Imports Microsoft.AspNet.Identity.Owin
@@ -39,6 +40,17 @@ Namespace Controllers
         <Route("Student/{id}/Grades")>
         Function Grades(ByVal id As String) As ActionResult
             Dim u As ApplicationUser = db.Users.FirstOrDefault(Function(a) a.Id = id.ToString())
+
+            Return View(u)
+        End Function
+
+        <Route("Student/SummaryResults/{id}")>
+        Async Function StudentSummaryResults(ByVal id As String) As Task(Of ActionResult)
+            Dim u As ApplicationUser = Await db.Users.FirstOrDefaultAsync(Function(a) a.Id = id.ToString())
+
+            If u Is Nothing Then
+                Return HttpNotFound()
+            End If
 
             Return View(u)
         End Function

@@ -49,6 +49,7 @@ End Code
                                 End Code
                             </td>
                             <td style="text-align:right;">
+                                <a class="btn btn-xs btn-primary" href="@Url.Action("StudentSummaryResults", New With {.id = item.UserId})">Summary Results</a>
                                 <a class="btn btn-xs btn-info" href="@Url.Action("Grades", New With {.id = item.UserId})">View Grades</a>
                             </td>
                         </tr>
