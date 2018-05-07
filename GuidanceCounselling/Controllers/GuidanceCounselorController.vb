@@ -864,11 +864,47 @@ Namespace Controllers
             Return View(nge)
         End Function
 
+        <Route("Student/NCAE/Grades/{id}/View")>
+        Function ViewNCAEGrade(ByVal id As Integer?) As ActionResult
+            Dim ng As NCAEGrade = db.NCAEGrades.FirstOrDefault(Function(n) n.NCAEGradeId = id)
+            Dim nge As New NCAEGradeEditModel(ng)
+            nge.StudentName = db.Users.FirstOrDefault(Function(s) s.Id = ng.UserId).getFullName
+            nge.NCAEGradeAptitudes = ng.NCAEGradeAptitudes.ToList()
+            nge.NCAEGradeSubjects = ng.NCAEGradeSubjects.ToList()
+
+            Return View(nge)
+        End Function
+
         <HttpPost()>
         <ValidateAntiForgeryToken>
         <Route("Student/NCAE/Grades/{id}/Edit")>
-        Function EditNCAEGrade(ByVal model As NCAEGradeEditModel) As ActionResult
+        Public Async Function EditNCAEGrade(ByVal model As NCAEGradeEditModel) As Task(Of ActionResult)
+            If ModelState.IsValid Then
+                Dim ng As NCAEGrade = db.NCAEGrades.FirstOrDefault(Function(n) n.NCAEGradeId = model.NCAEGradeId)
+                ng.TrackChoice = model.TrackChoice
+                ng.StrandConcentrationChoice = model.StrandConcentrationChoice
+                ng.Name = model.Name
 
+                For Each i In model.NCAEGradeAptitudes
+                    Dim nga As NCAEGradeAptitude = Await db.NCAEGradeAptitudes.FirstOrDefaultAsync(Function(n) n.NCAEGradeAptitudeId = i.NCAEGradeAptitudeId)
+                    nga.PercentileRank = i.PercentileRank
+                    nga.StandardScore = i.StandardScore
+
+                    Await db.SaveChangesAsync()
+                Next
+
+                For Each i In model.NCAEGradeSubjects
+                    Dim ngs As NCAEGradeSubject = Await db.NCAEGradeSubjects.FirstOrDefaultAsync(Function(n) n.NCAEGradeSubjectId = i.NCAEGradeSubjectId)
+                    ngs.PercentageScore = i.PercentageScore
+                    ngs.RankOverall = i.RankOverall
+
+                    Await db.SaveChangesAsync()
+                Next
+
+                Return RedirectToAction("ViewNCAEGrade", New With {.id = model.NCAEGradeId})
+            End If
+
+            Return View(model)
         End Function
 
         '
@@ -1139,6 +1175,71 @@ Namespace Controllers
             End If
 
             Return View()
+        End Function
+
+        '
+        '
+        '
+        '
+        ' Summary Result by Section
+
+        Function GGrades() As ActionResult
+            Return View(db.Grades.ToList())
+        End Function
+
+        <Route("{id}/Sections")>
+        Function GSections(ByVal id As Integer?) As ActionResult
+            If id Is Nothing Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+
+            Dim grade As Grade = db.Grades.FirstOrDefault(Function(g) g.GradeId = id)
+
+            If grade Is Nothing Then
+                Return HttpNotFound()
+            End If
+
+            ViewBag.GradeId = grade.GradeId
+
+            Return View(grade.Sections)
+        End Function
+
+        <Route("Sections/{id}/View")>
+        Function ViewStudents(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+
+            Dim section As Section = db.Sections.Find(id)
+
+            If IsNothing(section) Then
+                Return HttpNotFound()
+            End If
+
+            Return View(section)
+        End Function
+
+        <Route("Section/{id}/SummaryResults")>
+        Async Function SectionSummaryResults(ByVal id As Integer?) As Task(Of ActionResult)
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+
+            Dim section As Section = db.Sections.Find(id)
+
+            Dim us As List(Of ApplicationUser) = Await db.Users.Where(Function(a) a.SectionId = id.ToString()).ToListAsync()
+            Dim userIDs() As String = us.Select(Function(a) a.Id).ToArray()
+
+            Dim totalTrue As Integer = db.ExamStudentTFRanks.Where(Function(s) s.QuestionTFRank.Question = "About Self" And userIDs.Contains(s.ExamStudent.UserId) And s.ExamStudent.Exam.Name = "My Problem Checklist").Sum(Function(t) t.Answer = 1)
+            Return Content(totalTrue.ToString())
+
+            If us Is Nothing Then
+                Return HttpNotFound()
+            End If
+
+            Return View(us)
+
+
         End Function
     End Class
 End Namespace

@@ -512,7 +512,7 @@ Namespace Controllers
         <Route("WebsiteConfigUpload/{id}/Edit")>
         Function EditWebsiteConfigLogo(ByVal postedFile As HttpPostedFileBase) As ActionResult
             If postedFile IsNot Nothing Then
-                Dim path As String = Server.MapPath("~/Content/")
+                Dim path As String = Server.MapPath("~/Content/Images/")
 
                 If Not Directory.Exists(path) Then
                     Directory.CreateDirectory(path)
@@ -529,6 +529,12 @@ Namespace Controllers
                     TempData("errMessage") = ex.Message
                     Return RedirectToAction("WebsiteConfig")
                 End Try
+
+                Dim savePath = "/Content/Images/" + postedFile.FileName
+                Dim logo As WebsiteConfig = db.WebsiteConfig.FirstOrDefault(Function(w) w.Name = "Logo-Location")
+
+                logo.Value = savePath
+                db.SaveChanges()
             End If
 
             Return RedirectToAction("WebsiteConfig")

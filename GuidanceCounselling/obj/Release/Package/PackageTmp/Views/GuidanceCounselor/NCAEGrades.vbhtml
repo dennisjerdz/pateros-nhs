@@ -42,6 +42,7 @@ End Code
                             </td>
                             <td style="text-align:right;">
                                 @Html.ActionLink("Edit Info", "EditNCAEGrade", New With {.id = item.NCAEGradeId}, New With {.class = "btn btn-xs btn-warning"})
+                                @Html.ActionLink("View Grade", "ViewNCAEGrade", New With {.id = item.NCAEGradeId}, New With {.class = "btn btn-xs btn-primary"})
                             </td>
                         </tr>
                     Next

@@ -243,3 +243,4 @@ C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\ob
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Release\GuidanceCounselling.Migrations.addedncaegradedatecreated.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Release\GuidanceCounselling.Migrations.ncaegradesUpdate.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Release\GuidanceCounselling.Migrations.typeForNCAEGradeAptitude.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Release\GuidanceCounselling.Migrations.addedTrackChoicesToNCAE.resources

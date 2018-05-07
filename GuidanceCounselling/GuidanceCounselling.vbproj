@@ -272,6 +272,10 @@
       <DependentUpon>201804221833116_typeForNCAEGradeAptitude.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201804221833116_typeForNCAEGradeAptitude.vb" />
+    <Compile Include="Migrations\201805071647121_addedTrackChoicesToNCAE.Designer.vb">
+      <DependentUpon>201805071647121_addedTrackChoicesToNCAE.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805071647121_addedTrackChoicesToNCAE.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\ExamModels.vb" />
@@ -345,6 +349,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804221833116_typeForNCAEGradeAptitude.resx">
       <DependentUpon>201804221833116_typeForNCAEGradeAptitude.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805071647121_addedTrackChoicesToNCAE.resx">
+      <DependentUpon>201805071647121_addedTrackChoicesToNCAE.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -483,6 +490,11 @@
     <Content Include="Views\Admin\EditWebsiteConfigLogo.vbhtml" />
     <Content Include="Views\GuidanceCounselor\StudentSummaryResults.vbhtml" />
     <Content Include="Views\FamilyMember\StudentSummaryResults.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\GGrades.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\GSections.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\ViewStudents.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\SectionSummaryReport.vbhtml" />
+    <Content Include="Views\GuidanceCounselor\ViewNCAEGrade.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

@@ -65,14 +65,28 @@ End Code
                                     <tr>
                                         <td>@item.Name</td>
                                         <td>
-                                            <input data-count="@c" class="inputPercentageScore form-control" name="NCAEGradeSubjects[@c].PercentageScore" value="@item.PercentageScore"/>
+                                            @item.PercentageScore
                                         </td>
                                         <td>
-                                            <input id="@iPL" class="inputPrefenceLevel form-control" name="NCAEGradeSubjects[@c].PreferenceLevel" readonly/>
+                                            @If item.PercentageScore <= 25 Then
+                                                @<text>VLP</text>
+                                            End If
+
+                                            @If item.PercentageScore <= 50 And item.PercentageScore >= 26 Then
+                                                @<text>LP</text>
+                                            End If
+
+                                            @If item.PercentageScore <= 75 And item.PercentageScore >= 51 Then
+                                                @<text>MP</text>
+                                            End If
+
+                                            @If item.PercentageScore <= 100 And item.PercentageScore >= 76 Then
+                                                @<text>HP</text>
+                                            End If
                                         </td>
                                         <td>
-                                            <input class="form-control" name="NCAEGradeSubjects[@c].RankOverall" value="@item.RankOverall" />
-                                            <input type="hidden" name="NCAEGradeSubjects[@c].NCAEGradeSubjectID" value="@item.NCAEGradeSubjectId"/>
+                                            @item.RankOverall
+                                            <input type="hidden" name="NCAEGradeSubjects[@c].NCAEGradeSubjectID" value="@item.NCAEGradeSubjectId" />
                                             <input type="hidden" name="NCAEGradeSubjects[@c].NCAEGradeId" value="@item.NCAEGradeId" />
                                             <input type="hidden" name="NCAEGradeSubjects[@c].Name" value="@item.Name" />
                                         </td>
@@ -125,6 +139,17 @@ End Code
                             </tr>
                             @code
                                 Dim b As Integer = 0
+                                Dim gsaStandardScoreTotal As Decimal = 0
+                                Dim gsaPercentileRankTotal As Decimal = 0
+                                Dim gsaCount As Decimal = 0
+
+                                Dim tvaStandardScoreTotal As Decimal = 0
+                                Dim tvaPercentileRankTotal As Decimal = 0
+                                Dim tvaCount As Decimal = 0
+
+                                Dim atStandardScoreTotal As Decimal = 0
+                                Dim atPercentileRankTotal As Decimal = 0
+                                Dim atCount As Decimal = 0
                             End Code
 
                             @For Each item In Model.NCAEGradeAptitudes.Where(Function(t) t.Type = 1)
@@ -132,18 +157,37 @@ End Code
                                     <tr>
                                         <td>@item.Name</td>
                                         <td>
-                                            <input name="NCAEGradeAptitudes[@b].StandardScore" class="form-control" value="@item.StandardScore"/>
+                                            @item.StandardScore
                                         </td>
                                         <td>
-                                            <input name="NCAEGradeAptitudes[@b].PercentileRank" class="form-control" value="@item.PercentileRank"/>
-                                            <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeAptitudeId" value="@item.NCAEGradeAptitudeId"/>
+                                            @item.PercentileRank
+                                            <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeAptitudeId" value="@item.NCAEGradeAptitudeId" />
                                             <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeId" value="@item.NCAEGradeId" />
                                         </td>
                                     </tr>
                                 </text>
 
                                 b += 1
+                                gsaCount += 1
+
+                                gsaStandardScoreTotal += item.StandardScore
+                                gsaPercentileRankTotal += item.PercentileRank
                             Next
+
+                            <tr>
+                                <td><strong>OVERALL GSA</strong></td>
+                                <td style="font-weight:600;">
+                                    @Code
+                                        Dim gsaStandardScoreAve As Decimal = gsaStandardScoreTotal / gsaCount
+                                        Dim gsaPercentileRankAve As Decimal = gsaPercentileRankTotal / gsaCount
+                                    End Code
+
+                                    @gsaStandardScoreAve
+                                </td>
+                                <td style="font-weight:600;">
+                                    @gsaPercentileRankAve
+                                </td>
+                            </tr>
 
                             <tr>
                                 <td colspan="3">
@@ -158,10 +202,10 @@ End Code
                                     <tr>
                                         <td>@item.Name</td>
                                         <td>
-                                            <input name="NCAEGradeAptitudes[@b].StandardScore" class="form-control" value="@item.StandardScore"/>
+                                            @item.StandardScore
                                         </td>
                                         <td>
-                                            <input name="NCAEGradeAptitudes[@b].PercentileRank" class="form-control" value="@item.PercentileRank"/>
+                                            @item.PercentileRank
                                             <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeAptitudeId" value="@item.NCAEGradeAptitudeId" />
                                             <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeId" value="@item.NCAEGradeId" />
                                         </td>
@@ -169,7 +213,26 @@ End Code
                                 </text>
 
                                 b += 1
+                                tvaCount += 1
+
+                                tvaStandardScoreTotal += item.StandardScore
+                                tvaPercentileRankTotal += item.PercentileRank
                             Next
+
+                            <tr>
+                                <td><strong>OVERALL TVA</strong></td>
+                                <td style="font-weight:600;">
+                                    @Code
+                                        Dim tvaStandardScoreAve As Decimal = tvaStandardScoreTotal / tvaCount
+                                        Dim tvaPercentileRankAve As Decimal = tvaPercentileRankTotal / tvaCount
+                                    End Code
+
+                                    @tvaStandardScoreAve
+                                </td>
+                                <td style="font-weight:600;">
+                                    @tvaPercentileRankAve
+                                </td>
+                            </tr>
 
                             <tr>
                                 <td colspan="3">
@@ -184,10 +247,10 @@ End Code
                                     <tr>
                                         <td>@item.Name</td>
                                         <td>
-                                            <input name="NCAEGradeAptitudes[@b].StandardScore" class="form-control" value="@item.StandardScore"/>
+                                            @item.StandardScore
                                         </td>
                                         <td>
-                                            <input name="NCAEGradeAptitudes[@b].PercentileRank" class="form-control" value="@item.PercentileRank"/>
+                                            @item.PercentileRank
                                             <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeAptitudeId" value="@item.NCAEGradeAptitudeId" />
                                             <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeId" value="@item.NCAEGradeId" />
                                         </td>
@@ -195,7 +258,26 @@ End Code
                                 </text>
 
                                 b += 1
+                                atCount += 1
+
+                                atStandardScoreTotal += item.StandardScore
+                                atPercentileRankTotal += item.PercentileRank
                             Next
+
+                            <tr>
+                                <td><strong>OVERALL AT</strong></td>
+                                <td style="font-weight:600;">
+                                    @Code
+                                        Dim atStandardScoreAve As Decimal = atStandardScoreTotal / atCount
+                                        Dim atPercentileRankAve As Decimal = atPercentileRankTotal / atCount
+                                    End Code
+
+                                    @atStandardScoreAve
+                                </td>
+                                <td style="font-weight:600;">
+                                    @atPercentileRankAve
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
 
@@ -221,29 +303,6 @@ End Code
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <!--<div class="row">
-                <div class="col-md-6">
-                    @For Each item In Model.NCAEGradeSubjects
-                        @<p>@item.Name</p>
-                    Next
-                </div>
-
-                <div class="col-md-6">
-                    @For Each item In Model.NCAEGradeAptitudes
-                        @<p>@item.Name</p>
-                    Next
-                </div>
-            </div>-->
-
-            <div class="row">
-                <div class="col-md-8"></div>
-
-                <div class="col-md-4">
-                    <label style="margin-bottom:0px;">&nbsp;</label>
-                    <input type="submit" class="btn btn-primary btn-block" value="Save NCAE Grade" />
                 </div>
             </div>
         </text> End Using

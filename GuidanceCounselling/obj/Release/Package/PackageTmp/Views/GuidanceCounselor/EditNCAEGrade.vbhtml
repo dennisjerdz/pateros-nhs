@@ -30,7 +30,9 @@ End Code
                     <label class="control-label">Student Name:</label>
                     <p>@Model.StudentName</p>
                 </div>
+            </div>
 
+            <div class="row">
                 <div class="col-md-4">
                     @Html.LabelFor(Function(m) m.Name, New With {.class = "control-label"})
                     @Html.EditorFor(Function(model) model.Name, New With {.htmlAttributes = New With {.class = "form-control", .placeholder = "NCAE Grade"}})
@@ -70,13 +72,35 @@ End Code
                                         </td>
                                         <td>
                                             <input class="form-control" name="NCAEGradeSubjects[@c].RankOverall" value="@item.RankOverall" />
-                                            <input type="hidden" name="NCAEGradeSubjects[@c].NCAEGradeSubjectID" />
+                                            <input type="hidden" name="NCAEGradeSubjects[@c].NCAEGradeSubjectID" value="@item.NCAEGradeSubjectId"/>
+                                            <input type="hidden" name="NCAEGradeSubjects[@c].NCAEGradeId" value="@item.NCAEGradeId" />
+                                            <input type="hidden" name="NCAEGradeSubjects[@c].Name" value="@item.Name" />
                                         </td>
                                     </tr>
                                 </text>
 
-                                c += 1
-                            Next
+                                            c += 1
+                                        Next
+                        </tbody>
+                    </table>
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Levels of Preference for the Occupational Interest</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>76% - 100% High Preference (HP)</td>
+                                <td>26% - 50% Low Preference (LP)</td>
+                            </tr>
+
+                            <tr>
+                                <td>51% - 75% Moderate Preference (MP)</td>
+                                <td>0% - 25% Very Low Preference (VLP)</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -95,7 +119,7 @@ End Code
                             <tr>
                                 <td colspan="3">
                                     <center>
-                                        General Scholastic Aptitude
+                                        General Scholastic Aptitude (GSA)
                                     </center>
                                 </td>
                             </tr>
@@ -108,20 +132,23 @@ End Code
                                     <tr>
                                         <td>@item.Name</td>
                                         <td>
-                                            <input name="NCAEGradeAptitudes[@b].StandardScore" class="form-control" />
+                                            <input name="NCAEGradeAptitudes[@b].StandardScore" class="form-control" value="@item.StandardScore"/>
                                         </td>
                                         <td>
-                                            <input name="NCAEGradeAptitudes[@b].PercentileRank" class="form-control"/>
-                                            <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeAptitudeId"/>
+                                            <input name="NCAEGradeAptitudes[@b].PercentileRank" class="form-control" value="@item.PercentileRank"/>
+                                            <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeAptitudeId" value="@item.NCAEGradeAptitudeId"/>
+                                            <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeId" value="@item.NCAEGradeId" />
                                         </td>
                                     </tr>
                                 </text>
+
+                                b += 1
                             Next
 
                             <tr>
                                 <td colspan="3">
                                     <center>
-                                        Technical Vocational Aptitude
+                                        Technical Vocational Aptitude (TVA)
                                     </center>
                                 </td>
                             </tr>
@@ -131,20 +158,23 @@ End Code
                                     <tr>
                                         <td>@item.Name</td>
                                         <td>
-                                            <input name="NCAEGradeAptitudes[@b].StandardScore" class="form-control" />
+                                            <input name="NCAEGradeAptitudes[@b].StandardScore" class="form-control" value="@item.StandardScore"/>
                                         </td>
                                         <td>
-                                            <input name="NCAEGradeAptitudes[@b].PercentileRank" class="form-control"/>
-                                            <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeAptitudeId"/>
+                                            <input name="NCAEGradeAptitudes[@b].PercentileRank" class="form-control" value="@item.PercentileRank"/>
+                                            <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeAptitudeId" value="@item.NCAEGradeAptitudeId" />
+                                            <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeId" value="@item.NCAEGradeId" />
                                         </td>
                                     </tr>
                                 </text>
+
+                                b += 1
                             Next
 
                             <tr>
                                 <td colspan="3">
                                     <center>
-                                        Academic Track
+                                        Academic Track (AT)
                                     </center>
                                 </td>
                             </tr>
@@ -154,21 +184,47 @@ End Code
                                     <tr>
                                         <td>@item.Name</td>
                                         <td>
-                                            <input name="NCAEGradeAptitudes[@b].StandardScore" class="form-control" />
+                                            <input name="NCAEGradeAptitudes[@b].StandardScore" class="form-control" value="@item.StandardScore"/>
                                         </td>
                                         <td>
-                                            <input name="NCAEGradeAptitudes[@b].PercentileRank" class="form-control"/>
-                                            <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeAptitudeId"/>
+                                            <input name="NCAEGradeAptitudes[@b].PercentileRank" class="form-control" value="@item.PercentileRank"/>
+                                            <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeAptitudeId" value="@item.NCAEGradeAptitudeId" />
+                                            <input type="hidden" name="NCAEGradeAptitudes[@b].NCAEGradeId" value="@item.NCAEGradeId" />
                                         </td>
                                     </tr>
                                 </text>
+
+                                b += 1
                             Next
+                        </tbody>
+                    </table>
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="2"><center>Preferred Track & Strand/Concentration</center></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Track Choice:</td>
+                                <td>
+                                    @Html.EditorFor(Function(model) model.TrackChoice, New With {.htmlAttributes = New With {.class = "form-control", .placeholder = ""}})
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Strand/Concentration Choice:</td>
+                                <td>
+                                    @Html.EditorFor(Function(model) model.StrandConcentrationChoice, New With {.htmlAttributes = New With {.class = "form-control", .placeholder = ""}})
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-md-6">
                     @For Each item In Model.NCAEGradeSubjects
                         @<p>@item.Name</p>
@@ -180,7 +236,7 @@ End Code
                         @<p>@item.Name</p>
                     Next
                 </div>
-            </div>
+            </div>-->
 
             <div class="row">
                 <div class="col-md-8"></div>
@@ -197,7 +253,7 @@ End Code
     <script>
         $(".inputPercentageScore").keyup(function () {
             var base = $(this).val();
-            alert(base);
+            //alert(base);
 
             if (base <= 25) {
                 var num = $(this).data("count");
