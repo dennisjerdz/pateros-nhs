@@ -182,10 +182,10 @@ End Code
                                         Dim gsaPercentileRankAve As Decimal = gsaPercentileRankTotal / gsaCount
                                     End Code
 
-                                    @gsaStandardScoreAve
+                                    @Math.Round(gsaStandardScoreAve, 2)
                                 </td>
                                 <td style="font-weight:600;">
-                                    @gsaPercentileRankAve
+                                    @Math.Round(gsaPercentileRankAve, 2)
                                 </td>
                             </tr>
 
@@ -227,10 +227,10 @@ End Code
                                         Dim tvaPercentileRankAve As Decimal = tvaPercentileRankTotal / tvaCount
                                     End Code
 
-                                    @tvaStandardScoreAve
+                                    @Math.Round(tvaStandardScoreAve, 2)
                                 </td>
                                 <td style="font-weight:600;">
-                                    @tvaPercentileRankAve
+                                    @Math.Round(tvaPercentileRankAve, 2)
                                 </td>
                             </tr>
 
@@ -272,10 +272,10 @@ End Code
                                         Dim atPercentileRankAve As Decimal = atPercentileRankTotal / atCount
                                     End Code
 
-                                    @atStandardScoreAve
+                                    @Math.Round(atStandardScoreAve, 2)
                                 </td>
                                 <td style="font-weight:600;">
-                                    @atPercentileRankAve
+                                    @Math.Round(atPercentileRankAve, 2)
                                 </td>
                             </tr>
                         </tbody>
