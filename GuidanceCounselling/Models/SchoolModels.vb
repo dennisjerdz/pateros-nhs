@@ -19,6 +19,19 @@ Public Class Section
     Public Overridable Property Grade As Grade
 
     Public Overridable Property Students As List(Of ApplicationUser)
+    Public Overridable Property ArchivedSectionStudents As List(Of ArchivedSectionStudents)
+
+    Public Property DateCreated As DateTimeOffset
+End Class
+
+
+Public Class ArchivedSectionStudents
+    Public Property ArchivedSectionStudentsId As Integer
+    Public Property UserId As String
+    Public Overridable Property User As ApplicationUser
+
+    Public Property SectionId As Integer
+    Public Overridable Property Section As Section
 
     Public Property DateCreated As DateTimeOffset
 End Class

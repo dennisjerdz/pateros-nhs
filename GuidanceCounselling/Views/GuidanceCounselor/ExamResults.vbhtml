@@ -8,7 +8,7 @@ end code
     <div class="row">
         <div class="col-md-9">
             <p>
-                @ViewBag.title / @Model.ExamStudentId / Results
+                @ViewBag.title / @Model.Exam.Name <small>@Model.ExamStudentId</small> / Results for @Model.User.getFullName()
                 <a class="header-btn btn btn-default" href="@Url.Action("AssignedExams", New With {.id = Model.UserId})"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
             </p>
         </div>

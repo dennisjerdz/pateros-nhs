@@ -58,20 +58,20 @@ Namespace Migrations
                 roleManager.Create(role)
             End If
 
-            If Not (context.Grades.Any(Function(g) g.Name = "Grade 10")) Then
-                Dim grade As New Grade With {.Name = "Grade 10", .DateCreated = Date.Now}
-                context.Grades.Add(grade)
-                context.SaveChanges()
-            End If
+            'If Not (context.Grades.Any(Function(g) g.Name = "Grade 10")) Then
+            'Dim grade As New Grade With {.Name = "Grade 10", .DateCreated = Date.Now}
+            'context.Grades.Add(grade)
+            'context.SaveChanges()
+            'End If
 
-            If Not (context.Grades.Any(Function(s) s.Name = "S-A")) Then
-                Dim section As New Section With {
-                    .GradeId = context.Grades.FirstOrDefault(Function(g) g.Name = "Grade 10").GradeId,
-                    .Name = "S-A"
-                }
-                context.Sections.Add(section)
-                context.SaveChanges()
-            End If
+            'If Not (context.Grades.Any(Function(s) s.Name = "S-A")) Then
+            'Dim section As New Section With {
+            '.GradeId = context.Grades.FirstOrDefault(Function(g) g.Name = "Grade 10").GradeId,
+            '.Name = "S-A"
+            '    }
+            'context.Sections.Add(section)
+            'context.SaveChanges()
+            'End If
 
             Dim userManager As New UserManager(Of ApplicationUser)(New UserStore(Of ApplicationUser)(context))
 

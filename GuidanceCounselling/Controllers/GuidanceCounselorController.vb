@@ -759,6 +759,8 @@ Namespace Controllers
             End If
 
             Dim exams As List(Of ExamStudent) = Await db.ExamStudents.Where(Function(e) e.UserId = id).OrderByDescending(Function(s) s.DateCreated).ToListAsync()
+            ViewBag.StudentName = u.getFullName()
+
             Return View(exams)
         End Function
 

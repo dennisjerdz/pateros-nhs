@@ -210,6 +210,45 @@ Namespace Controllers
             Return View(section)
         End Function
 
+        <Route("Sections/{id}/Archive")>
+        Async Function ArchiveSection(ByVal id As Integer?) As Task(Of ActionResult)
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+
+            Dim section As Section = db.Sections.Find(id)
+
+            If IsNothing(section) Then
+                Return HttpNotFound()
+            End If
+
+            For Each student As ApplicationUser In section.Students
+                student.SectionId = Nothing
+
+                db.ArchivedSectionStudents.Add(New ArchivedSectionStudents() With {.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)), .SectionId = section.SectionId, .UserId = student.Id})
+            Next
+
+            Await db.SaveChangesAsync()
+            Return RedirectToAction("Sections", New With {.id = section.GradeId})
+        End Function
+
+        <Route("Sections/{id}/Archived/Students")>
+        Function ViewArchivedStudents(ByVal id As Integer?) As ActionResult
+            If IsNothing(id) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            End If
+
+            Dim section As Section = db.Sections.Find(id)
+
+            If IsNothing(section) Then
+                Return HttpNotFound()
+            End If
+
+            ViewBag.SectionName = section.Name
+            ViewBag.GradeId = section.GradeId
+            Return View(section.ArchivedSectionStudents)
+        End Function
+
         <Route("Sections/{id}/Students/Manage")>
         Async Function ManageStudents(ByVal id As Integer?) As Task(Of ActionResult)
             If IsNothing(id) Then

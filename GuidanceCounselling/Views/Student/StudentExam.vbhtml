@@ -60,35 +60,69 @@ End Code
                             </div>
                         </text>
                     Case "TFList"
-                        @<text>
-                            <div class="exam-module-border">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <strong>@e.QuestionGroup.DisplayName</strong>
-                                    </div>
-                                </div>
-                                @For Each q As QuestionTFList In e.QuestionGroup.QuestionTFLists
-                                    @<text>
+                        @If e.Exam.Name = "Aptitudes Assessment" Then
+                            @<text>
+                                <div class="col-md-6">
+                                    <div class="exam-module-border">
                                         <div class="row">
-                                            <div class="col-md-2">
-                                                <select class="form-control" name="ExamStudentTFList[@cTFList].Answer">
-                                                    <option value="True">Yes</option>
-                                                    <option value="False">No</option>
-                                                </select>
-                                            </div>
-                                            
-                                            <input type="hidden" value="@q.QuestionTFListId" name="ExamStudentTFList[@cTFList].QuestionTFListId"/>
-                                            <div class="col-md-10">
-                                                <p><strong>@cq .</strong> @q.Question</p>
+                                            <div class="col-md-4">
+                                                <strong>@e.QuestionGroup.DisplayName</strong>
                                             </div>
                                         </div>
-                                    </text>
+                                        @For Each q As QuestionTFList In e.QuestionGroup.QuestionTFLists
+                                            @<text>
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <select class="form-control" name="ExamStudentTFList[@cTFList].Answer">
+                                                            <option value="True">Yes</option>
+                                                            <option value="False">No</option>
+                                                        </select>
+                                                    </div>
+                                            
+                                                    <input type="hidden" value="@q.QuestionTFListId" name="ExamStudentTFList[@cTFList].QuestionTFListId"/>
+                                                    <div class="col-md-10">
+                                                        <p><strong>@cq .</strong> @q.Question</p>
+                                                    </div>
+                                                </div>
+                                            </text>
 
-                                    cq += 1
-                                    cTFList += 1
-                                Next
-                            </div>
-                        </text>
+                                            cq += 1
+                                            cTFList += 1
+                                        Next
+                                    </div>
+                                </div>
+                            </text>
+                        Else
+                            @<text>
+                                <div class="exam-module-border">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <strong>@e.QuestionGroup.DisplayName</strong>
+                                        </div>
+                                    </div>
+                                    @For Each q As QuestionTFList In e.QuestionGroup.QuestionTFLists
+                                        @<text>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <select class="form-control" name="ExamStudentTFList[@cTFList].Answer">
+                                                        <option value="True">Yes</option>
+                                                        <option value="False">No</option>
+                                                    </select>
+                                                </div>
+                                            
+                                                <input type="hidden" value="@q.QuestionTFListId" name="ExamStudentTFList[@cTFList].QuestionTFListId"/>
+                                                <div class="col-md-10">
+                                                    <p><strong>@cq .</strong> @q.Question</p>
+                                                </div>
+                                            </div>
+                                        </text>
+
+                                        cq += 1
+                                        cTFList += 1
+                                    Next
+                                </div>
+                            </text>
+                        End If
                     Case "Essay"
                         @<text>
                             <div class="exam-module-border">
@@ -119,38 +153,75 @@ End Code
                             </div>
                         </text>
                     Case "OneToFive"
-                        @<text>
-                            <div class="exam-module-border">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <strong>@e.QuestionGroup.DisplayName</strong>
-                                    </div>
-                                </div>
-                                @For Each q As QuestionOneToFive In e.QuestionGroup.QuestionOneToFives
-                                    @<text>
+                        @If e.Exam.Name = "Aptitudes Assessment" Then
+                            @<text>
+                                <div class="col-md-6">
+                                    <div class="exam-module-border">
                                         <div class="row">
-                                            <div class="col-md-2">
-                                                <select class="form-control" name="ExamStudentOneToFive[@cOneToFive].Answer">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                </select>
-                                            </div>
-                                            
-                                            <input type="hidden" value="@q.QuestionOneToFiveId" name="ExamStudentOneToFive[@cOneToFive].QuestionOneToFiveId"/>
-                                            <div class="col-md-10">
-                                                <p><strong>@cq .</strong> @q.Question</p>
+                                            <div class="col-md-4">
+                                                <strong>@e.QuestionGroup.DisplayName</strong>
                                             </div>
                                         </div>
-                                    </text>
+                                        @For Each q As QuestionOneToFive In e.QuestionGroup.QuestionOneToFives
+                                            @<text>
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <select class="form-control" name="ExamStudentOneToFive[@cOneToFive].Answer">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </div>
+                                            
+                                                    <input type="hidden" value="@q.QuestionOneToFiveId" name="ExamStudentOneToFive[@cOneToFive].QuestionOneToFiveId"/>
+                                                    <div class="col-md-10">
+                                                        <p><strong>@cq .</strong> @q.Question</p>
+                                                    </div>
+                                                </div>
+                                            </text>
 
-                                    cq += 1
-                                    cOneToFive += 1
-                                Next
-                            </div>
-                        </text>
+                                            cq += 1
+                                            cOneToFive += 1
+                                        Next
+                                    </div>
+                                </div>
+                            </text>
+                        Else
+                            @<text>
+                                <div class="exam-module-border">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <strong>@e.QuestionGroup.DisplayName</strong>
+                                        </div>
+                                    </div>
+                                    @For Each q As QuestionOneToFive In e.QuestionGroup.QuestionOneToFives
+                                        @<text>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <select class="form-control" name="ExamStudentOneToFive[@cOneToFive].Answer">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select>
+                                                </div>
+                                            
+                                                <input type="hidden" value="@q.QuestionOneToFiveId" name="ExamStudentOneToFive[@cOneToFive].QuestionOneToFiveId"/>
+                                                <div class="col-md-10">
+                                                    <p><strong>@cq .</strong> @q.Question</p>
+                                                </div>
+                                            </div>
+                                        </text>
+
+                                        cq += 1
+                                        cOneToFive += 1
+                                    Next
+                                </div>
+                            </text>
+                        End If
                 End Select
 
                 ' Exam counter reset

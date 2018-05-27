@@ -135,6 +135,7 @@ Public Class ApplicationDbContext
     Public Property NCAEGrades As DbSet(Of NCAEGrade)
     Public Property NCAEGradeSubjects As DbSet(Of NCAEGradeSubject)
     Public Property NCAEGradeAptitudes As DbSet(Of NCAEGradeAptitude)
+    Public Property ArchivedSectionStudents As DbSet(Of ArchivedSectionStudents)
 
     Public Shared Function Create() As ApplicationDbContext
         Return New ApplicationDbContext()

@@ -25,7 +25,6 @@ End Code
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Role</th>
                         <th>Grade - Section</th>
                         <th>Status</th>
                         <th></th>
@@ -37,7 +36,6 @@ End Code
                         @<tr>
                             <td>@item.Name</td>
                             <td>@item.Email</td>
-                            <td>@item.Role</td>
                             <td>
                                 @If item.Section IsNot Nothing Then
                                     @<text>@item.Grade - @item.Section</text>
@@ -55,8 +53,8 @@ End Code
                             <td style="text-align:right;">
                                 <a class="btn btn-xs btn-warning" href="@Url.Action("AssignedExams", New With {.id = item.UserId})">Assigned Exams</a>
                                 <a class="btn btn-xs btn-primary" href="@Url.Action("StudentSummaryResults", New With {.id = item.UserId})">Summary Results</a>
-                                <a class="btn btn-xs btn-info" href="@Url.Action("Grades", New With {.id = item.UserId})">View Grades</a>
-                                <a class="btn btn-xs btn-info" href="@Url.Action("NCAEGrades", New With {.id = item.UserId})">View <strong>NCAE</strong> Grades</a>
+                                <a class="btn btn-xs btn-info" href="@Url.Action("Grades", New With {.id = item.UserId})">Grades</a>
+                                <a class="btn btn-xs btn-info" href="@Url.Action("NCAEGrades", New With {.id = item.UserId})"><strong>NCAE</strong> Grades</a>
                             </td>
                         </tr>
                                     Next
@@ -75,7 +73,7 @@ End Code
                 "pageLength": 10,
                 "dom": "<'table-responsive'rt><'window-footer'<'col-md-6'i><'col-md-6'p>>",
                 "columnDefs": [
-                    { "orderable": false, "targets": 5 }
+                    { "orderable": false, "targets": 4 }
                 ]
             });
 

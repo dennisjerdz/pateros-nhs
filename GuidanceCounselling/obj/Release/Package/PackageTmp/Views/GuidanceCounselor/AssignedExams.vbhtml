@@ -7,7 +7,7 @@ End Code
     <div class="row">
         <div class="col-md-9">
             <p>
-                @ViewBag.Title / List
+                @ViewBag.Title / Assigned to @ViewBag.StudentName
                 <a class="header-btn btn btn-default" href="@Url.Action("Students", New With {.id = Nothing})"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
             </p>
         </div>

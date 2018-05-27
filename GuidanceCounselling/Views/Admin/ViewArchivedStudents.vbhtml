@@ -1,14 +1,14 @@
-﻿@ModelType IEnumerable(Of GuidanceCounselling.ExamStudent)
+﻿@ModelType List(Of ArchivedSectionStudents)
 @Code
-    ViewBag.Title = "Exams"
+    ViewBag.Title = "Archived Section Students"
 End Code
 
 <div class="container body-header">
     <div class="row">
         <div class="col-md-9">
             <p>
-                @ViewBag.Title / Assigned to @ViewBag.StudentName
-                <a class="header-btn btn btn-default" href="@Url.Action("Students", New With {.id = Nothing})"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
+                @ViewBag.SectionSectionName / @ViewBag.Title
+                <a class="header-btn btn btn-default" href="@Url.Action("Sections", New With {.id = ViewBag.GradeId})"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
             </p>
         </div>
 
@@ -24,35 +24,24 @@ End Code
             <table class="table table-hover table-condensed">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Availability</th>
-                        <th>Taken At</th>
+                        <th>Student Name</th>
+                        <th>Current Section</th>
                         <th>Date Created</th>
-                        <th></th>
                     </tr>
                 </thead>
 
                 <tbody>
                     @For Each item In Model
                         @<tr>
+                            <td>@item.User.getFullName()</td>
                             <td>
-                                @item.Exam.Name
-                            </td>
-                            <td>
-                                @item.AvailabilityStart to @item.AvailabilityEnd
-                            </td>
-                            <td>
-                                @item.TakenAt
-                            </td>
-                            <td>
-                                @item.DateCreated
-                            </td>
-                            <td style="text-align:right;">
-
-                                @If item.TakenAt IsNot Nothing Then
-                                    @Html.ActionLink("View Exam Results", "ExamResults", New With {.id = item.ExamStudentId}, New With {.class = "btn btn-xs btn-warning"})
+                                @If item.Section.Name IsNot Nothing Then
+                                    @item.Section.Name
+                                Else
+                                    @<span>Not Assigned</span>
                                 End If
                             </td>
+                            <td>@item.DateCreated</td>
                         </tr>
                     Next
                 </tbody>
@@ -70,7 +59,7 @@ End Code
                 "pageLength": 10,
                 "dom": "<'table-responsive'rt><'window-footer'<'col-md-6'i><'col-md-6'p>>",
                 "columnDefs": [
-                    { "orderable": false, "targets": 4 }
+                    { "orderable": false, "targets": 2 }
                 ]
             });
 
@@ -80,3 +69,4 @@ End Code
         });
     </script>
 End Section
+
