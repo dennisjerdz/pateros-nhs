@@ -245,3 +245,4 @@ C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\ob
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Release\GuidanceCounselling.Migrations.typeForNCAEGradeAptitude.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Release\GuidanceCounselling.Migrations.addedTrackChoicesToNCAE.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Release\GuidanceCounselling.Migrations.AddedArchiveSection.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Release\GuidanceCounselling.Migrations.update64.resources

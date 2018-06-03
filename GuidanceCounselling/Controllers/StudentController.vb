@@ -141,6 +141,7 @@ Namespace Controllers
 
             db.SaveChanges()
 
+            ViewBag.ExamTakeSuccess = "1"
             Return RedirectToAction("AssignedExams")
         End Function
 

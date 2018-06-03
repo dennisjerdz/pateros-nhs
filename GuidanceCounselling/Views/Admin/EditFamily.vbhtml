@@ -39,16 +39,20 @@ End Code
                                 <tr>
                                     <th>Name</th>
                                     <th>Role</th>
-                                    <th></th>
+                                    <th style="text-align:right;">
+                                        <a class="select-all-btn btn btn-xs btn-link" href="#" style="display:inline;">Select All</a>
+                                        <a href="#" class="add-selected-btn btn btn-xs btn-primary" style="display:inline;">Add Selected</a>
+                                    </th>
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody id="add-tbody">
                                 @For Each item In Model.NonMembers
                                     @<tr>
                                         <td>@item.Name</td>
                                         <td>@item.Role</td>
                                         <td>
+                                            <input class="form-control checkbox" type="checkbox" style="height:9px; display:inline; width:20px;" />
                                             <button type="button" class="btn btn-info btn-xs add-btn"
                                                     data-Id="@item.UserId"
                                                     data-Name="@item.Name"
@@ -76,16 +80,20 @@ End Code
                                 <tr>
                                     <th>Name</th>
                                     <th>Role</th>
-                                    <th></th>
+                                    <th style="text-align:right;">
+                                        <a class="select-all-btn btn btn-xs btn-link" href="#" style="display:inline;">Select All</a>
+                                        <a href="#" class="remove-selected-btn btn btn-xs btn-warning" style="display:inline;">Remove Selected</a>
+                                    </th>
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody id="remove-tbody">
                                 @For Each item In Model.FamilyMembers
                                     @<tr>
                                         <td>@item.Name</td>
                                         <td>@item.Role</td>
                                         <td>
+                                            <input class="form-control checkbox" type="checkbox" style="height:9px; display:inline; width:20px;" />
                                             <button class="btn btn-xs btn-danger remove-btn"
                                                     data-Id="@item.UserId" data-Name="@item.Name" data-Role="@item.Role">
                                                 Remove
@@ -154,6 +162,26 @@ End Code
                 datatable.search($(this).val()).draw();
             });
 
+            $(document).on("click", ".select-all-btn", function () {
+                $(this).parent().parent().parent().parent().find(".checkbox").each(function () {
+                    $(this).prop('checked', true);
+                });
+
+                $(this).html("Unselect All");
+                $(this).removeClass("select-all-btn");
+                $(this).addClass("unselect-all-btn");
+            });
+
+            $(document).on("click", ".unselect-all-btn", function () {
+                $(this).parent().parent().parent().parent().find(".checkbox").each(function () {
+                    $(this).prop('checked', false);
+                });
+
+                $(this).html("Select All");
+                $(this).removeClass("unselect-all-btn");
+                $(this).addClass("select-all-btn");
+            });
+
             $(document).on("click", ".add-btn", function () {
                 var id = $(this).data("id");
                 var name = $(this).data("name");
@@ -163,13 +191,66 @@ End Code
                     .append("<tr>" +
                     "<td>" + name + "</td>" +
                     "<td>" + role + "</td>" +
-                    "<td><button class='btn btn-xs btn-danger remove-btn' data-Id='" + id + "' data-Name='" + name + "' data-Role='" + role + "'>Remove</button></td>" +
+                    "<td><input class='form-control checkbox' type='checkbox' style='height:9px; display:inline; width:20px;' /><button class='btn btn-xs btn-danger remove-btn' data-Id='" + id + "' data-Name='" + name + "' data-Role='" + role + "'>Remove</button></td>" +
                     "</tr>");
 
                 var n = $(".selected-table tbody tr").length - 1;
                 $(".form-inputs").append("<input name='FamilyMembers[" + n + "].UserId' value='" + id + "' />");
 
                 datatable.row($(this).parent().parent()).remove().draw();
+            });
+
+            $(document).on("click", ".add-selected-btn", function () {
+                $("#add-tbody .checkbox").each(function () {
+                    var button;
+
+                    if ($(this).prop("checked")) {
+                        console.log($(this).prop("checked"));
+                        button = $(this).parent().find("button");
+
+                        var id = button.data("id");
+                        var name = button.data("name");
+                        var role = button.data("role");
+
+                        $(".selected-table tbody")
+                        .append("<tr>" +
+                        "<td>" + name + "</td>" +
+                        "<td>" + role + "</td>" +
+                        "<td><input class='form-control checkbox' type='checkbox' style='height:9px; display:inline; width:20px;' /><button class='btn btn-xs btn-danger remove-btn' data-Id='" + id + "' data-Name='" + name + "' data-Role='" + role + "'>Remove</button></td>" +
+                        "</tr>");
+
+                        var n = $(".selected-table tbody tr").length - 1;
+                        $(".form-inputs").append("<input name='FamilyMembers[" + n + "].UserId' value='" + id + "' />");
+
+                        datatable.row($(this).parent().parent()).remove().draw();
+                    }
+                });
+            });
+
+            $(document).on("click", ".remove-selected-btn", function () {
+                $("#remove-tbody .checkbox").each(function () {
+                    var button;
+
+                    if ($(this).prop("checked")) {
+                        console.log($(this).prop("checked"));
+                        button = $(this).parent().find("button");
+
+                        var id = button.data("id");
+                        var name = button.data("name");
+                        var role = button.data("role");
+
+                        datatable.row.add([name, role, "<input class='form-control checkbox' type='checkbox' style='height:9px; display:inline; width:20px;' /><button class='btn btn-xs btn-info add-btn' data-Id='" + id + "' data-Name='" + name + "' data-Role='" + role + "'>Add</button>"]).draw().node();
+
+                        $(".form-inputs input").each(function () {
+                            if ($(this).attr("value") == id) {
+                                $(this).remove();
+                            }
+                        });
+                        reorder();
+
+                        $(this).parent().parent().remove();
+                    }
+                });
             });
 
             $(document).on("click", ".remove-btn", function () {
@@ -184,7 +265,7 @@ End Code
                     "<td style='text-align:right;'><button class='btn btn-xs btn-danger remove-btn' data-Id='" + id + "' data-Name='" + name + "' data-Role='" + role + "'>Remove</button></td>" +
                     "</tr>");*/
 
-                datatable.row.add([name, role, "<button class='btn btn-xs btn-info add-btn' data-Id='" + id + "' data-Name='" + name + "' data-Role='" + role + "'>Add</button>"]).draw().node();
+                datatable.row.add([name, role, "<input class='form-control checkbox' type='checkbox' style='height:9px; display:inline; width:20px;' /><button class='btn btn-xs btn-info add-btn' data-Id='" + id + "' data-Name='" + name + "' data-Role='" + role + "'>Add</button>"]).draw().node();
 
                 $(".form-inputs input").each(function () {
                     if ($(this).attr("value") == id) {

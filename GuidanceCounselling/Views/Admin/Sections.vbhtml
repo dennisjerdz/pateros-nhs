@@ -41,7 +41,10 @@ End Code
                             <td style="text-align:right;">
                                 <a class="btn btn-xs btn-warning" href="@Url.Action("SectionsEdit", New With {.id = item.SectionId})">Edit Info</a>
                                 <a class="btn btn-xs btn-info" href="@Url.Action("ManageStudents", New With {.id = item.SectionId})">Manage Students</a>
-                                <a class="btn btn-xs btn-danger" href="@Url.Action("ArchiveSection", New With {.id = item.SectionId})">Archived Section</a>
+                                
+                                @If item.Students.Count() > 0 Then
+                                    @<a Class="btn btn-xs btn-danger" href="@Url.Action("ArchiveSection", New With {.id = item.SectionId})">Archive Section</a>
+                                End If
 
                                 @If item.ArchivedSectionStudents.Count() > 0 Then
                                     @<a class="btn btn-xs btn-primary" href="@Url.Action("ViewArchivedStudents", New With {.id = item.SectionId})">View Archived Students</a>

@@ -280,6 +280,10 @@
       <DependentUpon>201805271813108_AddedArchiveSection.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201805271813108_AddedArchiveSection.vb" />
+    <Compile Include="Migrations\201806032112511_update-6-4.Designer.vb">
+      <DependentUpon>201806032112511_update-6-4.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806032112511_update-6-4.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\ExamModels.vb" />
@@ -359,6 +363,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805271813108_AddedArchiveSection.resx">
       <DependentUpon>201805271813108_AddedArchiveSection.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806032112511_update-6-4.resx">
+      <DependentUpon>201806032112511_update-6-4.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

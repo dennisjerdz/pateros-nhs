@@ -222,7 +222,7 @@ Namespace Controllers
                 Return HttpNotFound()
             End If
 
-            For Each student As ApplicationUser In section.Students
+            For Each student As ApplicationUser In section.Students.ToList()
                 student.SectionId = Nothing
 
                 db.ArchivedSectionStudents.Add(New ArchivedSectionStudents() With {.DateCreated = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)), .SectionId = section.SectionId, .UserId = student.Id})

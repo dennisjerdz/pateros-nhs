@@ -35,7 +35,7 @@ End Code
                         @<tr>
                             <td>@item.User.getFullName()</td>
                             <td>
-                                @If item.Section.Name IsNot Nothing Then
+                                @If item.User.SectionId IsNot Nothing Then
                                     @item.Section.Name
                                 Else
                                     @<span>Not Assigned</span>

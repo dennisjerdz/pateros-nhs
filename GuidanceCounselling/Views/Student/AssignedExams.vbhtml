@@ -4,6 +4,15 @@
 End Code
 
 <div class="container body-header">
+    @If ViewBag.ExamTakeSuccess = "1" Then
+        @<div class="row">
+            <div class="alert alert-success">
+                You've <strong>successfully</strong> taken the exam.
+            </div>
+        </div>
+    End If
+    
+
     <div class="row">
         <div class="col-md-9">
             <p>
