@@ -22,6 +22,11 @@ Namespace Controllers
         End Function
 
         Function AssignedExams() As ActionResult
+
+            If TempData("ExamTakeSuccess") IsNot Nothing Then
+                ViewBag.ExamTakeSuccess = TempData("ExamTakeSuccess")
+            End If
+
             Dim UserId As String = db.Users.FirstOrDefault(Function(u) u.Email = User.Identity.Name).Id
 
             Dim exams As List(Of ExamStudent) = db.ExamStudents.Where(Function(e) e.UserId = UserId).OrderByDescending(Function(s) s.DateCreated).ToList()
@@ -141,7 +146,7 @@ Namespace Controllers
 
             db.SaveChanges()
 
-            ViewBag.ExamTakeSuccess = "1"
+            TempData("ExamTakeSuccess") = "1"
             Return RedirectToAction("AssignedExams")
         End Function
 
