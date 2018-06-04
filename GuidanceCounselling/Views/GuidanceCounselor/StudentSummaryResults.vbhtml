@@ -12,6 +12,10 @@ End Code
             </p>
         </div>
     </div>
+
+    @code
+        Dim list As List(Of ScoreViewModel) = New List(Of ScoreViewModel)()
+    End Code
 </div>
 
 <div class="container body-data" style="background-color:white !important;">
@@ -65,6 +69,8 @@ End Code
                                                         <td style="text-align:right;">@percentage %</td>
                                                     </tr>
                                                 </text>
+
+                                                list.Add(New ScoreViewModel() With {.Name = a.QuestionGroup.DisplayName, .Score = percentage})
                                             End If
                                         Next
 
@@ -115,9 +121,12 @@ End Code
                                                         <td style="text-align:right;">@percentage %</td>
                                                     </tr>
                                             </text>
+
+                                            list.Add(New ScoreViewModel() With {.Name = a.QuestionGroup.DisplayName, .Score = percentage})
                                         Next
 
                                         Dim average As Double = Math.Round((needsInventoryPercentageTotal / needsInventoryQuestionGroupTotal), 2)
+                                        list.Add(New ScoreViewModel() With {.Name = "Needs", .Score = average})
 
                                         @<text>
                                             <tr>
@@ -175,9 +184,12 @@ End Code
                                                     <td style="text-align:right;">@percentage %</td>
                                                 </tr>
                                             </text>
+
+                                            list.Add(New ScoreViewModel() With {.Name = a.QuestionGroup.DisplayName, .Score = percentage})
                                         Next
 
                                         Dim average As Double = Math.Round((personalityWorkPercentageTotal / personalityWorkQuestionGroupTotal), 2)
+                                        list.Add(New ScoreViewModel() With {.Name = "Personality-Work Orientation", .Score = average})
 
                                         @<text>
                                             <tr>
@@ -232,9 +244,12 @@ End Code
                                                     <td style="text-align:right;">@percentage %</td>
                                                 </tr>
                                             </text>
+
+                                            list.Add(New ScoreViewModel() With {.Name = a.QuestionGroup.DisplayName, .Score = percentage})
                                         Next
 
                                         Dim average As Double = Math.Round((interestInventoryPercentageTotal / interestInventoryQuestionGroupTotal), 2)
+                                        list.Add(New ScoreViewModel() With {.Name = "Interest Inventory", .Score = average})
 
                                         @<text>
                                             <tr>
@@ -253,7 +268,7 @@ End Code
     </div>
 
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -292,6 +307,54 @@ End Code
 
                     <tr>
                         <td style="text-align:center;"><strong>Results: @aptitudesList.Count() / @questionCount</strong></td>
+                    </tr>
+
+                    @Code
+                        list.Add(New ScoreViewModel() With {.Name = "Aptitudes", .Score = aptitudesList.Count()})
+                    End Code
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align:center;"><strong>Suggested Track</strong></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>
+                            @If (list.FirstOrDefault(Function(s) s.Name = "Relationship Conserver").Score >= 55) And
+                                (list.FirstOrDefault(Function(s) s.Name = "Conventional").Score >= 55) And
+                                (list.FirstOrDefault(Function(s) s.Name = "Aptitudes").Score >= 5) Then
+                                @<strong style="padding-right:2px;">Academic Track</strong>
+                            End If 
+
+                            @If (list.FirstOrDefault(Function(s) s.Name = "Data Analyzer").Score >= 55) And
+                                (list.FirstOrDefault(Function(s) s.Name = "Group Perserver").Score >= 55) And
+                                (list.FirstOrDefault(Function(s) s.Name = "Artistic").Score >= 55) And
+                                (list.FirstOrDefault(Function(s) s.Name = "Realistic").Score >= 55) And
+                                (list.FirstOrDefault(Function(s) s.Name = "Aptitudes").Score >= 5) Then
+                                @<strong style="padding-right:2px;">Arts & Design Track</strong>
+                            End If
+
+                            @If (list.FirstOrDefault(Function(s) s.Name = "Results Driver").Score >= 55) And
+                                (list.FirstOrDefault(Function(s) s.Name = "Group Perserver").Score >= 55) And
+                                (list.FirstOrDefault(Function(s) s.Name = "Investigative").Score >= 55) And
+                                (list.FirstOrDefault(Function(s) s.Name = "Enterprising").Score >= 55) Then
+                                @<strong style="padding-right:2px;">Sports Track</strong>
+                            End If 
+
+                            @If (list.FirstOrDefault(Function(s) s.Name = "Needs").Score >= 55) And
+                                (list.FirstOrDefault(Function(s) s.Name = "Personality-Work Orientation").Score >= 55) And
+                                (list.FirstOrDefault(Function(s) s.Name = "Interest Inventory").Score >= 55) And
+                                (list.FirstOrDefault(Function(s) s.Name = "Aptitudes").Score >= 5) Then
+                                @<strong style="padding-right:2px;">Technical Vocational-Livelihood (TVL) Track</strong>
+                            End If 
+                        </td>
                     </tr>
                 </tbody>
             </table>

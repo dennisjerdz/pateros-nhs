@@ -258,3 +258,8 @@ Public Class SubmitExamModel
     Public Overridable Property ExamStudentOneToFive As List(Of ExamStudentOneToFive)
     Public Overridable Property ExamStudentRowGroup As List(Of ExamStudentRowGroup)
 End Class
+
+Public Class ScoreViewModel
+    Public Property Name As String
+    Public Property Score As Decimal?
+End Class

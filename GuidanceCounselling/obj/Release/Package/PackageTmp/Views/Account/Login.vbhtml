@@ -5,6 +5,10 @@
 End Code
 
 <div class="container">
+    <div style="position:absolute; z-index:9999; top:10px; right:20px;">
+        <a href="@Url.Action("OTPLogin")" class="btn btn-sm btn-primary">OTP Login</a>
+    </div>
+
     <div class="row" style="margin-top:40px;">
         <div class="col-md-4 col-md-offset-4">
             <section id="loginForm">
@@ -47,7 +51,7 @@ End Code
                         @Html.ActionLink("Forgot your password?", "ForgotPassword")
                     </p>*@
                     </text>
-                End Using
+                                End Using
             </section>
         </div>
     </div>

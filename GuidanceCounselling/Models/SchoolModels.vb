@@ -239,3 +239,13 @@ Public Class NCAEGradeEditModel
     Public Property NCAEGradeSubjects As List(Of NCAEGradeSubject)
     Public Property NCAEGradeAptitudes As List(Of NCAEGradeAptitude)
 End Class
+
+Public Class OTPLink
+    Public Property OTPLinkId As String
+    Public Property Code As Integer?
+
+    Public Property UserId As String
+    Public Overridable Property User As ApplicationUser
+
+    Public Property AvailabilityEnd As DateTimeOffset
+End Class

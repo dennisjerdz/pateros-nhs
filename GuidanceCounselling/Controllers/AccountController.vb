@@ -203,6 +203,85 @@ Public Class AccountController
     '
     ' GET: /Account/ForgotPassword
     <AllowAnonymous>
+    Public Function OTPLogin() As ActionResult
+        ViewBag.Success = TempData("Success")
+
+        Return View()
+    End Function
+
+    <AllowAnonymous>
+    Public Async Function OTPLoginProc(Id As String) As Task(Of ActionResult)
+        Dim find As OTPLink = db.OTPLinks.FirstOrDefault(Function(o) o.OTPLinkId = Id)
+
+        If find Is Nothing Then
+            Return HttpNotFound()
+        End If
+
+        If DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)) > find.AvailabilityEnd Then
+            Return HttpNotFound()
+        End If
+
+        Dim identity = UserManager.CreateIdentity(find.User, DefaultAuthenticationTypes.ApplicationCookie)
+        HttpContext.GetOwinContext().Authentication.SignIn(New AuthenticationProperties With {.IsPersistent = False}, identity)
+
+        ' Await SignInManager.SignInAsync(find.User, isPersistent:=False, rememberBrowser:=False)
+        Return RedirectToAction("Index", "Home")
+    End Function
+
+    <HttpPost>
+    <AllowAnonymous>
+    <ValidateAntiForgeryToken>
+    Public Async Function OTPLogin(model As ForgotPasswordViewModel) As Task(Of ActionResult)
+        If ModelState.IsValid Then
+            Dim user = Await UserManager.FindByNameAsync(model.Email)
+            'If user Is Nothing OrElse Not (Await UserManager.IsEmailConfirmedAsync(user.Id)) Then
+            ' Don't reveal that the user does not exist or is not confirmed
+            'Return View("ForgotPasswordConfirmation")
+            'End If
+
+            If user Is Nothing Then
+                ' Don't reveal that the user does not exist or is not confirmed
+                Return View("OTPLogin")
+            End If
+
+            Dim newCode As OTPLink = New OTPLink() With {.AvailabilityEnd = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)).AddHours(1), .OTPLinkId = Guid.NewGuid().ToString(), .UserId = user.Id}
+            db.OTPLinks.Add(newCode)
+            db.SaveChanges()
+
+            Dim callbackUrl = Url.Action("OTPLoginProc", "Account", New With {.Id = newCode.OTPLinkId.ToString()}, protocol:=Request.Url.Scheme)
+
+            'Await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=""" & callbackUrl & """>here</a>")
+            Dim fromAddress As New MailAddress("testintingone@gmail.com", "Pateros-NHS No Reply")
+            Dim toAddress As New MailAddress(model.Email, user.getFullName)
+            Dim fromPassword As String = "Testinting"
+            Dim subject As String = "OTP Login Pateros-NHS"
+
+            Dim smtp As New SmtpClient() With {
+                .Host = "smtp.gmail.com",
+                .Port = 587,
+                .EnableSsl = True,
+                .DeliveryMethod = SmtpDeliveryMethod.Network,
+                .UseDefaultCredentials = False,
+                .Credentials = New NetworkCredential(fromAddress.Address, fromPassword)
+            }
+
+            Dim message As New MailMessage(fromAddress, toAddress) With {
+                .Subject = subject,
+                .Body = "Please click the link to login; " & callbackUrl & " . The link will expire in 1 hour."
+            }
+
+            smtp.Send(message)
+            TempData("Success") = "1"
+            Return RedirectToAction("OTPLogin", "Account")
+        End If
+
+        ' If we got this far, something failed, redisplay form
+        Return View(model)
+    End Function
+
+    '
+    ' GET: /Account/ForgotPassword
+    <AllowAnonymous>
     Public Function ForgotPassword() As ActionResult
         Return View()
     End Function

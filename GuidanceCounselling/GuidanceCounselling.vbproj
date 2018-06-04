@@ -284,6 +284,14 @@
       <DependentUpon>201806032112511_update-6-4.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201806032112511_update-6-4.vb" />
+    <Compile Include="Migrations\201806042144130_OTP.Designer.vb">
+      <DependentUpon>201806042144130_OTP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806042144130_OTP.vb" />
+    <Compile Include="Migrations\201806042147183_OTP-update.Designer.vb">
+      <DependentUpon>201806042147183_OTP-update.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806042147183_OTP-update.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\ExamModels.vb" />
@@ -366,6 +374,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806032112511_update-6-4.resx">
       <DependentUpon>201806032112511_update-6-4.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806042144130_OTP.resx">
+      <DependentUpon>201806042144130_OTP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806042147183_OTP-update.resx">
+      <DependentUpon>201806042147183_OTP-update.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -510,6 +524,7 @@
     <Content Include="Views\GuidanceCounselor\SectionSummaryReport.vbhtml" />
     <Content Include="Views\GuidanceCounselor\ViewNCAEGrade.vbhtml" />
     <Content Include="Views\Admin\ViewArchivedStudents.vbhtml" />
+    <Content Include="Views\Account\OTPLogin.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
