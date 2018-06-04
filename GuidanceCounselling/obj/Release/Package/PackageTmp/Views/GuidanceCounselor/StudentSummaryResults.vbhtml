@@ -326,34 +326,79 @@ End Code
 
                 <tbody>
                     <tr>
-                        <td>
-                            @If (list.FirstOrDefault(Function(s) s.Name = "Relationship Conserver").Score >= 55) And
-                                (list.FirstOrDefault(Function(s) s.Name = "Conventional").Score >= 55) And
-                                (list.FirstOrDefault(Function(s) s.Name = "Aptitudes").Score >= 5) Then
-                                @<strong style="padding-right:2px;">Academic Track</strong>
-                            End If 
+                        <td style="text-align:center;">
+                            @code
+                                Dim relationshipConserver = 0
+                                Dim conventional = 0
+                                Dim aptitudes = 0
+                                Dim groupPreserver = 0
+                                Dim artistic = 0
+                                Dim realistic = 0
+                                Dim resultsDriver = 0
+                                Dim investigative = 0
+                                Dim enterprising = 0
+                                Dim dataAnalyzer = 0
 
-                            @If (list.FirstOrDefault(Function(s) s.Name = "Data Analyzer").Score >= 55) And
-                                (list.FirstOrDefault(Function(s) s.Name = "Group Perserver").Score >= 55) And
-                                (list.FirstOrDefault(Function(s) s.Name = "Artistic").Score >= 55) And
-                                (list.FirstOrDefault(Function(s) s.Name = "Realistic").Score >= 55) And
-                                (list.FirstOrDefault(Function(s) s.Name = "Aptitudes").Score >= 5) Then
+                                If list.Any(Function(s) s.Name = "Relationship Conserver") Then
+                                    relationshipConserver = list.FirstOrDefault(Function(s) s.Name = "Relationship Conserver").Score
+                                End If
+
+                                If list.Any(Function(s) s.Name = "Conventional") Then
+                                    conventional = list.FirstOrDefault(Function(s) s.Name = "Conventional").Score
+                                End If
+
+                                If list.Any(Function(s) s.Name = "Aptitudes") Then
+                                    aptitudes = list.FirstOrDefault(Function(s) s.Name = "Aptitudes").Score
+                                End If
+
+                                If list.Any(Function(s) s.Name = "Group Preserver") Then
+                                    groupPreserver = list.FirstOrDefault(Function(s) s.Name = "Group Preserver").Score
+                                End If
+
+                                If list.Any(Function(s) s.Name = "Artistic") Then
+                                    artistic = list.FirstOrDefault(Function(s) s.Name = "Artistic").Score
+                                End If
+
+                                If list.Any(Function(s) s.Name = "Realistic") Then
+                                    artistic = list.FirstOrDefault(Function(s) s.Name = "Realistic").Score
+                                End If
+
+                                If list.Any(Function(s) s.Name = "Data Analyzer") Then
+                                    dataAnalyzer = list.FirstOrDefault(Function(s) s.Name = "Data Analyzer").Score
+                                End If
+
+                                If list.Any(Function(s) s.Name = "Results Driver") Then
+                                    resultsDriver = list.FirstOrDefault(Function(s) s.Name = "Results Driver").Score
+                                End If
+
+                                If list.Any(Function(s) s.Name = "Enterprising") Then
+                                    enterprising = list.FirstOrDefault(Function(s) s.Name = "Enterprising").Score
+                                End If
+
+                                If list.Any(Function(s) s.Name = "Investigative") Then
+                                    investigative = list.FirstOrDefault(Function(s) s.Name = "Investigative").Score
+                                End If
+
+                                If (relationshipConserver >= 55) And (conventional >= 55) And (aptitudes >= 5) Then
+                                @<strong style="padding-right:2px;">Academic Track</strong>
+                                End If
+
+                                If (dataAnalyzer >= 55) And (groupPreserver >= 55) And (artistic >= 55) And (realistic >= 55) And (aptitudes >= 5) Then
                                 @<strong style="padding-right:2px;">Arts & Design Track</strong>
+                                End If
+
+                                If (resultsDriver >= 55) And (groupPreserver >= 55) And (investigative >= 55) And (enterprising >= 55) Then
+                                @<strong style="padding-right:2px;">Sports Track</strong>
+                                End If
+
+                                If (list.FirstOrDefault(Function(s) s.Name = "Needs").Score >= 55) And
+                                                                        (list.FirstOrDefault(Function(s) s.Name = "Personality-Work Orientation").Score >= 55) And
+                                                                        (list.FirstOrDefault(Function(s) s.Name = "Interest Inventory").Score >= 55) And
+                                                                        (list.FirstOrDefault(Function(s) s.Name = "Aptitudes").Score >= 5) Then
+                                @<strong style="padding-right:2px;">Technical Vocational-Livelihood (TVL) Track</strong>
                             End If
 
-                            @If (list.FirstOrDefault(Function(s) s.Name = "Results Driver").Score >= 55) And
-                                (list.FirstOrDefault(Function(s) s.Name = "Group Perserver").Score >= 55) And
-                                (list.FirstOrDefault(Function(s) s.Name = "Investigative").Score >= 55) And
-                                (list.FirstOrDefault(Function(s) s.Name = "Enterprising").Score >= 55) Then
-                                @<strong style="padding-right:2px;">Sports Track</strong>
-                            End If 
-
-                            @If (list.FirstOrDefault(Function(s) s.Name = "Needs").Score >= 55) And
-                                (list.FirstOrDefault(Function(s) s.Name = "Personality-Work Orientation").Score >= 55) And
-                                (list.FirstOrDefault(Function(s) s.Name = "Interest Inventory").Score >= 55) And
-                                (list.FirstOrDefault(Function(s) s.Name = "Aptitudes").Score >= 5) Then
-                                @<strong style="padding-right:2px;">Technical Vocational-Livelihood (TVL) Track</strong>
-                            End If 
+                            End Code
                         </td>
                     </tr>
                 </tbody>
