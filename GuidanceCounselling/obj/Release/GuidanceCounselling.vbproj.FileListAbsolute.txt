@@ -248,3 +248,4 @@ C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\ob
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Release\GuidanceCounselling.Migrations.update64.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Release\GuidanceCounselling.Migrations.OTP.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Release\GuidanceCounselling.Migrations.OTPupdate.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Release\GuidanceCounselling.Migrations.ncaeuploadpicture.resources

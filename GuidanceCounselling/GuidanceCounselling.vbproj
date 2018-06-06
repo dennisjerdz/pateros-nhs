@@ -292,6 +292,10 @@
       <DependentUpon>201806042147183_OTP-update.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201806042147183_OTP-update.vb" />
+    <Compile Include="Migrations\201806062213123_ncae-upload-picture.Designer.vb">
+      <DependentUpon>201806062213123_ncae-upload-picture.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806062213123_ncae-upload-picture.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\ExamModels.vb" />
@@ -380,6 +384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806042147183_OTP-update.resx">
       <DependentUpon>201806042147183_OTP-update.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806062213123_ncae-upload-picture.resx">
+      <DependentUpon>201806062213123_ncae-upload-picture.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

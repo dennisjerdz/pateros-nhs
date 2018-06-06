@@ -15,6 +15,70 @@ End Code
 </div>
 
 <div class="container body-data">
+    <div id="uploadModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Upload Image</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container body-data">
+                        @Using Html.BeginForm("UploadNCAEPicture", "GuidanceCounselor", FormMethod.Post, New With {.class = "form-horizontal form-bottom-space", .role = "form", .enctype = "multipart/form-data"})
+                            @<text>
+                                @Html.ValidationSummary("", New With {.class = "text-danger"})
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="control-label">Name</label>
+                                        <input class="form-control " value="NCAE Picture" readonly />
+
+                                        <input class="form-control" name="NCAEGradeId" value="@Model.NCAEGradeId" style="display:none;" readonly />
+                                    </div>
+
+                                    <div Class="col-md-4">
+                                        <label>Image (JPG/PNG)</label>
+                                        <input type="file" name="postedFile" class="form-control" required>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label style="margin-bottom:5px;">&nbsp;</label>
+                                        <input type="submit" class="btn btn-primary btn-block" value="Upload" />
+                                    </div>
+                                </div>
+                            </text>
+                        End Using
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="viewPictureModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">View Attached Image</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="@Model.PictureLocation" class="img-responsive"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     @Using Html.BeginForm("EditNCAEGrade", "GuidanceCounselor", FormMethod.Post, New With {.class = "form-horizontal form-bottom-space", .role = "form"})
 
         @Html.AntiForgeryToken()
@@ -29,6 +93,14 @@ End Code
                 <div class="col-md-4">
                     <label class="control-label">Student Name:</label>
                     <p>@Model.StudentName</p>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label">Options: </label>
+                    <p>
+                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadModal">Upload Image</button>
+                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewPictureModal">View Image</button>
+                    </p>
                 </div>
             </div>
 

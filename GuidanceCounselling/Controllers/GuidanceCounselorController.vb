@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Entity
+Imports System.IO
 Imports System.Net
 Imports System.Threading.Tasks
 Imports System.Web.Mvc
@@ -800,6 +801,40 @@ Namespace Controllers
             Dim g As New NCAEGrade() With {.UserId = u.Id}
 
             Return View(g)
+        End Function
+
+        <HttpPost()>
+        Function UploadNCAEPicture(ByVal postedFile As HttpPostedFileBase) As ActionResult
+            Dim ncaeGradeId As Integer = Convert.ToInt32(Request("NCAEGradeId"))
+            Dim ncaeGrade As NCAEGrade = db.NCAEGrades.FirstOrDefault(Function(s) s.NCAEGradeId = ncaeGradeId)
+
+            If postedFile IsNot Nothing Then
+                Dim path As String = Server.MapPath("~/Content/Images/")
+
+                If Not Directory.Exists(path) Then
+                    Directory.CreateDirectory(path)
+                End If
+
+                Dim ext As String = System.IO.Path.GetExtension(postedFile.FileName)
+
+                ' Return Content(postedFile.FileName + " " + ext)
+
+                Try
+                    postedFile.SaveAs(path & postedFile.FileName)
+                Catch ex As Exception
+                    TempData("upload") = "fail"
+                    TempData("errMessage") = ex.Message
+                    Return RedirectToAction("WebsiteConfig")
+                End Try
+
+                Dim savePath = "/Content/Images/" + postedFile.FileName
+                'Dim logo As WebsiteConfig = db.WebsiteConfig.FirstOrDefault(Function(w) w.Name = "Logo-Location")
+
+                ncaeGrade.PictureLocation = savePath
+                db.SaveChanges()
+            End If
+
+            Return RedirectToAction("ViewNCAEGrade", New With {.id = ncaeGrade.NCAEGradeId})
         End Function
 
         <HttpPost()>

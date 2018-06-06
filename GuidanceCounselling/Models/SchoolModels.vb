@@ -177,6 +177,7 @@ Public Class NCAEGrade
     Public Property TrackChoice As String
     Public Property StrandConcentrationChoice As String
 
+    Public Property PictureLocation As String
     Public Overridable Property NCAEGradeSubjects As List(Of NCAEGradeSubject)
     Public Overridable Property NCAEGradeAptitudes As List(Of NCAEGradeAptitude)
 End Class
@@ -224,6 +225,7 @@ Public Class NCAEGradeEditModel
         UserId = ng.UserId
         TrackChoice = ng.TrackChoice
         StrandConcentrationChoice = ng.StrandConcentrationChoice
+        PictureLocation = ng.PictureLocation
     End Sub
 
     Public Property NCAEGradeId As Integer
@@ -236,6 +238,7 @@ Public Class NCAEGradeEditModel
     Public Property TrackChoice As String
     Public Property StrandConcentrationChoice As String
 
+    Public Property PictureLocation As String
     Public Property NCAEGradeSubjects As List(Of NCAEGradeSubject)
     Public Property NCAEGradeAptitudes As List(Of NCAEGradeAptitude)
 End Class
