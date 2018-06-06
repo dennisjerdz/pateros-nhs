@@ -9,6 +9,7 @@ End Code
             <p>
                 @Model.FirstName / @ViewBag.Title 
                 <a class="header-btn btn btn-default" href="@Url.Action("Students")"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
+                <a class="header-btn btn btn-success export-excel" href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a>
             </p>
         </div>
     </div>
@@ -35,8 +36,11 @@ End Code
                 <tbody>
                     <tr>
                         <td>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="my-problem-checklist-table">
                                 <tbody>
+                                    <tr class="hide-this">
+                                        <td colspan="2">My Problem Checklist</td>
+                                    </tr>
                                     @Code
                                         Dim mp As ExamStudent = Model.ExamStudents.Where(Function(a) a.Exam.Name.Contains("My Problem Checklist") And a.TakenAt IsNot Nothing).OrderByDescending(Function(a) a.TakenAt).FirstOrDefault()
                                     End Code
@@ -83,13 +87,25 @@ End Code
                                             </tr>
                                         </text>
                                     End If
+
+                                    <tr class="hide-this">
+                                        <td colspan="2">
+                                            @If ViewBag.Name IsNot Nothing Then
+                                                @<text>Prepared by: @ViewBag.name</text>
+                                            End If
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </td>
 
                         <td>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="needs-inventory-table">
                                 <tbody>
+                                    <tr class="hide-this">
+                                        <td colspan="2">Needs Inventory</td>
+                                    </tr>
+
                                     @Code
                                         Dim ni As ExamStudent = Model.ExamStudents.Where(Function(a) a.Exam.Name.Contains("Needs Inventory") And a.TakenAt IsNot Nothing).OrderByDescending(Function(a) a.TakenAt).FirstOrDefault()
                                     End Code
@@ -135,6 +151,14 @@ End Code
                                             </tr>
                                         </text>
                                     End If
+
+                                    <tr class="hide-this">
+                                        <td colspan="2">
+                                            @If ViewBag.Name IsNot Nothing Then
+                                                @<text>Prepared by: @ViewBag.name</text>
+                                            End If
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </td>
@@ -151,8 +175,12 @@ End Code
                 <tbody>
                     <tr>
                         <td>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="personality-work-orientation-table">
                                 <tbody>
+                                    <tr class="hide-this">
+                                        <td colspan="2">Personality-Work Orientation</td>
+                                    </tr>
+
                                     @Code
                                         Dim pw As ExamStudent = Model.ExamStudents.Where(Function(a) a.Exam.Name.Contains("Personality-Work Orientation Profile") And a.TakenAt IsNot Nothing).OrderByDescending(Function(a) a.TakenAt).FirstOrDefault()
                                     End Code
@@ -206,13 +234,25 @@ End Code
                                             </tr>
                                         </text>
                                     End If
+
+                                    <tr class="hide-this">
+                                        <td colspan="2">
+                                            @If ViewBag.Name IsNot Nothing Then
+                                                @<text>Prepared by: @ViewBag.name</text>
+                                            End If
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </td>
 
                         <td>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="interest-inventory-table">
                                 <tbody>
+                                    <tr style="display:none;">
+                                        <td class="hide-this">Interest Inventory</td>
+                                    </tr>
+
                                     @Code
                                         Dim ii As ExamStudent = Model.ExamStudents.Where(Function(a) a.Exam.Name.Contains("Interest Inventory") And a.TakenAt IsNot Nothing).OrderByDescending(Function(a) a.TakenAt).FirstOrDefault()
                                     End Code
@@ -258,6 +298,14 @@ End Code
                                             </tr>
                                         </text>
                                     End If
+
+                                    <tr class="hide-this">
+                                        <td colspan="2">
+                                            @If ViewBag.Name IsNot Nothing Then
+                                                @<text>Prepared by: @ViewBag.name</text>
+                                            End If
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </td>
@@ -269,7 +317,7 @@ End Code
 
     <div class="row">
         <div class="col-md-6">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="aptitudes-table">
                 <thead>
                     <tr>
                         <th style="text-align:center;">Aptitude</th>
@@ -309,6 +357,14 @@ End Code
                         <td style="text-align:center;"><strong>Results: @aptitudesList.Count() / @questionCount</strong></td>
                     </tr>
 
+                    <tr class="hide-this">
+                        <td>
+                            @If ViewBag.Name IsNot Nothing Then
+                                @<text>Prepared by: @ViewBag.name</text>
+                            End If
+                        </td>
+                    </tr>
+
                     @Code
                         list.Add(New ScoreViewModel() With {.Name = "Aptitudes", .Score = aptitudesList.Count()})
                     End Code
@@ -317,7 +373,7 @@ End Code
         </div>
 
         <div class="col-md-6">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="suggested-track-table">
                 <thead>
                     <tr>
                         <th style="text-align:center;"><strong>Suggested Track</strong></th>
@@ -401,6 +457,14 @@ End Code
                             End Code
                         </td>
                     </tr>
+
+                    <tr class="hide-this">
+                        <td>
+                            @If ViewBag.Name IsNot Nothing Then
+                                @<text>Prepared by: @ViewBag.name</text>
+                            End If
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -409,4 +473,80 @@ End Code
 
 @section Scripts
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Content/sheetJS/xlsx.full.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var wb = XLSX.utils.book_new();
+
+            wb.Props = {
+                Title: "SheetJS Tutorial",
+                Subject: "Test",
+                Author: "Red Stapler",
+                CreatedDate: new Date(2017, 12, 19)
+            };
+
+            wb.SheetNames.push("Test Sheet");
+            var ws_data = [['hello', 'world']];
+            var ws = XLSX.utils.aoa_to_sheet(ws_data);
+            wb.Sheets["Test Sheet"] = ws;
+
+            $(".hide-this").each(function () {
+                $(this).css("display", "none");
+            });
+
+            var author = "";
+            @If ViewBag.Name IsNot Nothing Then
+                @<text>author = "@ViewBag.name";</text>
+            End If
+
+            var studentName = "@Model.getFullName()";
+            var studentFirstName = "@Model.FirstName";
+
+            $(document).on("click", ".export-excel", function () {
+                var workbook = XLSX.utils.book_new();
+
+                workbook.Props = {
+                    Title: "Summary Results for "+ studentName,
+                    Author: author
+                };
+
+                $(".hide-this").each(function () {
+                    $(this).css("display", "");
+                });
+
+                var table1 = document.getElementById("my-problem-checklist-table");
+                var table2 = document.getElementById("needs-inventory-table");
+                var table3 = document.getElementById("personality-work-orientation-table");
+                var table4 = document.getElementById("interest-inventory-table");
+                var table5 = document.getElementById("aptitudes-table");
+                var table6 = document.getElementById("suggested-track-table");
+
+                var ws1 = XLSX.utils.table_to_sheet(table1, { raw: true });
+                var ws2 = XLSX.utils.table_to_sheet(table2, { raw: true });
+                var ws3 = XLSX.utils.table_to_sheet(table3, { raw: true });
+                var ws4 = XLSX.utils.table_to_sheet(table4, { raw: true });
+                var ws5 = XLSX.utils.table_to_sheet(table5, { raw: true });
+                var ws6 = XLSX.utils.table_to_sheet(table6, { raw: true });
+
+                //XLSX.utils.sheet_add_aoa(ws1, [[1, 2], [2, 3], [3, 4]], { origin: "A2" });
+
+                XLSX.utils.book_append_sheet(workbook, ws1, "My Problem Checklist");
+                XLSX.utils.book_append_sheet(workbook, ws2, "Needs Inventory");
+                XLSX.utils.book_append_sheet(workbook, ws3, "Personality-Work Orientation");
+                XLSX.utils.book_append_sheet(workbook, ws4, "Interest Inventory");
+                XLSX.utils.book_append_sheet(workbook, ws5, "Aptitudes");
+                XLSX.utils.book_append_sheet(workbook, ws6, "Suggested Track");
+
+                XLSX.writeFile(workbook, studentFirstName+"-summary-results"+".xlsx");
+
+                $(".hide-this").each(function () {
+                    $(this).css("display", "none");
+                });
+            });
+
+        });
+    </script>
 End Section

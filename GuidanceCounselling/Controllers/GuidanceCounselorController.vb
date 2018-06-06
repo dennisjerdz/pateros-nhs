@@ -950,6 +950,10 @@ Namespace Controllers
                 Return HttpNotFound()
             End If
 
+            Dim userID = User.Identity.GetUserId()
+
+            ViewBag.Name = db.Users.FirstOrDefault(Function(f) f.Id = userID.ToString()).getFullName()
+
             Return View(u)
         End Function
 

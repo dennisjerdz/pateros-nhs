@@ -394,11 +394,23 @@
     <Content Include="Content\datatable\dataTables.bootstrap.min.css" />
     <Content Include="Content\datatable\jquery-ui.min.css" />
     <Content Include="Content\logo.jpg" />
+    <Content Include="Content\sheetJS\cpexcel.js" />
+    <Content Include="Content\sheetJS\jszip.js" />
+    <Content Include="Content\sheetJS\shim.min.js" />
+    <Content Include="Content\sheetJS\xlsx.core.min.js" />
+    <Content Include="Content\sheetJS\xlsx.extendscript.js" />
+    <Content Include="Content\sheetJS\xlsx.full.min.js" />
+    <Content Include="Content\sheetJS\xlsx.js" />
+    <Content Include="Content\sheetJS\xlsx.min.js" />
     <Content Include="Content\sidebar.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\sheetJS\LICENSE" />
+    <Content Include="Content\sheetJS\xlsx.core.min.map" />
+    <Content Include="Content\sheetJS\xlsx.full.min.map" />
+    <Content Include="Content\sheetJS\xlsx.min.map" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
