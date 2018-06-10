@@ -328,3 +328,5 @@ C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\ob
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.OTP.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.OTPupdate.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.ncaeuploadpicture.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.codeLogin.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\gcc1\GuidanceCounselling\obj\Debug\GuidanceCounselling.Migrations.codeLoginFix.resources

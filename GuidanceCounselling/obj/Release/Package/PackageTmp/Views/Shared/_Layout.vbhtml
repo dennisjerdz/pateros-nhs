@@ -49,7 +49,7 @@
 
     <div id="wrapper" class="toggled">
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
+        <div class="no-print" id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <!--
                 <li class="sidebar-brand">
@@ -164,7 +164,7 @@
         </div>
 
         <div id = "page-content-wrapper" >
-            <div class="navbar">
+            <div class="navbar no-print">
                         <div class="container">
                             <div class="navbar-header">
                                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

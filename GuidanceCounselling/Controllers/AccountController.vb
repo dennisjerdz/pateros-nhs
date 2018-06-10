@@ -210,6 +210,133 @@ Public Class AccountController
     End Function
 
     <AllowAnonymous>
+    Public Function OTPCodeLogin(Id As String) As ActionResult
+        Dim otp As OTPLink = db.OTPLinks.FirstOrDefault(Function(o) o.OTPLinkId = Id)
+
+        If otp Is Nothing Then
+            Return HttpNotFound()
+        Else
+            If otp.Usable = False Then
+                Return HttpNotFound()
+            Else
+                Return View(otp)
+            End If
+        End If
+    End Function
+
+    <AllowAnonymous>
+    <HttpPost>
+    <ValidateAntiForgeryToken>
+    Public Function OTPCodeLogin(model As OTPLink) As ActionResult
+
+        'ViewBag.Success = TempData("Success")
+        Dim original = db.OTPLinks.FirstOrDefault(Function(o) o.OTPLinkId = model.OTPLinkId)
+
+        'Return Content(Request("original_code") + " Original:" + original.Code.ToString() + " Input:" + model.Code.ToString())
+
+        If model.Code = original.Code Then
+            original.Usable = False
+            model.Code = original.Code
+            db.SaveChanges()
+
+            Dim identity = UserManager.CreateIdentity(original.User, DefaultAuthenticationTypes.ApplicationCookie)
+            HttpContext.GetOwinContext().Authentication.SignIn(New AuthenticationProperties With {.IsPersistent = False}, identity)
+
+            ' Await SignInManager.SignInAsync(find.User, isPersistent:=False, rememberBrowser:=False)
+            Return RedirectToAction("Index", "Home")
+        Else
+            ViewBag.Success = "0"
+
+            Return View(original)
+        End If
+    End Function
+
+    <HttpPost>
+    <AllowAnonymous>
+    <ValidateAntiForgeryToken>
+    Public Async Function OTPLogin(model As ForgotPasswordViewModel) As Task(Of ActionResult)
+        If ModelState.IsValid Then
+            'dim user = await usermanager.findbynameasync(model.email)
+
+            'if user is nothing then
+            '    ' don't reveal that the user does not exist or is not confirmed
+            '    return view("otplogin")
+            'end if
+
+            'dim newcode as otplink = new otplink() with {.availabilityend = datetimeoffset.now.tooffset(new timespan(8, 0, 0)).addhours(1), .otplinkid = guid.newguid().tostring(), .userid = user.id}
+            'db.otplinks.add(newcode)
+            'db.savechanges()
+
+            'dim callbackurl = url.action("otploginproc", "account", new with {.id = newcode.otplinkid.tostring()}, protocol:=request.url.scheme)
+
+            'dim fromaddress as new mailaddress("testintingone@gmail.com", "pateros-nhs no reply")
+            'dim toaddress as new mailaddress(model.email, user.getfullname)
+            'dim frompassword as string = "testinting"
+            'dim subject as string = "otp login pateros-nhs"
+
+            'dim smtp as new smtpclient() with {
+            '    .host = "smtp.gmail.com",
+            '    .port = 587,
+            '    .enablessl = true,
+            '    .deliverymethod = smtpdeliverymethod.network,
+            '    .usedefaultcredentials = false,
+            '    .credentials = new networkcredential(fromaddress.address, frompassword)
+            '}
+
+            'dim message as new mailmessage(fromaddress, toaddress) with {
+            '    .subject = subject,
+            '    .body = "please click the link to login; " & callbackurl & " . the link will expire in 1 hour."
+            '}
+
+            'smtp.send(message)
+            'tempdata("success") = "1"
+            'Return RedirectToAction("otplogin", "account")
+
+            Dim user = Await UserManager.FindByNameAsync(model.Email)
+
+            If user Is Nothing Then
+                ' don't reveal that the user does not exist or is not confirmed
+                Return View("otplogin")
+            End If
+
+            Dim rnd As Random = New Random()
+            Dim code As Integer = rnd.Next(10000, 99999)
+
+            Dim newcode As OTPLink = New OTPLink() With {.AvailabilityEnd = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)).AddHours(1), .OTPLinkId = Guid.NewGuid().ToString(), .UserId = user.Id, .Code = code, .Usable = True}
+            db.OTPLinks.Add(newcode)
+            db.SaveChanges()
+
+            Dim callbackurl = Url.Action("otpcodelogin", "account", New With {.id = newcode.OTPLinkId.ToString()}, protocol:=Request.Url.Scheme)
+
+            Dim fromaddress As New MailAddress("testintingone@gmail.com", "Pateros-NHS No Reply")
+            Dim toaddress As New MailAddress(model.Email, user.getFullName)
+            Dim frompassword As String = "Testinting"
+            Dim subject As String = "otp login pateros-nhs"
+
+            Dim smtp As New SmtpClient() With {
+                .Host = "smtp.gmail.com",
+                .Port = 587,
+                .EnableSsl = True,
+                .DeliveryMethod = SmtpDeliveryMethod.Network,
+                .UseDefaultCredentials = False,
+                .Credentials = New NetworkCredential(fromaddress.Address, frompassword)
+            }
+
+            Dim message As New MailMessage(fromaddress, toaddress) With {
+                .Subject = subject,
+                .Body = "Your login code is " & code & "."
+            }
+
+            smtp.Send(message)
+            Return RedirectToAction("otpcodelogin", "account", New With {.Id = newcode.OTPLinkId})
+        End If
+
+        ' If we got this far, something failed, redisplay form
+        Return View(model)
+    End Function
+
+    ' Link login
+    <AllowAnonymous>
     Public Async Function OTPLoginProc(Id As String) As Task(Of ActionResult)
         Dim find As OTPLink = db.OTPLinks.FirstOrDefault(Function(o) o.OTPLinkId = Id)
 
@@ -226,57 +353,6 @@ Public Class AccountController
 
         ' Await SignInManager.SignInAsync(find.User, isPersistent:=False, rememberBrowser:=False)
         Return RedirectToAction("Index", "Home")
-    End Function
-
-    <HttpPost>
-    <AllowAnonymous>
-    <ValidateAntiForgeryToken>
-    Public Async Function OTPLogin(model As ForgotPasswordViewModel) As Task(Of ActionResult)
-        If ModelState.IsValid Then
-            Dim user = Await UserManager.FindByNameAsync(model.Email)
-            'If user Is Nothing OrElse Not (Await UserManager.IsEmailConfirmedAsync(user.Id)) Then
-            ' Don't reveal that the user does not exist or is not confirmed
-            'Return View("ForgotPasswordConfirmation")
-            'End If
-
-            If user Is Nothing Then
-                ' Don't reveal that the user does not exist or is not confirmed
-                Return View("OTPLogin")
-            End If
-
-            Dim newCode As OTPLink = New OTPLink() With {.AvailabilityEnd = DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)).AddHours(1), .OTPLinkId = Guid.NewGuid().ToString(), .UserId = user.Id}
-            db.OTPLinks.Add(newCode)
-            db.SaveChanges()
-
-            Dim callbackUrl = Url.Action("OTPLoginProc", "Account", New With {.Id = newCode.OTPLinkId.ToString()}, protocol:=Request.Url.Scheme)
-
-            'Await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=""" & callbackUrl & """>here</a>")
-            Dim fromAddress As New MailAddress("testintingone@gmail.com", "Pateros-NHS No Reply")
-            Dim toAddress As New MailAddress(model.Email, user.getFullName)
-            Dim fromPassword As String = "Testinting"
-            Dim subject As String = "OTP Login Pateros-NHS"
-
-            Dim smtp As New SmtpClient() With {
-                .Host = "smtp.gmail.com",
-                .Port = 587,
-                .EnableSsl = True,
-                .DeliveryMethod = SmtpDeliveryMethod.Network,
-                .UseDefaultCredentials = False,
-                .Credentials = New NetworkCredential(fromAddress.Address, fromPassword)
-            }
-
-            Dim message As New MailMessage(fromAddress, toAddress) With {
-                .Subject = subject,
-                .Body = "Please click the link to login; " & callbackUrl & " . The link will expire in 1 hour."
-            }
-
-            smtp.Send(message)
-            TempData("Success") = "1"
-            Return RedirectToAction("OTPLogin", "Account")
-        End If
-
-        ' If we got this far, something failed, redisplay form
-        Return View(model)
     End Function
 
     '

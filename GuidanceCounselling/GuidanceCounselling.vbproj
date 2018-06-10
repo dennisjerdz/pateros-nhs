@@ -296,6 +296,14 @@
       <DependentUpon>201806062213123_ncae-upload-picture.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201806062213123_ncae-upload-picture.vb" />
+    <Compile Include="Migrations\201806101653550_codeLogin.Designer.vb">
+      <DependentUpon>201806101653550_codeLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806101653550_codeLogin.vb" />
+    <Compile Include="Migrations\201806101655292_codeLoginFix.Designer.vb">
+      <DependentUpon>201806101655292_codeLoginFix.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806101655292_codeLoginFix.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\ExamModels.vb" />
@@ -387,6 +395,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806062213123_ncae-upload-picture.resx">
       <DependentUpon>201806062213123_ncae-upload-picture.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806101653550_codeLogin.resx">
+      <DependentUpon>201806101653550_codeLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806101655292_codeLoginFix.resx">
+      <DependentUpon>201806101655292_codeLoginFix.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -544,6 +558,7 @@
     <Content Include="Views\GuidanceCounselor\ViewNCAEGrade.vbhtml" />
     <Content Include="Views\Admin\ViewArchivedStudents.vbhtml" />
     <Content Include="Views\Account\OTPLogin.vbhtml" />
+    <Content Include="Views\Account\OTPCodeLogin.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

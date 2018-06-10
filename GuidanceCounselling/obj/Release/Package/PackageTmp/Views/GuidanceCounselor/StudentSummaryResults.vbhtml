@@ -3,13 +3,14 @@
     ViewBag.Title = "Summary Results"
 End Code
 
-<div class="container body-header">
+<div class="container body-header no-print">
     <div class="row">
         <div class="col-md-9">
             <p>
                 @Model.FirstName / @ViewBag.Title 
                 <a class="header-btn btn btn-default" href="@Url.Action("Students")"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
                 <a class="header-btn btn btn-success export-excel" href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a>
+                <a class="header-btn btn btn-danger export-pdf" href="#"><span class="glyphicon glyphicon-print"></span>Save as PDF</a>
             </p>
         </div>
     </div>
@@ -22,14 +23,38 @@ End Code
 <div class="container body-data" style="background-color:white !important;">
     <div class="row">
         <div class="col-md-12">
-            <table class="table">
+            <table class="print-visible-section table table-bordered" style="margin-bottom:0px;">
+                <tbody>
+                    <tr>
+                        <td>
+                            <center style="margin-top:3px;">
+                                <img src="~/Content/logo.jpg" style="width:100px;"/>
+                            </center>
+                        </td>
+                        <td>
+                            <center style="margin-top:40px; font-size:1.2em;">
+                                @Model.getFullName()
+                            </center>
+                        </td>
+                        <td>
+                            <strong style="margin-top:40px;">Prepared By:</strong> <br />@ViewBag.name
+
+                            <br />
+
+                            <strong style="margin-top:10px;">Prepared Date:</strong> <br />@DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)).ToString("h:mm tt M/d/yyyy")
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table report-table" id="main-table">
                 <thead>
                     <tr>
                         <th colspan="2" style="text-align:center;">Summary Results</th>
                     </tr>
                     <tr>
-                        <th style="text-align:center;">My Problem Checklist</th>
-                        <th style="text-align:center;">Needs Inventory</th>
+                        <th style="text-align:center; border-bottom:none;">My Problem Checklist</th>
+                        <th style="text-align:center; border-bottom:none;">Needs Inventory</th>
                     </tr>
                 </thead>
 
@@ -93,6 +118,12 @@ End Code
                                             @If ViewBag.Name IsNot Nothing Then
                                                 @<text>Prepared by: @ViewBag.name</text>
                                             End If
+                                        </td>
+                                    </tr>
+
+                                    <tr class="hide-this">
+                                        <td colspan="2">
+                                            Export Date: @DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)).ToString("h:mm tt M/d/yyyy")
                                         </td>
                                     </tr>
                                 </tbody>
@@ -159,6 +190,12 @@ End Code
                                             End If
                                         </td>
                                     </tr>
+
+                                    <tr class="hide-this">
+                                        <td colspan="2">
+                                            Export Date: @DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)).ToString("h:mm tt M/d/yyyy")
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </td>
@@ -167,8 +204,8 @@ End Code
 
                 <thead>
                     <tr>
-                        <th style="text-align:center;">Personality-Work Orientation</th>
-                        <th style="text-align:center;">Interest Inventory</th>
+                        <th style="text-align:center; border-bottom:none;">Personality-Work Orientation</th>
+                        <th style="text-align:center; border-bottom:none;">Interest Inventory</th>
                     </tr>
                 </thead>
 
@@ -242,6 +279,12 @@ End Code
                                             End If
                                         </td>
                                     </tr>
+
+                                    <tr class="hide-this">
+                                        <td colspan="2">
+                                            Export Date: @DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)).ToString("h:mm tt M/d/yyyy")
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </td>
@@ -306,6 +349,12 @@ End Code
                                             End If
                                         </td>
                                     </tr>
+
+                                    <tr class="hide-this">
+                                        <td colspan="2">
+                                            Export Date: @DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)).ToString("h:mm tt M/d/yyyy")
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </td>
@@ -317,7 +366,7 @@ End Code
 
     <div class="row">
         <div class="col-md-6">
-            <table class="table table-bordered" id="aptitudes-table">
+            <table class="table table-bordered report-table" id="aptitudes-table">
                 <thead>
                     <tr>
                         <th style="text-align:center;">Aptitude</th>
@@ -365,6 +414,12 @@ End Code
                         </td>
                     </tr>
 
+                    <tr class="hide-this">
+                                        <td>
+                                            Export Date: @DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)).ToString("h:mm tt M/d/yyyy")
+                                        </td>
+                                    </tr>
+
                     @Code
                         list.Add(New ScoreViewModel() With {.Name = "Aptitudes", .Score = aptitudesList.Count()})
                     End Code
@@ -373,7 +428,7 @@ End Code
         </div>
 
         <div class="col-md-6">
-            <table class="table table-bordered" id="suggested-track-table">
+            <table class="table table-bordered report-table" id="suggested-track-table">
                 <thead>
                     <tr>
                         <th style="text-align:center;"><strong>Suggested Track</strong></th>
@@ -465,11 +520,31 @@ End Code
                             End If
                         </td>
                     </tr>
+
+                    <tr class="hide-this">
+                        <td>
+                            Export Date: @DateTimeOffset.Now.ToOffset(New TimeSpan(8, 0, 0)).ToString("h:mm tt M/d/yyyy")
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+@section styles
+    <style>
+        @@media print{
+            .no-print{
+                display:none;
+            }
+
+            #wrapper.toggled{
+                padding:0px !important;
+            }
+        }
+    </style>
+End Section
 
 @section Scripts
     @Scripts.Render("~/bundles/jqueryval")
@@ -478,6 +553,28 @@ End Code
 
     <script>
         $(document).ready(function () {
+            
+            $(".print-visible-section").css("display", "none");
+
+            $(document).on("click", ".export-pdf", function () {
+
+                $(".print-visible-section").css("display", "");
+
+                $(".report-table").each(function () {
+                    $(this).addClass("table-condensed");
+                });
+
+                $("#main-table").addClass("table-bordered");
+
+                window.print();
+
+                $(".report-table").each(function () {
+                    $(this).removeClass("table-condensed");
+                });
+
+                $(".print-visible-section").css("display", "none");
+                $("#main-table").removeClass("table-bordered");
+            });
 
             var wb = XLSX.utils.book_new();
 

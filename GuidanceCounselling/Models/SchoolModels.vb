@@ -251,4 +251,5 @@ Public Class OTPLink
     Public Overridable Property User As ApplicationUser
 
     Public Property AvailabilityEnd As DateTimeOffset
+    Public Property Usable As Boolean?
 End Class
